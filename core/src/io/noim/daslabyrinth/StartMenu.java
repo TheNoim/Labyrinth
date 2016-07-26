@@ -1,5 +1,6 @@
 package io.noim.daslabyrinth;
 
+import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
@@ -17,6 +18,9 @@ public class StartMenu {
     Texture button;
     Color font_color;
     String heading;
+    String play;
+    String ranking;
+    String settings;
 
     public void create() {
         batch = new SpriteBatch();
@@ -36,6 +40,9 @@ public class StartMenu {
         font.setColor(font_color);
         button = new Texture("button.png");
         String heading = "Das verrückte\nLabyrinth";
+        play = "SPIEL STARTEN";
+        ranking = "RANKING";
+        settings = "EINSTELLUNGEN";
     }
 
     private void draw() {
@@ -49,9 +56,9 @@ public class StartMenu {
         batch.draw(button, Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() / 2);
         batch.draw(button, Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() * (3 / 2));
 
-        font.draw(batch, "SPIEL STARTEN", Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 + button.getHeight());
-        font.draw(batch, "RANKING", Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() / 2);
-        font.draw(batch, "EINSTELLUNGEN", Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() * (3 / 2));
+        font.draw(batch, play, Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 + button.getHeight());
+        font.draw(batch, ranking, Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() / 2);
+        font.draw(batch, settings, Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() * (3 / 2));
 
         batch.end();
     }
