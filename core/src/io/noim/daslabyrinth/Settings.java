@@ -3,6 +3,7 @@ package io.noim.daslabyrinth;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -14,6 +15,7 @@ public class Settings extends ApplicationAdapter {
     Texture background;
     Music music;
     BitmapFont font;
+    Color font_color;
 
 
     @Override
@@ -25,5 +27,12 @@ public class Settings extends ApplicationAdapter {
         music = Gdx.audio.newMusic(Gdx.files.internal("Spooky Fun.mp3"));
         music.setLooping(true);
         music.play();
+        font = new BitmapFont(Gdx.files.internal("Arial.fnt"));
+        float r = 119;
+        float g = 179;
+        float b = 212;
+        float a = 0;
+        font_color = new Color(r, g, b, a);
+        font.setColor(font_color);
     }
 }
