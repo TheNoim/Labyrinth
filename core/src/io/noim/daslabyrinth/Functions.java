@@ -44,21 +44,22 @@ public class Functions {
         gameFields.get(c).isTreasure = true;
         gameFields.get(ccc).isTreasure = true;
         gameFields.get(cccc).isTreasure = true;
-        if (acounter > treasurcountermax){
-            Array<GameField> atreasures = new Array<GameField>();
-            for (int i = 0; i < gameFields.size; i++){
-                if (gameFields.get(i).isTreasure){
-                    acounter++;
-                    atreasures.add(gameFields.get(i));
-                }
+        Array<GameField> atreasures = new Array<GameField>();
+        for (int i = 0; i < gameFields.size; i++){
+            if (gameFields.get(i).isTreasure){
+                acounter++;
+                atreasures.add(gameFields.get(i));
             }
-            Array<GameField> btreasure = new Array<GameField>();
+        }
+        Array<GameField> btreasure = new Array<GameField>();
+        if (acounter > treasurcountermax){
             int b = acounter - treasurcountermax;
+            /*
             long seed = System.nanoTime();
-            Collections.shuffle((List) atreasures, new Random(seed));
+            Collections.shuffle((List) atreasures, new Random(seed));*/
             for (int i = 0; i < b; i++){
                 btreasure.add(atreasures.get(i));
-                ((List) atreasures).remove(i);
+                atreasures.removeIndex(i);
             }
             for (int i = 0; i < gameFields.size; i++){
                 for (int ii = 0; i < atreasures.size; i++){
