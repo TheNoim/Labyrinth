@@ -12,8 +12,14 @@ public class DasLabyrinth extends ApplicationAdapter {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
+<<<<<<< HEAD
+=======
 		Functions.generateRandomeField();
 		Functions.printField();
+		m = Gdx.audio.newMusic(Gdx.files.internal("Epic Suspense.mp3"));
+		m.setLooping(true);
+		m.play();
+>>>>>>> f0f31e8e2061541fdf44fb0e42979ccd66a8c36f
     }
 
 	@Override
