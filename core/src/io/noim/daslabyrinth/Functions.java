@@ -15,6 +15,7 @@ public class Functions {
     public static Array<GameField> gameFields = new Array<GameField>();
 	//dsdsaasd
     public static void generateRandomeField() {
+        gameFields.clear();
         int x = 1;
         int y = 1;
         int treasurecountermin = 3;
