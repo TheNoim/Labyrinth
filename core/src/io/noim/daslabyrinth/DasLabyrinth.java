@@ -13,7 +13,8 @@ public class DasLabyrinth extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		Functions.generateRandomeField();
 		Functions.printField();
-	}
+        //Test
+    }
 
 	@Override
 	public void render () {
