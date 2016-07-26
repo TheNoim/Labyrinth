@@ -48,17 +48,20 @@ public class Functions {
                 atreasures.add(gameFields.get(i));
             }
         }
-        Array<GameField> btreasure = new Array<GameField>();
         if (acounter > treasurcountermax){
             int b = acounter - treasurcountermax;
+            Array<GameField> btreasure = new Array<GameField>();
             for (int i = 0; i < b; i++){
                 btreasure.add(atreasures.get(i));
-                atreasures.removeRange(i, i);
             }
             System.out.println("Trues: " + acounter);
             System.out.println("Btreasure size: " + btreasure.size);
+            for (int i = 0; i < btreasure.size; i++){
+                System.out.println("-> " + btreasure.get(i).isTreasure);
+            }
             for (int i = 0; i < gameFields.size; i++){
-                for (int ii = 0; i < atreasures.size; i++){
+//            for (GameField gf : gameFields) {
+                for (int ii = 0; i < btreasure.size; i++){
                     if (gameFields.get(i) == btreasure.get(ii)){
                         System.out.println("Change GameField with Index " + gameFields.get(i).index + " from isTreasure true to false.");
                         gameFields.get(i).isTreasure = false;
@@ -147,6 +150,13 @@ public class Functions {
         System.out.println("3 | " + int3.get(0) + " | " + int3.get(1) + " | " + int3.get(2) + " | " + int3.get(3) + " |");
         System.out.println("2 | " + int2.get(0) + " | " + int2.get(1) + " | " + int2.get(2) + " | " + int2.get(3) + " |");
         System.out.println("1 | " + int1.get(0) + " | " + int1.get(1) + " | " + int1.get(2) + " | " + int1.get(3) + " |");
+        int truecount = 0;
+        for (int i = 0; i < gameFields.size; i++){
+            if (gameFields.get(i).isTreasure){
+                truecount++;
+            }
+        }
+        System.out.println("Trues -> " + truecount);
 
     }
 
