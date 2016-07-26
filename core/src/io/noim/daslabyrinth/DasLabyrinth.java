@@ -12,8 +12,6 @@ public class DasLabyrinth extends ApplicationAdapter {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		Functions.generateRandomeField();
-		Functions.printField();
     }
 
 	@Override
