@@ -11,15 +11,10 @@ public class Playground extends ApplicationAdapter{
 
     Array<GameField> gameFields = new Array<GameField>();
     SpriteBatch batch;
-    int playground_width;
-    PlayGround pg;
     int screen_width;
     int screen_hight;
-    int start_position_x;
     double prozenthight = 0.1;
-    int hight_distance;
     Music music;
-    int ytexturesizes;
     int startx;
     int heightandwidthperfield;
     int halffinalprozent;
@@ -59,6 +54,9 @@ public class Playground extends ApplicationAdapter{
         for (GameField gf : gameFields){
             if (gf.x == x && gf.y <= 5){
                 batch.draw(gf.fieldTextureRegion, yy, xx, heightandwidthperfield, heightandwidthperfield);
+                if (gf.isTreasure){
+
+                }
                 xx += heightandwidthperfield;
                 if (gf.y == 5){
                     x++;
