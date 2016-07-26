@@ -18,24 +18,22 @@ public class Settings extends ApplicationAdapter {
     Music music;
     BitmapFont font;
     Color font_color;
-    String heading = "TEST";
+    String heading = "EINSTELLUNGEN";
     Vector3 touchPosition = new Vector3();
 
     Texture checkBox1;
-    boolean checkBox1Checked = false;
-    int checkBoxPosX;
-    int checkBox1PosY;
-
     Texture checkBox2;
+    boolean checkBox1Checked = false;
     boolean checkBox2Checked = false;
-    int checkBox2PosY;
+    float checkBoxPosX;
+    float checkBoxPosY;
 
     @Override
-    public void create(){
-        /*checkBoxPosX = Gdx.graphics.getWidth() / 2 - checkBox1.getWidth() / 2;
-        checkBox1PosY = Gdx.graphics.getHeight() / 2;
-        checkBox2PosY = Gdx.graphics.getHeight() / 2 - 150;*/
+    public void create() {
         checkBox1 = new Texture("checkbox.png");
+        checkBox2 = new Texture("checkbox.png");
+        checkBoxPosX = (Gdx.graphics.getWidth() / 2) - (checkBox1.getWidth() / 2);
+        checkBoxPosY = Gdx.graphics.getHeight() / 2;
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -44,11 +42,7 @@ public class Settings extends ApplicationAdapter {
         music.setLooping(true);
         music.play();
         font = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
-        float r = 119;
-        float g = 179;
-        float b = 212;
-        float a = 0;
-        font_color = new Color(r, g, b, a);
+        font_color = new Color(119, 179, 212, 1);
         font.setColor(font_color);
     }
 
@@ -56,7 +50,7 @@ public class Settings extends ApplicationAdapter {
         if(Gdx.input.justTouched()) {
             touchPosition.set(Gdx.input.getX(),Gdx.input.getY(), 0);
             camera.unproject(touchPosition);
-            if (touchPosition.x >= checkBoxPosX -10 && touchPosition.x >= checkBoxPosX + 60 && touchPosition.y >= checkBox1PosY - 10 && touchPosition.y >= checkBox1PosY + 60) {
+            if (touchPosition.x >= (Gdx.graphics.getWidth() / 2 - 25) -10 && touchPosition.x >= (Gdx.graphics.getWidth() / 2 - 25) + 60 && touchPosition.y >= checkBoxPosY - 10 && touchPosition.y >= checkBoxPosY + 60) {
                 if (!checkBox1Checked) {
                     checkBox1 = new Texture("checkbox_checked.png");
                     checkBox1Checked = true;
@@ -64,7 +58,7 @@ public class Settings extends ApplicationAdapter {
                     checkBox1 = new Texture("checkbox.png");
                     checkBox1Checked = false;
                 }
-            } else if (touchPosition.x >= checkBoxPosX -10 && touchPosition.x >= checkBoxPosX + 60 && touchPosition.y >= checkBox2PosY - 10 && touchPosition.y >= checkBox2PosY + 60) {
+            } else if (touchPosition.x >= (Gdx.graphics.getWidth() / 2 - 25) -10 && touchPosition.x >= (Gdx.graphics.getWidth() / 2 - 25) + 60 && touchPosition.y >= checkBoxPosY + 140 && touchPosition.y >= checkBoxPosY + 210) {
                 if (!checkBox2Checked) {
                     checkBox2 = new Texture("checkbox_checked.png");
                     checkBox2Checked = true;
@@ -79,8 +73,8 @@ public class Settings extends ApplicationAdapter {
     private void draw() {
         batch.begin();
         batch.draw(background, camera.position.x - background.getWidth() / 2, 0);
-        batch.draw(checkBox1, Gdx.graphics.getWidth() / 2 - checkBox1.getWidth() / 2, Gdx.graphics.getHeight() / 2, 50, 50);
-        batch.draw(checkBox2, (Gdx.graphics.getWidth() / 2) - (checkBox2.getWidth() / 2), Gdx.graphics.getHeight() / 2, 50, 50);
+        batch.draw(checkBox1, checkBoxPosX, Gdx.graphics.getHeight() / 2, 50, 50);
+        batch.draw(checkBox2, checkBoxPosX, Gdx.graphics.getHeight() / 2 - 150, 50, 50);
         font.draw(batch, heading, Gdx.graphics.getWidth() / 2 - StartMenu.textWidth(heading, font), Gdx.graphics.getHeight() - StartMenu.textHeight(heading, font) - 200);
         batch.end();
     }
