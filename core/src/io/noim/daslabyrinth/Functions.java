@@ -1,6 +1,7 @@
 package io.noim.daslabyrinth;
 
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
 
 import java.util.Collections;
@@ -8,6 +9,11 @@ import java.util.List;
 import java.util.Random;
 
 public class Functions {
+
+    public static Texture dvl_cross = new Texture("labyrinth_cross.png");
+    public static Texture dvl_curve = new Texture("labyrinth_curve.png");
+    public static Texture dvl_straight = new Texture("labyrinth_straight.png");
+    public static Texture dvl_tcross = new Texture("labyrinth_tcross.png");
 
     public static Array<GameField> gameFields = new Array<GameField>();
     public static void generateRandomeField() {
@@ -17,7 +23,8 @@ public class Functions {
         int treasurecountermin = 3;
         int treasurcountermax = 5;
         for (int i = 0; i < 20; i++) {
-            GameField gf = new GameField(null, randomBooleanT(), x, y, i, randomWithRange(0, 3), randomWithRange(0, 3));
+            int _type = randomWithRange(0, 3);
+            GameField gf = new GameField(getTextureByType(_type), randomBooleanT(), x, y, i, _type, randomWithRange(0, 3));
             if (gf.isTreasure) {
                 gf.treasure = new Treasure();
             }
@@ -88,7 +95,7 @@ public class Functions {
     public static void makeMoreTreasures(int b){
         Array<GameField> bgamefields = new Array<GameField>();
         for (int i = 0; i < b; i++){
-            int rnd = randomWithRange(0, gameFields.size);
+            int rnd = randomWithRange(0, gameFields.size -1);
             if (gameFields.get(rnd).isTreasure){
                 makeMoreTreasures(b - i);
             } else {
@@ -111,37 +118,37 @@ public class Functions {
             switch (gameFields.get(i).y){
                 case 5:
                     if (gameFields.get(i).type < 10){
-                        int5.add(gameFields.get(i).isTreasure + " ");
+                        int5.add(gameFields.get(i).type + " ");
                     } else {
-                        int5.add(gameFields.get(i).isTreasure + "");
+                        int5.add(gameFields.get(i).type + "");
                     }
                     break;
                 case 4:
                     if (gameFields.get(i).type < 10){
-                        int4.add(gameFields.get(i).isTreasure + " ");
+                        int4.add(gameFields.get(i).type + " ");
                     } else {
-                        int4.add(gameFields.get(i).isTreasure + "");
+                        int4.add(gameFields.get(i).type + "");
                     }
                     break;
                 case 3:
                     if (gameFields.get(i).type < 10){
-                        int3.add(gameFields.get(i).isTreasure + " ");
+                        int3.add(gameFields.get(i).type + " ");
                     } else {
-                        int3.add(gameFields.get(i).isTreasure + "");
+                        int3.add(gameFields.get(i).type + "");
                     }
                     break;
                 case 2:
                     if (gameFields.get(i).type < 10){
-                        int2.add(gameFields.get(i).isTreasure + " ");
+                        int2.add(gameFields.get(i).type + " ");
                     } else {
-                        int2.add(gameFields.get(i).isTreasure + "");
+                        int2.add(gameFields.get(i).type + "");
                     }
                     break;
                 case 1:
                     if (gameFields.get(i).type < 10){
-                        int1.add(gameFields.get(i).isTreasure + " ");
+                        int1.add(gameFields.get(i).type + " ");
                     } else {
-                        int1.add(gameFields.get(i).isTreasure + "");
+                        int1.add(gameFields.get(i).type + "");
                     }
                     break;
             }
@@ -159,6 +166,20 @@ public class Functions {
         }
         System.out.println("Trues -> " + truecount);
 
+    }
+
+    public static Texture getTextureByType(int _ty){
+        switch (_ty){
+            case 0:
+                return dvl_cross;
+            case 1:
+                return dvl_curve;
+            case 2:
+                return dvl_straight;
+            case 3:
+                return dvl_tcross;
+        }
+        return null;
     }
 
 }
