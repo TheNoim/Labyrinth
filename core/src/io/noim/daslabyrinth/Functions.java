@@ -1,6 +1,11 @@
 package io.noim.daslabyrinth;
 
+
 import com.badlogic.gdx.utils.Array;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Created by nilsbergmann on 25.07.16.
@@ -12,10 +17,12 @@ public class Functions {
     public static void generateRandomeField() {
         int x = 1;
         int y = 1;
+        int treasurecountermin = 1;
+        int treasurcountermax = 3;
         for (int i = 0; i < 20; i++) {
             GameField gf = new GameField(null, randomBooleanT(), x, y, i, randomWithRange(0, 3), randomWithRange(0, 3));
             if (gf.isTreasure) {
-                gf.treasure = new io.noim.daslabyrinth.Treasure();
+                gf.treasure = new Treasure();
             }
             gameFields.add(gf);
             System.out.println("GF X: " + x);
@@ -27,6 +34,43 @@ public class Functions {
             } else {
                 y++;
             }
+        }
+        int acounter = 0;
+        int c = randomWithRange(0, gameFields.size);
+        int cc = randomWithRange(0, gameFields.size);
+        int ccc = randomWithRange(0, gameFields.size);
+        int cccc = randomWithRange(0, gameFields.size);
+        gameFields.get(c).isTreasure = true;
+        gameFields.get(c).isTreasure = true;
+        gameFields.get(ccc).isTreasure = true;
+        gameFields.get(cccc).isTreasure = true;
+        if (acounter > treasurcountermax){
+            Array<GameField> atreasures = new Array<GameField>();
+            for (int i = 0; i < gameFields.size; i++){
+                if (gameFields.get(i).isTreasure){
+                    acounter++;
+                    atreasures.add(gameFields.get(i));
+                }
+            }
+            Array<GameField> btreasure = new Array<GameField>();
+            int b = acounter - treasurcountermax;
+            long seed = System.nanoTime();
+            Collections.shuffle((List) atreasures, new Random(seed));
+            for (int i = 0; i < b; i++){
+                btreasure.add(atreasures.get(i));
+                ((List) atreasures).remove(i);
+            }
+            for (int i = 0; i < gameFields.size; i++){
+                for (int ii = 0; i < atreasures.size; i++){
+                    if (gameFields.get(i) == btreasure.get(ii)){
+                        System.out.println("Change GameField with Index " + gameFields.get(i).index + " from isTreasure true to false.");
+                        gameFields.get(i).isTreasure = false;
+                    }
+                }
+            }
+        }
+        if (acounter < treasurecountermin){
+
         }
     }
 
