@@ -20,6 +20,7 @@ public class StartMenu extends ApplicationAdapter{
     Music music;
     BitmapFont font;
     Texture button;
+    Texture button_pushed;
     Color font_color;
     String heading;
     String play;
@@ -37,14 +38,11 @@ public class StartMenu extends ApplicationAdapter{
         music.play();
 
         font = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
-        float r = 119;
-        float g = 179;
-        float b = 212;
-        float a = 0;
-        font_color = new Color(r, g, b, a);
+        font_color = new Color(119, 179, 212, 1);
         font.setColor(font_color);
         button = new Texture("button.png");
-        String heading = "Das verrückte\nLabyrinth";
+        button = new Texture("button_pushed.png");
+        heading = "Das verrückte\nLabyrinth";
         play = "SPIEL STARTEN";
         ranking = "RANKING";
         settings = "EINSTELLUNGEN";
@@ -66,25 +64,27 @@ public class StartMenu extends ApplicationAdapter{
         if(Gdx.input.justTouched()) {
             touchPosition.set(Gdx.input.getX(),Gdx.input.getY(), 0);
             camera.unproject(touchPosition);
+            if(touchPosition.x >= (Gdx.graphics.getWidth() / 2 - button.getWidth() / 2) &&  touchPosition.x <= (Gdx.graphics.getWidth() / 2 + button.getWidth() / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 + button.getHeight()) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 + 2 * button.getHeight())){
+
+            }
         }
     }
 
     private void draw() {
-        /*batch.begin();
+        batch.begin();
 
         //batch.draw(background, camera.position.x - background.getWidth() / 2, 0);
-
         font.draw(batch, heading, Gdx.graphics.getWidth() / 2 - textWidth(heading, font), Gdx.graphics.getHeight() - textHeight(heading, font) - 200);
 
         batch.draw(button, Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 + button.getHeight());
         batch.draw(button, Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() / 2);
-        batch.draw(button, Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() * (3 / 2));
+        batch.draw(button, Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() * 2);
 
         font.draw(batch, play, Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 + button.getHeight());
-        font.draw(batch, ranking, Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() / 2);
-        font.draw(batch, settings, Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() * (3 / 2));
+        font.draw(batch, ranking, Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 - (button.getHeight() / 2));
+        font.draw(batch, settings, Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 - (button.getHeight() * 2));
 
-        batch.end();*/
+        batch.end();
     }
 
     public void render() {
