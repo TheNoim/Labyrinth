@@ -25,9 +25,6 @@ public class Functions {
                 gf.treasure = new Treasure();
             }
             gameFields.add(gf);
-            System.out.println("GF X: " + x);
-            System.out.println("GF Y: " + y);
-            System.out.println("GF Index: " + i);
             if (y == 5){
                 y = 1;
                 x++;
