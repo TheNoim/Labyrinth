@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class StartMenu {
@@ -45,12 +46,24 @@ public class StartMenu {
         settings = "EINSTELLUNGEN";
     }
 
+    public float textWidth(String text, BitmapFont font){
+        GlyphLayout glyphLayout = new GlyphLayout();
+        glyphLayout.setText(font,text);
+        return glyphLayout.width;
+    }
+
+    public float textHeight(String text, BitmapFont font){
+        GlyphLayout glyphLayout = new GlyphLayout();
+        glyphLayout.setText(font,text);
+        return glyphLayout.height;
+    }
+
     private void draw() {
         batch.begin();
 
         batch.draw(background, camera.position.x - background.getWidth() / 2, 0);
 
-        font.draw(batch, heading, 4, Gdx.graphics.getHeight() - 200);
+        font.draw(batch, heading, Gdx.graphics.getWidth() / 2 - textWidth(heading, font), Gdx.graphics.getHeight() - textHeight(heading, font) - 200);
 
         batch.draw(button, Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 + button.getHeight());
         batch.draw(button, Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() / 2);
