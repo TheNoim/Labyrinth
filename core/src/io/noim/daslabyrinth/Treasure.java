@@ -1,4 +1,4 @@
-package io.noim.daslabyrinthtestfiles;
+package io.noim.daslabyrinth;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;

@@ -1,4 +1,4 @@
-package io.noim.daslabyrinthtestfiles;
+package io.noim.daslabyrinth;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;

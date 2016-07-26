@@ -1,8 +1,8 @@
-package io.noim.daslabyrinthtestfiles.desktop;
+package io.noim.daslabyrinth.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import io.noim.daslabyrinthtestfiles.DasLabyrinth;
+import io.noim.daslabyrinth.DasLabyrinth;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {

@@ -1,6 +1,5 @@
-package io.noim.daslabyrinthtestfiles;
+package io.noim.daslabyrinth;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.utils.Array;
 
 /**
@@ -16,7 +15,7 @@ public class Functions {
         for (int i = 0; i < 20; i++) {
             GameField gf = new GameField(null, randomBooleanT(), x, y, i, randomWithRange(0, 3), randomWithRange(0, 3));
             if (gf.isTreasure) {
-                gf.treasure = new Treasure();
+                gf.treasure = new io.noim.daslabyrinth.Treasure();
             }
             gameFields.add(gf);
             System.out.println("GF X: " + x);
