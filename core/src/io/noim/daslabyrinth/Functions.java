@@ -14,6 +14,8 @@ public class Functions {
     public static Texture dvl_curve = new Texture("labyrinth_curve.png");
     public static Texture dvl_straight = new Texture("labyrinth_straight.png");
     public static Texture dvl_tcross = new Texture("labyrinth_tcross.png");
+    public static Texture treasure_min = new Texture("treasure.png");
+    public static Texture treasure_max = new Texture("treasure2.png");
 
     public static Array<GameField> gameFields = new Array<GameField>();
     public static void generateRandomeField() {
@@ -26,7 +28,13 @@ public class Functions {
             int _type = randomWithRange(0, 3);
             GameField gf = new GameField(getTextureByType(_type), randomBooleanT(), x, y, i, _type, randomWithRange(0, 3));
             if (gf.isTreasure) {
-                gf.treasure = new Treasure();
+                int rnd = randomWithRange(0, 100);
+                if (rnd > 20){
+                    gf.treasure = new Treasure(treasure_min, 3);
+                } else {
+                    gf.treasure = new Treasure(treasure_max, 5);
+                }
+
             }
             gameFields.add(gf);
             if (y == 5){
