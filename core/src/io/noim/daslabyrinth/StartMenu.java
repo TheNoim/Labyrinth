@@ -14,6 +14,9 @@ public class StartMenu {
     Texture background;
     Music music;
     BitmapFont font;
+    Texture button;
+    Color font_color;
+    String heading;
 
     public void create() {
         batch = new SpriteBatch();
@@ -29,19 +32,17 @@ public class StartMenu {
         float g = 179;
         float b = 212;
         float a = 0;
-        Color font_color = new Color(r, g, b, a);
+        font_color = new Color(r, g, b, a);
         font.setColor(font_color);
-
-
+        button = new Texture("button.png");
+        String heading = "Das verrückte\nLabyrinth";
     }
 
     private void draw() {
-        Texture button = new Texture("button.png");
         batch.begin();
 
         batch.draw(background, camera.position.x - background.getWidth() / 2, 0);
 
-        String heading = "Das verrückte\nLabyrinth";
         font.draw(batch, heading, 4, Gdx.graphics.getHeight() - 200);
 
         batch.draw(button, Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 + button.getHeight());
