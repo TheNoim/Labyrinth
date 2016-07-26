@@ -20,8 +20,6 @@ public class Settings extends ApplicationAdapter {
     public void create(){
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
-        batch = new SpriteBatch();
-        camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         background = new Texture("");
         music = Gdx.audio.newMusic(Gdx.files.internal("Spooky Fun.mp3"));
