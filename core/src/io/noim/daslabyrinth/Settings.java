@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 public class Settings extends ApplicationAdapter {
     SpriteBatch batch;
@@ -17,7 +18,7 @@ public class Settings extends ApplicationAdapter {
     Texture background;
     Music music;
     BitmapFont font;
-    Color font_color;
+    Label label;
     String heading = "EINSTELLUNGEN";
     Vector3 touchPosition = new Vector3();
 
@@ -27,6 +28,8 @@ public class Settings extends ApplicationAdapter {
     boolean checkBox2Checked = false;
     float checkBoxPosX;
     float checkBoxPosY;
+
+    Label.LabelStyle style;
 
     @Override
     public void create() {
@@ -42,15 +45,15 @@ public class Settings extends ApplicationAdapter {
         music.setLooping(true);
         music.play();
         font = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
-        font_color = new Color(119, 179, 212, 1);
-        font.setColor(font_color);
+        style = new Label.LabelStyle(font, Color.BLUE);
+        label = new Label(heading, style);
     }
 
     private void update() {
         if(Gdx.input.justTouched()) {
             touchPosition.set(Gdx.input.getX(),Gdx.input.getY(), 0);
             camera.unproject(touchPosition);
-            if (touchPosition.x >= (Gdx.graphics.getWidth() / 2 - 25) -10 && touchPosition.x >= (Gdx.graphics.getWidth() / 2 - 25) + 60 && touchPosition.y >= checkBoxPosY - 10 && touchPosition.y >= checkBoxPosY + 60) {
+            if (touchPosition.x >= checkBoxPosX -10 && touchPosition.x >= checkBoxPosX + 60 && touchPosition.y >= checkBoxPosY - 10 && touchPosition.y >= checkBoxPosY + 60) {
                 if (!checkBox1Checked) {
                     checkBox1 = new Texture("checkbox_checked.png");
                     checkBox1Checked = true;
@@ -58,7 +61,7 @@ public class Settings extends ApplicationAdapter {
                     checkBox1 = new Texture("checkbox.png");
                     checkBox1Checked = false;
                 }
-            } else if (touchPosition.x >= (Gdx.graphics.getWidth() / 2 - 25) -10 && touchPosition.x >= (Gdx.graphics.getWidth() / 2 - 25) + 60 && touchPosition.y >= checkBoxPosY + 140 && touchPosition.y >= checkBoxPosY + 210) {
+            } else if (touchPosition.x >= checkBoxPosX -10 && touchPosition.x >= checkBoxPosX + 60 && touchPosition.y >= checkBoxPosY + 140 && touchPosition.y >= checkBoxPosY + 210) {
                 if (!checkBox2Checked) {
                     checkBox2 = new Texture("checkbox_checked.png");
                     checkBox2Checked = true;
@@ -73,14 +76,15 @@ public class Settings extends ApplicationAdapter {
     private void draw() {
         batch.begin();
         batch.draw(background, camera.position.x - background.getWidth() / 2, 0);
-        batch.draw(checkBox1, checkBoxPosX, Gdx.graphics.getHeight() / 2, 50, 50);
-        batch.draw(checkBox2, checkBoxPosX, Gdx.graphics.getHeight() / 2 - 150, 50, 50);
-        font.draw(batch, heading, Gdx.graphics.getWidth() / 2 - StartMenu.textWidth(heading, font), Gdx.graphics.getHeight() - StartMenu.textHeight(heading, font) - 200);
+        batch.draw(checkBox1, checkBoxPosX, Gdx.graphics.getHeight() / 2);
+        batch.draw(checkBox2, checkBoxPosX, Gdx.graphics.getHeight() / 2 - 150);
+        //font.draw(batch, heading, Gdx.graphics.getWidth() / 2 - StartMenu.textWidth(heading, font), Gdx.graphics.getHeight() - StartMenu.textHeight(heading, font) - 200);
+        label.draw(batch,5);
         batch.end();
     }
 
     public void render() {
-        Gdx.gl.glClearColor(0, 1, 1, 1);
+        Gdx.gl.glClearColor(0, 1, (float) 0.5, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         update();
