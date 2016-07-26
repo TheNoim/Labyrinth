@@ -8,9 +8,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-/**
- * Created by flame on 26.07.2016.
- */
 public class startmenu {
     SpriteBatch batch;
     OrthographicCamera camera;

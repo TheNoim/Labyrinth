@@ -7,9 +7,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Created by nilsbergmann on 25.07.16.
- */
 public class Functions {
 
     public static Array<GameField> gameFields = new Array<GameField>();
