@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 //Hallo Jannis
 public class StartMenu {
@@ -24,6 +26,7 @@ public class StartMenu {
     String play;
     String ranking;
     String settings;
+    Vector3 touchPosition = new Vector3();
 
     public void create() {
         batch = new SpriteBatch();
@@ -60,6 +63,13 @@ public class StartMenu {
         return glyphLayout.height;
     }
 
+    private void update() {
+        if(Gdx.input.justTouched()) {
+            touchPosition.set(Gdx.input.getX(),Gdx.input.getY(), 0);
+            camera.unproject(touchPosition);
+        }
+    }
+
     private void draw() {
         batch.begin();
 
@@ -82,6 +92,7 @@ public class StartMenu {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        update();
         draw();
     }
 }
