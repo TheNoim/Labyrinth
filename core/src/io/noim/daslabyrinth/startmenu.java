@@ -36,12 +36,14 @@ public class startmenu {
         batch.begin();
         batch.draw(background, camera.position.x - background.getWidth() / 2, 0);
 
-        batch.draw(button, Gdx.graphics.getWidth() / 2, Gdx.graphics.getWidth() / 2);
-        batch.draw(button, Gdx.graphics.getWidth() / 2, Gdx.graphics.getWidth() / 2);
-        batch.draw(button, Gdx.graphics.getWidth() / 2, Gdx.graphics.getWidth() / 2);
+        batch.draw(button, Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 + button.getHeight());
+        batch.draw(button, Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() / 2);
+        batch.draw(button, Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() * (3/2));
 
-        font.draw(batch, "SPIEL STARTEN", Gdx.graphics.getWidth() / 2, Gdx.graphics.getWidth() / 2);
-        font.draw(batch, "RANKING", Gdx.graphics.getWidth() / 2, Gdx.graphics.getWidth() / 2);
-        font.draw(batch, "EINSTELLUNGEN", Gdx.graphics.getWidth() / 2, Gdx.graphics.getWidth() / 2);
+        font.draw(batch, "SPIEL STARTEN", Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 + button.getHeight());
+        font.draw(batch, "RANKING", Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() / 2);
+        font.draw(batch, "EINSTELLUNGEN", Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() * (3/2));
+
+        batch.end();
     }
 }
