@@ -17,8 +17,8 @@ public class Functions {
     public static void generateRandomeField() {
         int x = 1;
         int y = 1;
-        int treasurecountermin = 1;
-        int treasurcountermax = 3;
+        int treasurecountermin = 3;
+        int treasurcountermax = 5;
         for (int i = 0; i < 20; i++) {
             GameField gf = new GameField(null, randomBooleanT(), x, y, i, randomWithRange(0, 3), randomWithRange(0, 3));
             if (gf.isTreasure) {
@@ -33,14 +33,6 @@ public class Functions {
             }
         }
         int acounter = 0;
-        int c = randomWithRange(0, gameFields.size);
-        int cc = randomWithRange(0, gameFields.size);
-        int ccc = randomWithRange(0, gameFields.size);
-        int cccc = randomWithRange(0, gameFields.size);
-        gameFields.get(c).isTreasure = true;
-        gameFields.get(c).isTreasure = true;
-        gameFields.get(ccc).isTreasure = true;
-        gameFields.get(cccc).isTreasure = true;
         Array<GameField> atreasures = new Array<GameField>();
         for (int i = 0; i < gameFields.size; i++){
             if (gameFields.get(i).isTreasure){
@@ -60,9 +52,8 @@ public class Functions {
                 System.out.println("-> " + btreasure.get(i).isTreasure);
             }
             for (int i = 0; i < gameFields.size; i++){
-//            for (GameField gf : gameFields) {
-                for (int ii = 0; i < btreasure.size; i++){
-                    if (gameFields.get(i) == btreasure.get(ii)){
+                for (int ii = 0; ii < btreasure.size; ii++){
+                    if (gameFields.get(i).index == btreasure.get(ii).index){
                         System.out.println("Change GameField with Index " + gameFields.get(i).index + " from isTreasure true to false.");
                         gameFields.get(i).isTreasure = false;
                     }
@@ -70,7 +61,8 @@ public class Functions {
             }
         }
         if (acounter < treasurecountermin){
-
+            int b = treasurecountermin - acounter;
+            makeMoreTreasures(b);
         }
     }
 
@@ -93,6 +85,18 @@ public class Functions {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public static void makeMoreTreasures(int b){
+        Array<GameField> bgamefields = new Array<GameField>();
+        for (int i = 0; i < b; i++){
+            int rnd = randomWithRange(0, gameFields.size);
+            if (gameFields.get(rnd).isTreasure){
+                makeMoreTreasures(b - i);
+            } else {
+                gameFields.get(rnd).isTreasure = true;
+            }
         }
     }
 
