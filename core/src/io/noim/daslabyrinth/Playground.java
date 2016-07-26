@@ -1,11 +1,9 @@
 package io.noim.daslabyrinth;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.utils.Array;
 
-/**
- * Created by nilsbergmann on 26.07.16.
- */
 public class Playground {
 
     Array<GameField> gameFields = new Array<GameField>();
@@ -16,8 +14,12 @@ public class Playground {
     int start_position_x;
     double prozenthight = 0.1;
     int hight_distance;
+    Music music;
 
     public void create(){
+        music = Gdx.audio.newMusic(Gdx.files.internal("Epic Suspense.mp3"));
+        music.setLooping(true);
+        music.play();
         Functions.generateRandomeField();
         gameFields = Functions.gameFields;
         int temp_a = 0;
