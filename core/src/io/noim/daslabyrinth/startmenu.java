@@ -2,6 +2,7 @@ package io.noim.daslabyrinth;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -26,7 +27,24 @@ public class startmenu {
         music.play();
 
         font = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
+        float r = 119;
+        float g = 179;
+        float b = 212;
+        float a = 0;
+        Color font_color = new Color(r,g,b,a);
+        font.setColor(font_color);
 
         Texture button = new Texture("button.png");
+
+        batch.begin();
+        batch.draw(background, camera.position.x - background.getWidth() / 2, 0);
+
+        batch.draw(button, Gdx.graphics.getWidth() / 2, Gdx.graphics.getWidth() / 2);
+        batch.draw(button, Gdx.graphics.getWidth() / 2, Gdx.graphics.getWidth() / 2);
+        batch.draw(button, Gdx.graphics.getWidth() / 2, Gdx.graphics.getWidth() / 2);
+
+        font.draw(batch, "SPIEL STARTEN", Gdx.graphics.getWidth() / 2, Gdx.graphics.getWidth() / 2);
+        font.draw(batch, "RANKING", Gdx.graphics.getWidth() / 2, Gdx.graphics.getWidth() / 2);
+        font.draw(batch, "EINSTELLUNGEN", Gdx.graphics.getWidth() / 2, Gdx.graphics.getWidth() / 2);
     }
 }
