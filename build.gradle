@@ -19,6 +19,8 @@ allprojects {
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.7.0'
         aiVersion = '1.8.0'
+        compileSdkVersion = 23
+        buildToolsVersion = '23.0.3'
     }
 
     repositories {
