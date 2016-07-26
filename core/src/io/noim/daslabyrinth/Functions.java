@@ -10,7 +10,6 @@ import java.util.Random;
 public class Functions {
 
     public static Array<GameField> gameFields = new Array<GameField>();
-	//dsdsaasd
     public static void generateRandomeField() {
         int x = 1;
         int y = 1;
