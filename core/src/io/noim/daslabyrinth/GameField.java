@@ -18,6 +18,7 @@ public class GameField {
 
     public GameField(Texture fieldTexture, boolean isTreasure, int x, int y, int index, int type, int facing){
         this.fieldTexture = fieldTexture;
+        this.fieldTextureRegion = new TextureRegion(this.fieldTexture);
         this.isTreasure = isTreasure;
         this.x = x;
         this.y = y;
@@ -27,6 +28,7 @@ public class GameField {
     }
     public GameField(Texture fieldTexture, boolean isTreasure, int x, int y, int index, int type, int facing, Treasure treasure){
         this.fieldTexture = fieldTexture;
+        this.fieldTextureRegion = new TextureRegion(this.fieldTexture);
         this.isTreasure = isTreasure;
         this.x = x;
         this.y = y;
