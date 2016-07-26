@@ -20,6 +20,9 @@ public class Playground extends ApplicationAdapter{
     int hight_distance;
     Music music;
     int ytexturesizes;
+    int startx;
+    int heightandwidthperfield;
+    int halffinalprozent;
 
     @Override
     public void create(){
@@ -32,31 +35,36 @@ public class Playground extends ApplicationAdapter{
         int temp_a = 0;
         for (GameField gf : gameFields) {
             if (gf.x == 1){
-                System.out.println("X" + gameFields.size);
-                int temp_width = gf.fieldTextureRegion.getRegionWidth();
-                temp_a += temp_width;
+
             }
         }
-        System.out.println("Width:" + temp_a);
-        screen_width = Gdx.graphics.getWidth();
-        screen_hight = Gdx.graphics.getHeight();
-        int temp_b = screen_width - temp_a;
-        start_position_x = temp_b / 2;
-        double temp_c = screen_hight * prozenthight;
-        long temp_d = Math.round(temp_c);
-        hight_distance = (int) temp_d;
-        int rest = screen_hight - hight_distance;
-        ytexturesizes = rest / 4;
+        screen_width = Gdx.graphics.getHeight();
+        screen_hight = Gdx.graphics.getWidth();
+        double tenprozent = screen_hight * prozenthight;
+        float round = Math.round(tenprozent);
+        int finaltenprozent = (int) round;
+        int availablehight = screen_hight - finaltenprozent;
+        halffinalprozent = finaltenprozent / 2;
+        heightandwidthperfield = availablehight / 4;
+        int usedwidth = heightandwidthperfield * 5;
+        int q = screen_width - usedwidth;
+        startx = q / 2;
     }
     public void draw(){
 
         batch.begin();
         int x = 1;
-        float xf = start_position_x;
+        int xx = startx;
+        int yy = halffinalprozent;
         for (GameField gf : gameFields){
-            if (x <= 5){
-                batch.draw(gf.fieldTextureRegion, xf, hight_distance, 100, ytexturesizes);
-                xf += gf.fieldTextureRegion.getRegionWidth();
+            if (gf.x == x && gf.y <= 5){
+                batch.draw(gf.fieldTextureRegion, yy, xx, heightandwidthperfield, heightandwidthperfield);
+                xx += heightandwidthperfield;
+                if (gf.y == 5){
+                    x++;
+                    yy += heightandwidthperfield;
+                    xx = startx;
+                }
             }
         }
 
