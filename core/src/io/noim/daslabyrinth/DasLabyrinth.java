@@ -7,13 +7,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class DasLabyrinth extends ApplicationAdapter {
 	SpriteBatch batch;
+	Music m;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		Functions.generateRandomeField();
 		Functions.printField();
-        //Test
     }
 
 	@Override
