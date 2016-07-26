@@ -54,13 +54,12 @@ public class Functions {
         Array<GameField> btreasure = new Array<GameField>();
         if (acounter > treasurcountermax){
             int b = acounter - treasurcountermax;
-            /*
-            long seed = System.nanoTime();
-            Collections.shuffle((List) atreasures, new Random(seed));*/
             for (int i = 0; i < b; i++){
                 btreasure.add(atreasures.get(i));
-                atreasures.removeIndex(i);
+                atreasures.removeRange(i, i);
             }
+            System.out.println("Trues: " + acounter);
+            System.out.println("Btreasure size: " + btreasure.size);
             for (int i = 0; i < gameFields.size; i++){
                 for (int ii = 0; i < atreasures.size; i++){
                     if (gameFields.get(i) == btreasure.get(ii)){
