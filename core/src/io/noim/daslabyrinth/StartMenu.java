@@ -40,8 +40,8 @@ public class StartMenu extends ApplicationAdapter{
         font = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
         font_color = new Color(119, 179, 212, 1);
         font.setColor(font_color);
-        button = new Texture("button.png");
-        button = new Texture("button_pushed.png");
+        button = new Texture("button.svg");
+        button = new Texture("button_pushed.svg");
         heading = "Das verrückte\nLabyrinth";
         play = "SPIEL STARTEN";
         ranking = "RANKING";
@@ -65,6 +65,7 @@ public class StartMenu extends ApplicationAdapter{
             touchPosition.set(Gdx.input.getX(),Gdx.input.getY(), 0);
             camera.unproject(touchPosition);
             if(touchPosition.x >= (Gdx.graphics.getWidth() / 2 - button.getWidth() / 2) &&  touchPosition.x <= (Gdx.graphics.getWidth() / 2 + button.getWidth() / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 + button.getHeight()) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 + 2 * button.getHeight())){
+                music.pause();
 
             }
         }
