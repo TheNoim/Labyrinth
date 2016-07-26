@@ -10,11 +10,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
-//Hallo Jannis
-public class StartMenu {
+
+public class StartMenu extends ApplicationAdapter{
     SpriteBatch batch;
     OrthographicCamera camera;
     Texture background;
@@ -32,7 +31,7 @@ public class StartMenu {
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        background = new Texture("");
+        //background = new Texture("");
         music = Gdx.audio.newMusic(Gdx.files.internal("Spooky Fun.mp3"));
         music.setLooping(true);
         music.play();
@@ -51,13 +50,13 @@ public class StartMenu {
         settings = "EINSTELLUNGEN";
     }
 
-    public float textWidth(String text, BitmapFont font){
+    public static float textWidth(String text, BitmapFont font){
         GlyphLayout glyphLayout = new GlyphLayout();
         glyphLayout.setText(font,text);
         return glyphLayout.width;
     }
 
-    public float textHeight(String text, BitmapFont font){
+    public static float textHeight(String text, BitmapFont font){
         GlyphLayout glyphLayout = new GlyphLayout();
         glyphLayout.setText(font,text);
         return glyphLayout.height;
@@ -71,9 +70,9 @@ public class StartMenu {
     }
 
     private void draw() {
-        batch.begin();
+        /*batch.begin();
 
-        batch.draw(background, camera.position.x - background.getWidth() / 2, 0);
+        //batch.draw(background, camera.position.x - background.getWidth() / 2, 0);
 
         font.draw(batch, heading, Gdx.graphics.getWidth() / 2 - textWidth(heading, font), Gdx.graphics.getHeight() - textHeight(heading, font) - 200);
 
@@ -85,10 +84,10 @@ public class StartMenu {
         font.draw(batch, ranking, Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() / 2);
         font.draw(batch, settings, Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() * (3 / 2));
 
-        batch.end();
+        batch.end();*/
     }
 
-    public void render () {
+    public void render() {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
