@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.Array;
 
 public class Playground implements Screen {
@@ -37,9 +38,11 @@ public class Playground implements Screen {
     OrthographicCamera camera;
     Texture background;
     GameField newgf;
+    Matrix4 originalMatrix = new Matrix4();
 
     public void create() {
         Functions.generateRandomeField();
+        Functions.printField();
         int tcount = 0;
         for (GameField gff : Functions.gameFields){
             if (gff.isTreasure){
@@ -105,11 +108,20 @@ public class Playground implements Screen {
             int dd = (int) Math.round(heightandwidthperfield * 1.5);
             batch.draw(newgf.fieldTextureRegion, yy, xx - dd, heightandwidthperfield, heightandwidthperfield);
             roboto.setColor(Color.BLACK);
-            roboto.draw(batch, "Your next Card !", yy + 10, xx);
+            roboto.getData().setScale( (float) 1.5,(float) 1.5);
+            roboto.draw(batch, "Your next Card !", yy, xx - dd - dd / 16);
         }
         for (GameField gf : gameFields) {
             if (gf.x == x && gf.y <= 5) {
+                Matrix4 rotMatrix = new Matrix4();
+
+                if (gf.facing > 0){
+                    rotMatrix.rotate(0,0,1, 90.0f * gf.facing);
+                    rotMatrix.translate(gf.fieldTextureRegion.getRegionHeight(),0 ,0);
+                    batch.setTransformMatrix(rotMatrix);
+                }
                 batch.draw(gf.fieldTextureRegion, yy, xx, heightandwidthperfield, heightandwidthperfield);
+                batch.setTransformMatrix(originalMatrix);
                 if (gf.isTreasure) {
                     int tr_texture_width = gf.treasure.textureRegion.getRegionWidth();
                     int g = heightandwidthperfield - tr_texture_width;

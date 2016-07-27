@@ -1,6 +1,9 @@
 package io.noim.daslabyrinth;
 
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -11,7 +14,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 
 
-public class Settings implements Screen {
+public class Settings implements Screen, ApplicationListener, InputProcessor {
 
     public DasLabyrinth main;
 
@@ -37,6 +40,8 @@ public class Settings implements Screen {
 
 
     public void create() {
+        Gdx.input.setInputProcessor(this);
+        Gdx.input.setCatchBackKey(true);
         checkBoxSize = Gdx.graphics.getWidth() / 10;
         checkBoxPosX = Gdx.graphics.getWidth() / 10;
         checkBoxPos1Y = Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10 * 3;
@@ -102,9 +107,12 @@ public class Settings implements Screen {
                     StartMenu.pref.flush();
                 }
             }
-            /*if(touchPosition.x >= (backPosX -10) &&  touchPosition.x <= (backPosX + 60) && touchPosition.y >= (backPos2Y -10) && touchPosition.y <= (checkBoxPos2Y + 60)) {
-                //TODO CALL StartMenu.java
-            }*/
+            if(touchPosition.x >= Gdx.graphics.getWidth() / 20 - (checkBoxSize / 5) &&
+                    touchPosition.x <= Gdx.graphics.getWidth() / 20 + (checkBoxSize / 5 * 6) &&
+                    touchPosition.y >= (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30) - (back.getHeight() / 3) - (checkBoxSize / 5) &&
+                    touchPosition.y <= (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30) - (back.getHeight() / 3) + (checkBoxSize / 5 * 6)) {
+                main.setScreen(new StartMenu(main));
+            }
         }
     }
 
@@ -128,6 +136,12 @@ public class Settings implements Screen {
         draw();
     }
     public void resize(int width, int height) {  }
+
+    @Override
+    public void render() {
+
+    }
+
     public void show() {
         create();
     }
@@ -137,5 +151,48 @@ public class Settings implements Screen {
 
     public void dispose() {
         batch.dispose();
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        if(keycode == Input.Keys.BACK){
+            main.setScreen(new StartMenu(main));
+    }
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
     }
 }
