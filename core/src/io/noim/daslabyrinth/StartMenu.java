@@ -30,6 +30,7 @@ public class StartMenu implements Screen {
     public Settings Settings;
     public Ranking Ranking;
     public static Boolean playMusic, playSounds;
+    public static int whichClass;
 
     public StartMenu(final DasLabyrinth main) {
         create();
@@ -45,6 +46,7 @@ public class StartMenu implements Screen {
     }
 
     public void create() {
+        whichClass = 0;
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
