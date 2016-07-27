@@ -73,7 +73,7 @@ public class Settings extends ApplicationAdapter {
         batch.draw(background, camera.position.x - background.getWidth() / 2, 0);
         batch.draw(checkBox1, checkBoxPosX, Gdx.graphics.getHeight() / 2);
         batch.draw(checkBox2, checkBoxPosX, Gdx.graphics.getHeight() / 2 - 150);
-        font.draw(batch, heading, Gdx.graphics.getWidth() / 2 - StartMenu.textWidth(heading, font), Gdx.graphics.getHeight() - StartMenu.textHeight(heading, font) - 200);
+        //font.draw(batch, heading, Gdx.graphics.getWidth() / 2 - StartMenu.textWidth(heading, font), Gdx.graphics.getHeight() - StartMenu.textHeight(heading, font) - 200);
         batch.end();
     }
 
