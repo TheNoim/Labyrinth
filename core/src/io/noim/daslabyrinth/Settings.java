@@ -4,7 +4,6 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -123,8 +122,8 @@ public class Settings implements Screen, ApplicationListener, InputProcessor {
         batch.draw(checkBox2, checkBoxPosX, checkBoxPos2Y, checkBoxSize, checkBoxSize);
         batch.draw(back, Gdx.graphics.getWidth() / 20, (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30) - (back.getHeight() / 3), Gdx.graphics.getWidth() / 10, Gdx.graphics.getWidth() / 10);
         font_heading.draw(batch, heading, Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 20) * 17, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10);
-        font_text.draw(batch, "Musik", checkBoxPosX + 100, checkBoxPos1Y + Gdx.graphics.getWidth() / 10);
-        font_text.draw(batch, "Sounds", checkBoxPosX + 100, checkBoxPos2Y + Gdx.graphics.getWidth() / 10);
+        font_text.draw(batch, "Musik", checkBoxPosX + (Gdx.graphics.getWidth() / 5), checkBoxPos1Y + Gdx.graphics.getWidth() / 10);
+        font_text.draw(batch, "Sounds", checkBoxPosX + (Gdx.graphics.getWidth() / 5), checkBoxPos2Y + Gdx.graphics.getWidth() / 10);
         batch.end();
     }
 
