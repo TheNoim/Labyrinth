@@ -30,6 +30,7 @@ public class Settings implements Screen {
 
     Texture checkBox1;
     Texture checkBox2;
+    Texture back;
     boolean checkBox1Checked, checkBox2Checked;
     float checkBoxPosX;
     float checkBoxPos1Y;
@@ -38,9 +39,9 @@ public class Settings implements Screen {
     public Preferences pref;
 
     public void create() {
-        checkBoxPosX = 75;
-        checkBoxPos1Y = 800;
-        checkBoxPos2Y = 650;
+        checkBoxPosX = Gdx.graphics.getWidth() / 10;
+        checkBoxPos1Y = Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10 * 3;
+        checkBoxPos2Y = Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10 * 4;
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
