@@ -3,7 +3,6 @@ package io.noim.daslabyrinth;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -11,9 +10,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 
+
 public class Settings implements Screen {
 
     public DasLabyrinth main;
+
     public Settings(final DasLabyrinth main){
         this.main = main;
     }
@@ -71,13 +72,13 @@ public class Settings implements Screen {
             camera.unproject(touchPosition);
             if(touchPosition.x >= (checkBoxPosX -10) &&  touchPosition.x <= (checkBoxPosX + 60) && touchPosition.y >= (checkBoxPos1Y -10) && touchPosition.y <= (checkBoxPos1Y + 60)) {
                 if (!checkBox1Checked) {
-                    music.play();
+                    StartMenu.music.play();
                     checkBox1 = new Texture("checkbox_checked.png");
                     checkBox1Checked = true;
                     pref.putInteger("Music", 1);
                     pref.flush();
                 } else {
-                    music.pause();
+                    StartMenu.music.pause();
                     checkBox1 = new Texture("checkbox.png");
                     checkBox1Checked = false;
                     pref.putInteger("Music", 0);
