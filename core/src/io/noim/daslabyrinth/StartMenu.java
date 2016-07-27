@@ -75,8 +75,8 @@ public class StartMenu implements Screen {
             if(touchPosition.x >= (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) &&  touchPosition.x <= (Gdx.graphics.getWidth() / 2 + ButtonWidth / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 - button.getHeight() / 2) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 + button.getHeight() / 2 )){
                 music.stop();
             }
-            if(touchPosition.x >= (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) &&  touchPosition.x <= (Gdx.graphics.getWidth() / 2 + ButtonWidth / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 - button.getHeight() * 2) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 + 2 * button.getHeight())){
-                //main.setScreen(new Settings(Settings));
+            if(touchPosition.x >= (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) &&  touchPosition.x <= (Gdx.graphics.getWidth() / 2 + ButtonWidth / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 - button.getHeight() * 2) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 - button.getHeight())){
+                main.setScreen(new Settings(main));
             }
         }
     }
