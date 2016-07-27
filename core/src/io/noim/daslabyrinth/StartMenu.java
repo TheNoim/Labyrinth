@@ -51,11 +51,12 @@ public class StartMenu implements Screen {
         music = Gdx.audio.newMusic(Gdx.files.internal("Spooky Fun.mp3"));
         music.setLooping(true);
 
-        if(!music.isPlaying()) {
-            if (playMusic) {
-                music.play();
-            }
-        }
+        System.out.println(music.isPlaying());
+        if(!music.isPlaying() && playMusic) {
+            music.play();
+        } else {
+            music.stop();
+    }
 
         font = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
         font_color = new Color(119, 179, 212, 1);
