@@ -10,6 +10,10 @@ public class AndroidLauncher extends AndroidApplication {
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
+<<<<<<< HEAD
 		initialize(new Settings(), config);
+=======
+		initialize(new Playground(), config);
+>>>>>>> 7f0b43e5335730637bf37f3b189aba37aad75236
 	}
 }
