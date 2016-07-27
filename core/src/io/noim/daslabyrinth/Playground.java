@@ -19,7 +19,7 @@ public class Playground implements Screen {
 
     public DasLabyrinth main;
 
-    public Playground(final DasLabyrinth main){
+    public Playground(final DasLabyrinth main) {
         Functions.generateRandomeField();
         this.main = main;
     }
@@ -44,17 +44,17 @@ public class Playground implements Screen {
         Functions.generateRandomeField();
         Functions.printField();
         int tcount = 0;
-        for (GameField gff : Functions.gameFields){
-            if (gff.isTreasure){
+        for (GameField gff : Functions.gameFields) {
+            if (gff.isTreasure) {
                 tcount++;
             }
         }
-        if (tcount < Functions.treasurcountermax){
+        if (tcount < Functions.treasurcountermax) {
             int rnd3 = Functions.randomWithRange(0, 100);
-            if (rnd3 < 20){
+            if (rnd3 < 20) {
                 newgf = new GameField(Functions.getTextureByType(Functions.randomWithRange(0, 3)), true, 0, 0, Functions.gameFields.size + 1, Functions.randomWithRange(0, 3), Functions.randomWithRange(0, 3));
                 int rnd2 = Functions.randomWithRange(0, 100);
-                if (rnd2 > 20){
+                if (rnd2 > 20) {
                     newgf.treasure = new Treasure(Functions.treasure_min, 3);
                 } else {
                     newgf.treasure = new Treasure(Functions.treasure_max, 5);
@@ -104,23 +104,22 @@ public class Playground implements Screen {
         int x = 1;
         int xx = startx;
         int yy = halffinalprozent;
-        if (newgf != null){
+        if (newgf != null) {
             int dd = (int) Math.round(heightandwidthperfield * 1.5);
             batch.draw(newgf.fieldTextureRegion, yy, xx - dd, heightandwidthperfield, heightandwidthperfield);
             roboto.setColor(Color.BLACK);
-            roboto.getData().setScale( (float) 1.5,(float) 1.5);
+            roboto.getData().setScale((float) 1.5, (float) 1.5);
             roboto.draw(batch, "Your next Card !", yy, xx - dd - dd / 16);
         }
         for (GameField gf : gameFields) {
             if (gf.x == x && gf.y <= 5) {
                 Matrix4 rotMatrix = new Matrix4();
-
-                if (gf.facing > 0){
-                    rotMatrix.rotate(0,0,1, 90.0f * gf.facing);
-                    rotMatrix.translate(gf.fieldTextureRegion.getRegionHeight(),0 ,0);
-                    batch.setTransformMatrix(rotMatrix);
-                }
-                batch.draw(gf.fieldTextureRegion, yy, xx, heightandwidthperfield, heightandwidthperfield);
+                rotMatrix.translate(yy, xx , 0);
+                rotMatrix.translate(heightandwidthperfield / 2, heightandwidthperfield / 2, 0);
+                rotMatrix.rotate(0, 0, 1, 90.0f * gf.facing);
+                rotMatrix.translate(-heightandwidthperfield / 2, -heightandwidthperfield / 2, 0);
+                batch.setTransformMatrix(rotMatrix);
+                batch.draw(gf.fieldTextureRegion, 0, 0, heightandwidthperfield, heightandwidthperfield);
                 batch.setTransformMatrix(originalMatrix);
                 if (gf.isTreasure) {
                     int tr_texture_width = gf.treasure.textureRegion.getRegionWidth();
@@ -155,13 +154,21 @@ public class Playground implements Screen {
         draw();
     }
 
-    public void resize(int width, int height) {  }
+    public void resize(int width, int height) {
+    }
+
     public void show() {
         create();
     }
-    public void hide() {  }
-    public void pause() {  }
-    public void resume() {  }
+
+    public void hide() {
+    }
+
+    public void pause() {
+    }
+
+    public void resume() {
+    }
 
     public void dispose() {
         batch.dispose();
