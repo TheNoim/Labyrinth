@@ -51,8 +51,10 @@ public class StartMenu implements Screen {
         music = Gdx.audio.newMusic(Gdx.files.internal("Spooky Fun.mp3"));
         music.setLooping(true);
 
-        if (playMusic) {
-            music.play();
+        if(music.isPlaying() == false) {
+            if (playMusic) {
+                music.play();
+            }
         }
 
         font = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
@@ -93,6 +95,7 @@ public class StartMenu implements Screen {
         batch.draw(button, Gdx.graphics.getWidth() / 2 - ButtonWidth / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() / 2, ButtonWidth, button.getHeight());
         batch.draw(button, Gdx.graphics.getWidth() / 2 - ButtonWidth / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() * 2, ButtonWidth, button.getHeight());
 
+        //font.getData().setScale(ButtonWidth * (float) 0.7, 1);
         font.draw(batch, heading, 0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10, Gdx.graphics.getWidth(), 1, false);
         font.draw(batch, play, (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2), Gdx.graphics.getHeight() / 2 + 2 * button.getHeight() - ((button.getHeight() - 46) / 2), ButtonWidth, 1, false);
         font.draw(batch, ranking, (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2), Gdx.graphics.getHeight() / 2 + (button.getHeight() / 2) - ((button.getHeight() - 46) / 2), ButtonWidth, 1, false);
