@@ -10,9 +10,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
 public class Playground implements Screen {
@@ -39,6 +39,9 @@ public class Playground implements Screen {
     Texture background;
     GameField newgf;
     Matrix4 originalMatrix = new Matrix4();
+    boolean istmovingnewfield;
+    Vector2 newfieldv = new Vector2();
+    int newfieldw;
 
     public void create() {
         Functions.generateRandomeField();
@@ -94,6 +97,7 @@ public class Playground implements Screen {
         int q = screen_width - usedwidth;
         startx = (int) Math.round(q / 1.07);
         roboto = new BitmapFont(Gdx.files.internal("Roboto.fnt"));
+        istmovingnewfield = false;
     }
 
     public void draw() {
@@ -107,6 +111,9 @@ public class Playground implements Screen {
         if (newgf != null) {
             int dd = (int) Math.round(heightandwidthperfield * 1.5);
             batch.draw(newgf.fieldTextureRegion, yy, xx - dd, heightandwidthperfield, heightandwidthperfield);
+            newfieldv.x = yy;
+            newfieldv.y = xx;
+            newfieldw = heightandwidthperfield;
             roboto.setColor(Color.BLACK);
             roboto.getData().setScale((float) 1.5, (float) 1.5);
             roboto.draw(batch, "Your next Card !", yy, xx - dd - dd / 16);
@@ -141,6 +148,19 @@ public class Playground implements Screen {
     }
 
     public void update() {
+        if (Gdx.input.isTouched()){
+            if (istmovingnewfield){
+
+            } else {
+                Vector2 touch = new Vector2();
+                touch.x = Gdx.input.getX();
+                touch.y = Gdx.input.getY();
+                if (touch.x <= newfieldv.x && touch.x >= newfieldv.x - newfieldw && touch.y >= newfieldv.y && touch.y <= newfieldv.y + newfieldw){
+                    System.out.println("Test");
+                    System.out.println(newfieldv.x + "  " + newfieldv.y);
+                }
+            }
+        }
     }
 
     public void render(float delta) {
