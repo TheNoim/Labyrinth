@@ -135,37 +135,37 @@ public class Functions {
             switch (gameFields.get(i).y){
                 case 5:
                     if (gameFields.get(i).type < 10){
-                        int5.add(gameFields.get(i).isTreasure + " ");
+                        int5.add(gameFields.get(i).facing + " ");
                     } else {
-                        int5.add(gameFields.get(i).isTreasure + "");
+                        int5.add(gameFields.get(i).facing + "");
                     }
                     break;
                 case 4:
                     if (gameFields.get(i).type < 10){
-                        int4.add(gameFields.get(i).isTreasure + " ");
+                        int4.add(gameFields.get(i).facing + " ");
                     } else {
-                        int4.add(gameFields.get(i).isTreasure + "");
+                        int4.add(gameFields.get(i).facing + "");
                     }
                     break;
                 case 3:
                     if (gameFields.get(i).type < 10){
-                        int3.add(gameFields.get(i).isTreasure + " ");
+                        int3.add(gameFields.get(i).facing + " ");
                     } else {
-                        int3.add(gameFields.get(i).isTreasure + "");
+                        int3.add(gameFields.get(i).facing + "");
                     }
                     break;
                 case 2:
                     if (gameFields.get(i).type < 10){
-                        int2.add(gameFields.get(i).isTreasure + " ");
+                        int2.add(gameFields.get(i).facing + " ");
                     } else {
-                        int2.add(gameFields.get(i).isTreasure + "");
+                        int2.add(gameFields.get(i).facing + "");
                     }
                     break;
                 case 1:
                     if (gameFields.get(i).type < 10){
-                        int1.add(gameFields.get(i).isTreasure + " ");
+                        int1.add(gameFields.get(i).facing + " ");
                     } else {
-                        int1.add(gameFields.get(i).isTreasure + "");
+                        int1.add(gameFields.get(i).facing + "");
                     }
                     break;
             }
