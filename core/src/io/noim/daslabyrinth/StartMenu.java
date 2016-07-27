@@ -1,6 +1,5 @@
 package io.noim.daslabyrinth;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
@@ -9,7 +8,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 
@@ -33,12 +31,12 @@ public class StartMenu implements Screen {
     public DasLabyrinth main;
     public Settings Settings;
 
-    public StartMenu(final DasLabyrinth main){
+    public StartMenu(final DasLabyrinth main) {
         create();
         this.main = main;
     }
 
-    public StartMenu(final Settings Settings){
+    public StartMenu(final Settings Settings) {
         this.Settings = Settings;
     }
 
@@ -64,18 +62,17 @@ public class StartMenu implements Screen {
     }
 
     private void update() {
-        if(Gdx.input.justTouched()) {
-            touchPosition.set(Gdx.input.getX(),Gdx.input.getY(), 0);
+        if (Gdx.input.justTouched()) {
+            touchPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(touchPosition);
-            if(touchPosition.x >= (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) &&  touchPosition.x <= (Gdx.graphics.getWidth() / 2 + ButtonWidth / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 + button.getHeight()) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 + 2 * button.getHeight())){
+            if (touchPosition.x >= (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) && touchPosition.x <= (Gdx.graphics.getWidth() / 2 + ButtonWidth / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 + button.getHeight()) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 + 2 * button.getHeight())) {
                 music.stop();
                 main.setScreen(new Playground(main));
             }
-
-            if(touchPosition.x >= (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) &&  touchPosition.x <= (Gdx.graphics.getWidth() / 2 + ButtonWidth / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 - button.getHeight() / 2) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 + button.getHeight() / 2 )){
-                music.stop();
+            if (touchPosition.x >= (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) && touchPosition.x <= (Gdx.graphics.getWidth() / 2 + ButtonWidth / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 - button.getHeight() / 2) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 + button.getHeight() / 2)) {
+                //TODO Ranking Page
             }
-            if(touchPosition.x >= (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) &&  touchPosition.x <= (Gdx.graphics.getWidth() / 2 + ButtonWidth / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 - button.getHeight() * 2) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 - button.getHeight())){
+            if (touchPosition.x >= (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) && touchPosition.x <= (Gdx.graphics.getWidth() / 2 + ButtonWidth / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 - button.getHeight() * 2) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 - button.getHeight())) {
                 main.setScreen(new Settings(main));
             }
         }
@@ -85,15 +82,15 @@ public class StartMenu implements Screen {
         batch.begin();
 
         batch.draw(background, 0, 0, (float) Gdx.graphics.getWidth(), (float) Gdx.graphics.getHeight());
-        font.draw(batch, heading, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()  - 200);
+        font.draw(batch, heading, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - 200);
 
         batch.draw(button, Gdx.graphics.getWidth() / 2 - ButtonWidth / 2, Gdx.graphics.getHeight() / 2 + button.getHeight(), ButtonWidth, button.getHeight());
         batch.draw(button, Gdx.graphics.getWidth() / 2 - ButtonWidth / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() / 2, ButtonWidth, button.getHeight());
         batch.draw(button, Gdx.graphics.getWidth() / 2 - ButtonWidth / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() * 2, ButtonWidth, button.getHeight());
 
-        font.draw(batch, play, (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) + 32, Gdx.graphics.getHeight() / 2 + 2 * button.getHeight() - ((button.getHeight() - 46) /2));
-        font.draw(batch, ranking, (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) + 32, Gdx.graphics.getHeight() / 2 + (button.getHeight() / 2)- ((button.getHeight() - 46) /2));
-        font.draw(batch, settings, (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) + 32, Gdx.graphics.getHeight() / 2 - button.getHeight() - ((button.getHeight() - 46) /2));
+        font.draw(batch, play, (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) + 32, Gdx.graphics.getHeight() / 2 + 2 * button.getHeight() - ((button.getHeight() - 46) / 2));
+        font.draw(batch, ranking, (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) + 32, Gdx.graphics.getHeight() / 2 + (button.getHeight() / 2) - ((button.getHeight() - 46) / 2));
+        font.draw(batch, settings, (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) + 32, Gdx.graphics.getHeight() / 2 - button.getHeight() - ((button.getHeight() - 46) / 2));
 
         batch.end();
     }
@@ -106,12 +103,20 @@ public class StartMenu implements Screen {
         draw();
     }
 
-    public void resize(int width, int height) {  }
+    public void resize(int width, int height) {
+    }
+
     public void show() {
     }
-    public void hide() {  }
-    public void pause() {  }
-    public void resume() {  }
+
+    public void hide() {
+    }
+
+    public void pause() {
+    }
+
+    public void resume() {
+    }
 
     public void dispose() {
         batch.dispose();
