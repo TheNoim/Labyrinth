@@ -1,10 +1,12 @@
 package io.noim.daslabyrinth;
 
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -134,38 +136,38 @@ public class Functions {
         for (int i = 0; i < gameFields.size; i++){
             switch (gameFields.get(i).y){
                 case 5:
-                    if (gameFields.get(i).type < 10){
-                        int5.add(gameFields.get(i).facing + " ");
+                    if (gameFields.get(i).index < 10){
+                        int5.add(gameFields.get(i).index + " ");
                     } else {
-                        int5.add(gameFields.get(i).facing + "");
+                        int5.add(gameFields.get(i).index + "");
                     }
                     break;
                 case 4:
-                    if (gameFields.get(i).type < 10){
-                        int4.add(gameFields.get(i).facing + " ");
+                    if (gameFields.get(i).index < 10){
+                        int4.add(gameFields.get(i).index + " ");
                     } else {
-                        int4.add(gameFields.get(i).facing + "");
+                        int4.add(gameFields.get(i).index + "");
                     }
                     break;
                 case 3:
-                    if (gameFields.get(i).type < 10){
-                        int3.add(gameFields.get(i).facing + " ");
+                    if (gameFields.get(i).index < 10){
+                        int3.add(gameFields.get(i).index + " ");
                     } else {
-                        int3.add(gameFields.get(i).facing + "");
+                        int3.add(gameFields.get(i).index + "");
                     }
                     break;
                 case 2:
-                    if (gameFields.get(i).type < 10){
-                        int2.add(gameFields.get(i).facing + " ");
+                    if (gameFields.get(i).index < 10){
+                        int2.add(gameFields.get(i).index + " ");
                     } else {
-                        int2.add(gameFields.get(i).facing + "");
+                        int2.add(gameFields.get(i).index + "");
                     }
                     break;
                 case 1:
-                    if (gameFields.get(i).type < 10){
-                        int1.add(gameFields.get(i).facing + " ");
+                    if (gameFields.get(i).index < 10){
+                        int1.add(gameFields.get(i).index + " ");
                     } else {
-                        int1.add(gameFields.get(i).facing + "");
+                        int1.add(gameFields.get(i).index + "");
                     }
                     break;
             }
@@ -197,6 +199,64 @@ public class Functions {
                 return dvl_tcross;
         }
         return null;
+    }
+
+    public static void moveFields(int x, int y, boolean fromx, GameField gff, boolean reverse){
+        if (reverse){
+            gameFields.reverse();
+        }
+        GameField newx;
+        HashMap<Integer, GameField> hash1 = new HashMap<Integer, GameField>();
+        HashMap<Integer, GameField> hash2 = new HashMap<Integer, GameField>();
+        if (fromx){
+            for (int i = 0; i < gameFields.size; i++){
+                if (gameFields.get(i).x == x){
+                    GameField first = null;
+                    for (int ui = 0; ui < gameFields.size; ui++){
+                        if (gameFields.get(ui).x == x){
+                            first = gameFields.get(ui);
+                            break;
+                        }
+                    }
+                    if (gameFields.get(i) == first){
+                        for (int ii = 0; ii < gameFields.size; ii++){
+                            if (gameFields.get(ii).x == x && ii > i){
+                                //gameFields.set(ii, gameFields.get(i));
+                                hash1.put(ii, gameFields.get(i));
+                                hash2.put(ii, gameFields.get(ii));
+                                hash2.put(i, gameFields.get(i));
+                                gameFields.set(i, gff);
+                                break;
+                            }
+                        }
+                    } else {
+                        if (i <= 14){
+                            for (int ii = 0; ii < gameFields.size; ii++){
+                                if (gameFields.get(ii).x == x && ii > i){
+                                    hash1.put(ii, gameFields.get(i));
+                                    gameFields.set(ii, gameFields.get(i));
+                                    break;
+                                }
+                            }
+                        } else {
+                            for (int ii = 0; ii < gameFields.size; ii++){
+                                if (gameFields.get(ii).x == x && ii > i){
+                                    newx = gameFields.get(ii);
+                                    gameFields.set(ii, gameFields.get(i));
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+
+
+        if (reverse){
+            gameFields.reverse();
+        }
     }
 
 }

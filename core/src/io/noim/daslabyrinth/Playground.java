@@ -38,7 +38,7 @@ public class Playground implements Screen {
     ShapeRenderer shaper;
     OrthographicCamera camera;
     Texture background;
-    GameField newgf;
+    public static GameField newgf;
     Matrix4 originalMatrix = new Matrix4();
     boolean istmovingnewfield;
     Vector2 newfieldv = new Vector2();
@@ -174,6 +174,7 @@ public class Playground implements Screen {
                     System.out.println("Test");
                     System.out.println(newfieldv.x + "  " + newfieldv.y);
                     istmovingnewfield = true;
+                    //Functions.moveFields(2, 0, true, newgf, true);
                 }
             }
         } else {
