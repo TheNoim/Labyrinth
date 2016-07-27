@@ -12,7 +12,7 @@ public class DasLabyrinth extends Game {
 		batch = new SpriteBatch();
 		//Functions.generateRandomeField();
 		//Functions.printField();
-		setScreen(new Playground(this));
+		setScreen(new StartMenu(this));
     }
 
 	@Override
