@@ -34,8 +34,6 @@ public class Ranking implements Screen {
         background = new Texture("background.png");
         back = new Texture("back.png");
         font = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
-        font_color = new Color(119, 179, 212, 1);
-        font.setColor(font_color);
     }
 
     private void update() {
