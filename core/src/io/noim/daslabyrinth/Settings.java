@@ -110,8 +110,7 @@ public class Settings implements Screen, ApplicationListener, InputProcessor {
                     touchPosition.x <= Gdx.graphics.getWidth() / 20 + (checkBoxSize / 5 * 6) &&
                     touchPosition.y >= (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30) - (back.getHeight() / 3) - (checkBoxSize / 5) &&
                     touchPosition.y <= (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30) - (back.getHeight() / 3) + (checkBoxSize / 5 * 6)) {
-                StartMenu.music.stop();
-                main.setScreen(new StartMenu(main));
+                callClass();
             }
         }
     }
@@ -156,8 +155,7 @@ public class Settings implements Screen, ApplicationListener, InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
         if(keycode == Input.Keys.BACK){
-            StartMenu.music.stop();
-            main.setScreen(new StartMenu(main));
+            callClass();
     }
         return false;
     }
@@ -195,5 +193,15 @@ public class Settings implements Screen, ApplicationListener, InputProcessor {
     @Override
     public boolean scrolled(int amount) {
         return false;
+    }
+
+    private void callClass() {
+        if (StartMenu.whichClass == 0) {
+            StartMenu.music.stop();
+            main.setScreen(new StartMenu(main));
+        } else if (StartMenu.whichClass == 1) {
+            StartMenu.music.stop();
+            main.setScreen(new Playground(main));
+        }
     }
 }
