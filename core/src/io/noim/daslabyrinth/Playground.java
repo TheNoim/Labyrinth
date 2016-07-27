@@ -4,9 +4,11 @@ package io.noim.daslabyrinth;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -21,6 +23,7 @@ public class Playground implements Screen {
         this.main = main;
     }
 
+    BitmapFont roboto;
     Array<GameField> gameFields = new Array<GameField>();
     SpriteBatch batch;
     int screen_width;
@@ -87,6 +90,7 @@ public class Playground implements Screen {
         int usedwidth = heightandwidthperfield * 5;
         int q = screen_width - usedwidth;
         startx = (int) Math.round(q / 1.07);
+        roboto = new BitmapFont(Gdx.files.internal("Roboto.fnt"));
     }
 
     public void draw() {
@@ -100,6 +104,8 @@ public class Playground implements Screen {
         if (newgf != null){
             int dd = (int) Math.round(heightandwidthperfield * 1.5);
             batch.draw(newgf.fieldTextureRegion, yy, xx - dd, heightandwidthperfield, heightandwidthperfield);
+            roboto.setColor(Color.BLACK);
+            roboto.draw(batch, "Your next Card !", yy + 10, xx);
         }
         for (GameField gf : gameFields) {
             if (gf.x == x && gf.y <= 5) {
