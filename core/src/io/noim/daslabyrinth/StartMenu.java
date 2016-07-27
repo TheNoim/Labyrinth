@@ -17,23 +17,17 @@ public class StartMenu implements Screen {
 
     SpriteBatch batch;
     OrthographicCamera camera;
-    Texture background;
     public static Music music;
     public static Preferences pref;
     BitmapFont font;
-    Texture button;
-    Texture button_pushed;
+    Texture background, button, button_pushed;
     Color font_color;
-    String heading;
-    String play;
-    String ranking;
-    String settings;
+    String heading, play, ranking, settings;
     Vector3 touchPosition = new Vector3();
     int ButtonWidth;
     public DasLabyrinth main;
     public Settings Settings;
-    public static Boolean playMusic;
-    public static Boolean playSounds;
+    public static Boolean playMusic, playSounds;
 
     public StartMenu(final DasLabyrinth main) {
         create();
