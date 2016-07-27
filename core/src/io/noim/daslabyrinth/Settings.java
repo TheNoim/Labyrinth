@@ -107,8 +107,8 @@ public class Settings implements Screen {
     private void draw() {
         batch.begin();
         batch.draw(background, 0, 0, Gdx.graphics.getWidth(),  Gdx.graphics.getHeight());
-        batch.draw(checkBox1, checkBoxPosX, checkBoxPos1Y);
-        batch.draw(checkBox2, checkBoxPosX, checkBoxPos2Y);
+        batch.draw(checkBox1, checkBoxPosX, checkBoxPos1Y, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(checkBox2, checkBoxPosX, checkBoxPos2Y, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         font_heading.draw(batch, heading, Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 20) * 17, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10);
         font_text.draw(batch, "Musik", checkBoxPosX + 100, checkBoxPos1Y + 50);
         font_text.draw(batch, "Sounds", checkBoxPosX + 100, checkBoxPos2Y + 50);
