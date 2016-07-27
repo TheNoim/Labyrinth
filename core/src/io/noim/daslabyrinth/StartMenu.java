@@ -50,6 +50,8 @@ public class StartMenu implements Screen {
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         background = new Texture("background.png");
 
+        ButtonWidth = (int) (Gdx.graphics.getWidth() * (float) 0.9);
+
         pref = Gdx.app.getPreferences("labyrinth.dat");
         playMusic = pref.getBoolean("Music", true);
         playSounds = pref.getBoolean("Sounds", true);
@@ -66,6 +68,7 @@ public class StartMenu implements Screen {
 
 
         font = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
+
         font_color = new Color(119, 179, 212, 1);
         font.setColor(font_color);
         button = new Texture("button.png");
@@ -74,7 +77,7 @@ public class StartMenu implements Screen {
         play = "SPIEL STARTEN";
         ranking = "RANKING";
         settings = "EINSTELLUNGEN";
-        ButtonWidth = (int) (Gdx.graphics.getWidth() * (float) 0.9);
+        font.getData().setScale(scaleText(settings, font, ButtonWidth-20));
     }
 
     private void update() {
@@ -117,7 +120,6 @@ public class StartMenu implements Screen {
         batch.draw(button, Gdx.graphics.getWidth() / 2 - ButtonWidth / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() / 2, ButtonWidth, button.getHeight());
         batch.draw(button, Gdx.graphics.getWidth() / 2 - ButtonWidth / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() * 2, ButtonWidth, button.getHeight());
 
-        font.getData().setScale(scaleText(settings, font, ButtonWidth-20));
         font.draw(batch, heading, 0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10, Gdx.graphics.getWidth(), 1, false);
         font.draw(batch, play, (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2), Gdx.graphics.getHeight() / 2 + 2 * button.getHeight() - ((button.getHeight() - 46) / 2), ButtonWidth, 1, false);
         font.draw(batch, ranking, (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2), Gdx.graphics.getHeight() / 2 + (button.getHeight() / 2) - ((button.getHeight() - 46) / 2), ButtonWidth, 1, false);
