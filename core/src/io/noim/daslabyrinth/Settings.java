@@ -35,7 +35,7 @@ public class Settings implements Screen {
     float checkBoxPos1Y;
     float checkBoxPos2Y;
 
-    Preferences pref;
+    public Preferences pref;
 
     public void create() {
         checkBoxPosX = 75;
