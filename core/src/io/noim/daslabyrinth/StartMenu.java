@@ -88,9 +88,9 @@ public class StartMenu implements Screen {
         batch.draw(button, Gdx.graphics.getWidth() / 2 - ButtonWidth / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() * 2, ButtonWidth, button.getHeight());
 
         font.draw(batch, heading, Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 20) * 17, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10);
-        font.draw(batch, play, (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) + 32, Gdx.graphics.getHeight() / 2 + 2 * button.getHeight() - ((button.getHeight() - 46) / 2));
-        font.draw(batch, ranking, (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) + 32, Gdx.graphics.getHeight() / 2 + (button.getHeight() / 2) - ((button.getHeight() - 46) / 2));
-        font.draw(batch, settings, (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) + 32, Gdx.graphics.getHeight() / 2 - button.getHeight() - ((button.getHeight() - 46) / 2));
+        font.draw(batch, play, (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) + 32, Gdx.graphics.getHeight() / 2 + 2 * button.getHeight() - ((button.getHeight() - 46) / 2), ButtonWidth, 10, false);
+        font.draw(batch, ranking, (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) + 32, Gdx.graphics.getHeight() / 2 + (button.getHeight() / 2) - ((button.getHeight() - 46) / 2), ButtonWidth, 10, false);
+        font.draw(batch, settings, (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) + 32, Gdx.graphics.getHeight() / 2 - button.getHeight() - ((button.getHeight() - 46) / 2), ButtonWidth, 10, false);
 
         batch.end();
     }
