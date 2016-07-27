@@ -19,7 +19,7 @@ public class StartMenu implements Screen {
     SpriteBatch batch;
     OrthographicCamera camera;
     Texture background;
-    public Music music;
+    public static Music music;
     BitmapFont font;
     Texture button;
     Texture button_pushed;
@@ -68,6 +68,7 @@ public class StartMenu implements Screen {
             touchPosition.set(Gdx.input.getX(),Gdx.input.getY(), 0);
             camera.unproject(touchPosition);
             if(touchPosition.x >= (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) &&  touchPosition.x <= (Gdx.graphics.getWidth() / 2 + ButtonWidth / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 + button.getHeight()) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 + 2 * button.getHeight())){
+                music.stop();
                 main.setScreen(new Playground(main));
             }
 
