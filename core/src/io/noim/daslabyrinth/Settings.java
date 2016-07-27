@@ -15,7 +15,8 @@ public class Settings extends ApplicationAdapter {
     OrthographicCamera camera;
     Texture background;
     Music music;
-    BitmapFont font;
+    BitmapFont font_heading;
+    BitmapFont font_text;
     String heading = "SETTINGS";
     Vector3 touchPosition = new Vector3();
 
@@ -41,7 +42,8 @@ public class Settings extends ApplicationAdapter {
         music = Gdx.audio.newMusic(Gdx.files.internal("Spooky Fun.mp3"));
         music.setLooping(true);
         music.play();
-        font = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
+        font_heading = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
+        font_text = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
     }
 
     private void update() {
@@ -74,13 +76,9 @@ public class Settings extends ApplicationAdapter {
         batch.draw(background, camera.position.x - background.getWidth() / 2, 0);
         batch.draw(checkBox1, checkBoxPosX, checkBoxPos1Y);
         batch.draw(checkBox2, checkBoxPosX, checkBoxPos2Y);
-        font.draw(batch, heading, Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 5) * 4, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10);
-        batch.draw(checkBox1, checkBoxPosX, Gdx.graphics.getHeight() / 2);
-        batch.draw(checkBox2, checkBoxPosX, Gdx.graphics.getHeight() / 2 - 150);
-        //font.draw(batch, heading, Gdx.graphics.getWidth() / 2 - StartMenu.textWidth(heading, font), Gdx.graphics.getHeight() - StartMenu.textHeight(heading, font) - 200);
-        batch.draw(checkBox1, checkBoxPosX, checkBoxPos1Y);
-        batch.draw(checkBox2, checkBoxPosX, checkBoxPos2Y - 150);
-        //font.draw(batch, heading, Gdx.graphics.getWidth() / 2 - StartMenu.textWidth(heading, font), Gdx.graphics.getHeight() - StartMenu.textHeight(heading, font) - 200);
+        font_heading.draw(batch, heading, Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 5) * 4, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10);
+        font_text.draw(batch, "MUSIK", checkBoxPosX + 100, checkBoxPos1Y + 50);
+        font_text.draw(batch, "SOUNDS", checkBoxPosX + 100, checkBoxPos2Y + 50);
         batch.end();
     }
 
