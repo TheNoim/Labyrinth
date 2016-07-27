@@ -66,7 +66,7 @@ public class Settings implements Screen {
         if(Gdx.input.justTouched()) {
             touchPosition.set(Gdx.input.getX(),Gdx.input.getY(), 0);
             camera.unproject(touchPosition);
-            if(touchPosition.x >= (checkBoxPosX -10) &&  touchPosition.x <= (checkBoxPosX + 60) && touchPosition.y >= (checkBoxPos1Y -10) && touchPosition.y <= (checkBoxPos1Y + 60)) {
+            if(touchPosition.x >= checkBoxPosX - ((Gdx.graphics.getWidth() / 10) - 10) &&  touchPosition.x <= checkBoxPosX - ((Gdx.graphics.getWidth() / 10) + 60) && touchPosition.y >= checkBoxPos1Y - ((Gdx.graphics.getWidth() / 10) + 60) && touchPosition.y <= checkBoxPos1Y - ((Gdx.graphics.getWidth() / 10) + 60)) {
                 if (!checkBox1Checked) {
                     StartMenu.music.play();
                     checkBox1 = new Texture("checkbox_checked.png");
@@ -81,7 +81,7 @@ public class Settings implements Screen {
                     StartMenu.pref.flush();
                 }
             }
-            if(touchPosition.x >= (checkBoxPosX -10) &&  touchPosition.x <= (checkBoxPosX + 60) && touchPosition.y >= (checkBoxPos2Y -10) && touchPosition.y <= (checkBoxPos2Y + 60)) {
+            if(touchPosition.x >= checkBoxPosX - ((Gdx.graphics.getWidth() / 10) - 10) &&  touchPosition.x <= checkBoxPosX - ((Gdx.graphics.getWidth() / 10) + 60) && touchPosition.y >= checkBoxPos2Y - ((Gdx.graphics.getWidth() / 10) + 60) && touchPosition.y <= checkBoxPos2Y - ((Gdx.graphics.getWidth() / 10) + 60)) {
                 if (!checkBox2Checked) {
                     checkBox2 = new Texture("checkbox_checked.png");
                     checkBox2Checked = true;
@@ -95,17 +95,7 @@ public class Settings implements Screen {
                 }
             }
             /*if(touchPosition.x >= (backPosX -10) &&  touchPosition.x <= (backPosX + 60) && touchPosition.y >= (backPos2Y -10) && touchPosition.y <= (checkBoxPos2Y + 60)) {
-                if (!checkBox2Checked) {
-                    checkBox2 = new Texture("checkbox_checked.png");
-                    checkBox2Checked = true;
-                    //pref.putInteger("Sounds", 1);
-                    //pref.flush();
-                } else {
-                    checkBox2 = new Texture("checkbox.png");
-                    checkBox2Checked = false;
-                    //pref.putInteger("Sounds", 0);
-                    //pref.flush();
-                }
+                //TODO CALL StartMenu.java
             }*/
         }
     }
@@ -115,7 +105,7 @@ public class Settings implements Screen {
         batch.draw(background, 0, 0, Gdx.graphics.getWidth(),  Gdx.graphics.getHeight());
         batch.draw(checkBox1, checkBoxPosX, checkBoxPos1Y, Gdx.graphics.getWidth() / 10, Gdx.graphics.getWidth() / 10);
         batch.draw(checkBox2, checkBoxPosX, checkBoxPos2Y, Gdx.graphics.getWidth() / 10, Gdx.graphics.getWidth() / 10);
-        batch.draw(back, Gdx.graphics.getWidth() / 20, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30 - back.getHeight() / 3, Gdx.graphics.getWidth() / 10, Gdx.graphics.getWidth() / 10);
+        batch.draw(back, Gdx.graphics.getWidth() / 20, (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30) - (back.getHeight() / 3), Gdx.graphics.getWidth() / 10, Gdx.graphics.getWidth() / 10);
         font_heading.draw(batch, heading, Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 20) * 17, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10);
         font_text.draw(batch, "Musik", checkBoxPosX + 100, checkBoxPos1Y + Gdx.graphics.getWidth() / 10);
         font_text.draw(batch, "Sounds", checkBoxPosX + 100, checkBoxPos2Y + Gdx.graphics.getWidth() / 10);
