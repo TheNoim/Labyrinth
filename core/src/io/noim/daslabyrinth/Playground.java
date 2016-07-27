@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
 public class Playground implements Screen {
@@ -42,6 +43,7 @@ public class Playground implements Screen {
     boolean istmovingnewfield;
     Vector2 newfieldv = new Vector2();
     int newfieldw;
+    Vector3 newfieldvector = new Vector3();
 
     public void create() {
         Functions.generateRandomeField();
@@ -108,16 +110,7 @@ public class Playground implements Screen {
         int x = 1;
         int xx = startx;
         int yy = halffinalprozent;
-        if (newgf != null) {
-            int dd = (int) Math.round(heightandwidthperfield * 1.5);
-            batch.draw(newgf.fieldTextureRegion, yy, xx - dd, heightandwidthperfield, heightandwidthperfield);
-            newfieldv.x = yy;
-            newfieldv.y = xx;
-            newfieldw = heightandwidthperfield;
-            roboto.setColor(Color.BLACK);
-            roboto.getData().setScale((float) 1.5, (float) 1.5);
-            roboto.draw(batch, "Your next Card !", yy, xx - dd - dd / 16);
-        }
+
         for (GameField gf : gameFields) {
             if (gf.x == x && gf.y <= 5) {
                 Matrix4 rotMatrix = new Matrix4();
@@ -144,22 +137,47 @@ public class Playground implements Screen {
                 }
             }
         }
+        xx = startx;
+        yy = halffinalprozent;
+        if (newgf != null) {
+            int dd = (int) Math.round(heightandwidthperfield * 1.5);
+            roboto.setColor(Color.BLACK);
+            roboto.getData().setScale((float) 1.5, (float) 1.5);
+            roboto.draw(batch, "Your next Card !", yy, xx - dd - dd / 16);
+            if (istmovingnewfield){
+                batch.draw(newgf.fieldTextureRegion, newfieldvector.x, newfieldvector.y, heightandwidthperfield, heightandwidthperfield);
+            } else {
+                batch.draw(newgf.fieldTextureRegion, yy, xx - dd, heightandwidthperfield, heightandwidthperfield);
+            }
+            newfieldv.x = yy;
+            newfieldv.y = xx - dd;
+            newfieldw = heightandwidthperfield;
+        }
         batch.end();
     }
 
     public void update() {
         if (Gdx.input.isTouched()){
+            newfieldvector.x = newfieldv.x;
+            newfieldvector.y = newfieldv.y;
             if (istmovingnewfield){
-
+                int ddd = newfieldw / 2;
+                newfieldvector.set(Gdx.input.getX(),Gdx.input.getY(), 0);
+                camera.unproject(newfieldvector);
+                newfieldvector.x -= ddd;
+                newfieldvector.y -= ddd;
             } else {
-                Vector2 touch = new Vector2();
-                touch.x = Gdx.input.getX();
-                touch.y = Gdx.input.getY();
-                if (touch.x <= newfieldv.x && touch.x >= newfieldv.x - newfieldw && touch.y >= newfieldv.y && touch.y <= newfieldv.y + newfieldw){
+                Vector3 touch = new Vector3();
+                touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+                camera.unproject(touch);
+                if (touch.x >= newfieldv.x && touch.x <= newfieldv.x + newfieldw && touch.y >= newfieldv.y && touch.y <= newfieldv.y + newfieldw){
                     System.out.println("Test");
                     System.out.println(newfieldv.x + "  " + newfieldv.y);
+                    istmovingnewfield = true;
                 }
             }
+        } else {
+            istmovingnewfield = false;
         }
     }
 
