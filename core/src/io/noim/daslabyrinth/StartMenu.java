@@ -41,7 +41,7 @@ public class StartMenu extends ApplicationAdapter{
         font_color = new Color(119, 179, 212, 1);
         font.setColor(font_color);
         button = new Texture("button.png");
-        button = new Texture("button_pushed.png");
+        button_pushed = new Texture("button_pushed.png");
         heading = "Das verrückte\nLabyrinth";
         play = "SPIEL STARTEN";
         ranking = "RANKING";
