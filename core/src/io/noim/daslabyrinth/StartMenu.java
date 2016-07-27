@@ -40,24 +40,12 @@ public class StartMenu extends ApplicationAdapter{
         font = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
         font_color = new Color(119, 179, 212, 1);
         font.setColor(font_color);
-        button = new Texture("button.svg");
-        button = new Texture("button_pushed.svg");
+        button = new Texture("button.png");
+        button = new Texture("button_pushed.png");
         heading = "Das verrückte\nLabyrinth";
         play = "SPIEL STARTEN";
         ranking = "RANKING";
         settings = "EINSTELLUNGEN";
-    }
-
-    public static float textWidth(String text, BitmapFont font){
-        GlyphLayout glyphLayout = new GlyphLayout();
-        glyphLayout.setText(font,text);
-        return glyphLayout.width;
-    }
-
-    public static float textHeight(String text, BitmapFont font){
-        GlyphLayout glyphLayout = new GlyphLayout();
-        glyphLayout.setText(font,text);
-        return glyphLayout.height;
     }
 
     private void update() {
@@ -75,15 +63,15 @@ public class StartMenu extends ApplicationAdapter{
         batch.begin();
 
         //batch.draw(background, camera.position.x - background.getWidth() / 2, 0);
-        font.draw(batch, heading, Gdx.graphics.getWidth() / 2 - textWidth(heading, font), Gdx.graphics.getHeight() - textHeight(heading, font) - 200);
+        font.draw(batch, heading, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()  - 200);
 
         batch.draw(button, Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 + button.getHeight());
         batch.draw(button, Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() / 2);
         batch.draw(button, Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() * 2);
 
-        font.draw(batch, play, Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 + button.getHeight());
-        font.draw(batch, ranking, Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 - (button.getHeight() / 2));
-        font.draw(batch, settings, Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 - (button.getHeight() * 2));
+        font.draw(batch, play, Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 + 2 * button.getHeight() - ((button.getHeight() - 46) /2));
+        font.draw(batch, ranking, Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 + (button.getHeight() / 2));
+        font.draw(batch, settings, Gdx.graphics.getWidth() / 2 - button.getWidth() / 2, Gdx.graphics.getHeight() / 2 - button.getHeight());
 
         batch.end();
     }
