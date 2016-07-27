@@ -20,7 +20,6 @@ public class Settings implements Screen {
     SpriteBatch batch;
     OrthographicCamera camera;
     Texture background;
-    Music music;
     Integer playMusic;
     Integer playSounds;
     BitmapFont font_heading;
@@ -48,9 +47,6 @@ public class Settings implements Screen {
         Preferences pref = Gdx.app.getPreferences("labyrinth.dat");
         playMusic = pref.getInteger("Music", 1);
         playSounds = pref.getInteger("Sounds", 1);
-        music = Gdx.audio.newMusic(Gdx.files.internal("Spooky Fun.mp3"));
-        music.setLooping(true);
-        music.play();
         font_heading = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
         font_text = new BitmapFont(Gdx.files.internal("Verdana.fnt"));
         if (playMusic == 1) {
@@ -107,11 +103,11 @@ public class Settings implements Screen {
     private void draw() {
         batch.begin();
         batch.draw(background, 0, 0, Gdx.graphics.getWidth(),  Gdx.graphics.getHeight());
-        batch.draw(checkBox1, checkBoxPosX, checkBoxPos1Y, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.draw(checkBox2, checkBoxPosX, checkBoxPos2Y, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(checkBox1, checkBoxPosX, checkBoxPos1Y, Gdx.graphics.getWidth() / 10, Gdx.graphics.getWidth() / 10);
+        batch.draw(checkBox2, checkBoxPosX, checkBoxPos2Y, Gdx.graphics.getWidth() / 10, Gdx.graphics.getWidth() / 10);
         font_heading.draw(batch, heading, Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 20) * 17, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10);
-        font_text.draw(batch, "Musik", checkBoxPosX + 100, checkBoxPos1Y + 50);
-        font_text.draw(batch, "Sounds", checkBoxPosX + 100, checkBoxPos2Y + 50);
+        font_text.draw(batch, "Musik", checkBoxPosX + 100, checkBoxPos1Y + Gdx.graphics.getWidth() / 10);
+        font_text.draw(batch, "Sounds", checkBoxPosX + 100, checkBoxPos2Y + Gdx.graphics.getWidth() / 10);
         batch.end();
     }
 
