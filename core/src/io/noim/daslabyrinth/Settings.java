@@ -75,14 +75,14 @@ public class Settings implements Screen {
                     StartMenu.music.play();
                     checkBox1 = new Texture("checkbox_checked.png");
                     checkBox1Checked = true;
-                    pref.putInteger("Music", 1);
-                    pref.flush();
+                    //pref.putInteger("Music", 1);
+                    //pref.flush();
                 } else {
                     StartMenu.music.pause();
                     checkBox1 = new Texture("checkbox.png");
                     checkBox1Checked = false;
-                    pref.putInteger("Music", 0);
-                    pref.flush();
+                    //pref.putInteger("Music", 0);
+                    //pref.flush();
                 }
             }
             if(touchPosition.x >= (checkBoxPosX -10) &&  touchPosition.x <= (checkBoxPosX + 60) && touchPosition.y >= (checkBoxPos2Y -10) && touchPosition.y <= (checkBoxPos2Y + 60)) {
