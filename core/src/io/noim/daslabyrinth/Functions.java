@@ -10,10 +10,10 @@ import java.util.Random;
 
 public class Functions {
 
-    public static Texture dvl_cross = new Texture("labyrinth_cross.png");
-    public static Texture dvl_curve = new Texture("labyrinth_curve.png");
-    public static Texture dvl_straight = new Texture("labyrinth_straight.png");
-    public static Texture dvl_tcross = new Texture("labyrinth_tcross.png");
+    public static Texture dvl_cross = new Texture("labyrinth_cross.png"); //0
+    public static Texture dvl_curve = new Texture("labyrinth_curve.png"); //1
+    public static Texture dvl_straight = new Texture("labyrinth_straight.png"); //2
+    public static Texture dvl_tcross = new Texture("labyrinth_tcross.png"); //3
     public static Texture treasure_min = new Texture("treasure.png");
     public static Texture treasure_max = new Texture("treasure2.png");
 
@@ -34,7 +34,10 @@ public class Functions {
                 } else {
                     gf.treasure = new Treasure(treasure_max, 5);
                 }
-
+                if (gf.treasure == null){
+                    gf.treasure = new Treasure(treasure_min, 3);
+                    System.out.print("Null");
+                }
             }
             gameFields.add(gf);
             if (y == 5){
@@ -126,37 +129,37 @@ public class Functions {
             switch (gameFields.get(i).y){
                 case 5:
                     if (gameFields.get(i).type < 10){
-                        int5.add(gameFields.get(i).type + " ");
+                        int5.add(gameFields.get(i).isTreasure + " ");
                     } else {
-                        int5.add(gameFields.get(i).type + "");
+                        int5.add(gameFields.get(i).isTreasure + "");
                     }
                     break;
                 case 4:
                     if (gameFields.get(i).type < 10){
-                        int4.add(gameFields.get(i).type + " ");
+                        int4.add(gameFields.get(i).isTreasure + " ");
                     } else {
-                        int4.add(gameFields.get(i).type + "");
+                        int4.add(gameFields.get(i).isTreasure + "");
                     }
                     break;
                 case 3:
                     if (gameFields.get(i).type < 10){
-                        int3.add(gameFields.get(i).type + " ");
+                        int3.add(gameFields.get(i).isTreasure + " ");
                     } else {
-                        int3.add(gameFields.get(i).type + "");
+                        int3.add(gameFields.get(i).isTreasure + "");
                     }
                     break;
                 case 2:
                     if (gameFields.get(i).type < 10){
-                        int2.add(gameFields.get(i).type + " ");
+                        int2.add(gameFields.get(i).isTreasure + " ");
                     } else {
-                        int2.add(gameFields.get(i).type + "");
+                        int2.add(gameFields.get(i).isTreasure + "");
                     }
                     break;
                 case 1:
                     if (gameFields.get(i).type < 10){
-                        int1.add(gameFields.get(i).type + " ");
+                        int1.add(gameFields.get(i).isTreasure + " ");
                     } else {
-                        int1.add(gameFields.get(i).type + "");
+                        int1.add(gameFields.get(i).isTreasure + "");
                     }
                     break;
             }

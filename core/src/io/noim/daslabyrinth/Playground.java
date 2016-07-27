@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
 
-public class Playground extends ApplicationAdapter{
+public class Playground extends ApplicationAdapter {
 
     Array<GameField> gameFields = new Array<GameField>();
     SpriteBatch batch;
@@ -24,7 +24,9 @@ public class Playground extends ApplicationAdapter{
     OrthographicCamera camera;
 
     @Override
-    public void create(){
+    public void create() {
+        Functions.generateRandomeField();
+        Functions.printField();
         screen_width = Gdx.graphics.getHeight();
         screen_hight = Gdx.graphics.getWidth();
         batch = new SpriteBatch();
@@ -37,7 +39,7 @@ public class Playground extends ApplicationAdapter{
         gameFields = Functions.gameFields;
         int temp_a = 0;
         for (GameField gf : gameFields) {
-            if (gf.x == 1){
+            if (gf.x == 1) {
 
             }
         }
@@ -51,30 +53,29 @@ public class Playground extends ApplicationAdapter{
         heightandwidthperfield = availablehight / 4;
         int usedwidth = heightandwidthperfield * 5;
         int q = screen_width - usedwidth;
-        startx = q / 4;
+        startx = (int) Math.round(q / 1.2);
     }
-    public void draw(){
+
+    public void draw() {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         int x = 1;
         int xx = startx;
         int yy = halffinalprozent;
-        for (GameField gf : gameFields){
-            if (gf.x == x && gf.y <= 5){
+        for (GameField gf : gameFields) {
+            if (gf.x == x && gf.y <= 5) {
                 batch.draw(gf.fieldTextureRegion, yy, xx, heightandwidthperfield, heightandwidthperfield);
-                if (gf.isTreasure){
-                    if(gf.treasure != null){
-                        int tr_texture_width = gf.treasure.textureRegion.getRegionWidth();
-                        int g = heightandwidthperfield - tr_texture_width;
-                        int h = g / 2;
-                        gf.treasure.position.x = yy + heightandwidthperfield / 4;
-                        gf.treasure.position.y = xx + heightandwidthperfield / 4;
-                        batch.draw(gf.treasure.textureRegion, gf.treasure.position.x, gf.treasure.position.y, heightandwidthperfield / 2, heightandwidthperfield / 2);
-                    }
+                if (gf.isTreasure) {
+                    int tr_texture_width = gf.treasure.textureRegion.getRegionWidth();
+                    int g = heightandwidthperfield - tr_texture_width;
+                    int h = g / 2;
+                    gf.treasure.position.x = yy + heightandwidthperfield / 4;
+                    gf.treasure.position.y = xx + heightandwidthperfield / 4;
+                    batch.draw(gf.treasure.textureRegion, gf.treasure.position.x, gf.treasure.position.y, heightandwidthperfield / 2, heightandwidthperfield / 2);
                 }
                 xx += heightandwidthperfield;
-                if (gf.y == 5){
+                if (gf.y == 5) {
                     x++;
                     yy += heightandwidthperfield;
                     xx = startx;
@@ -84,22 +85,24 @@ public class Playground extends ApplicationAdapter{
 
         batch.end();
     }
-    public void update(){
+
+    public void update() {
     }
 
     @Override
-    public void render(){
+    public void render() {
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        Functions.generateRandomeField();
-        Functions.printField();
+        //Functions.generateRandomeField();
+        //Functions.printField();
         update();
         draw();
     }
+
     @Override
-    public void dispose () {
+    public void dispose() {
         batch.dispose();
     }
 
@@ -108,7 +111,7 @@ public class Playground extends ApplicationAdapter{
         int width;
         int hight;
 
-        public void PlayerGround(int width, int hight){
+        public void PlayerGround(int width, int hight) {
             this.width = width;
             this.hight = hight;
         }
