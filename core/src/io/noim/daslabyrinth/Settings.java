@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Gdx2DPixmap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 
@@ -38,7 +37,7 @@ public class Settings extends ApplicationAdapter {
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        background = new Texture("figure3.png");
+        background = new Texture("background.png");
         music = Gdx.audio.newMusic(Gdx.files.internal("Spooky Fun.mp3"));
         music.setLooping(true);
         music.play();
@@ -73,24 +72,20 @@ public class Settings extends ApplicationAdapter {
     private void draw() {
         batch.begin();
         batch.draw(background, camera.position.x - background.getWidth() / 2, 0);
-<<<<<<< HEAD
         batch.draw(checkBox1, checkBoxPosX, checkBoxPos1Y);
         batch.draw(checkBox2, checkBoxPosX, checkBoxPos2Y);
         font.draw(batch, heading, Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 5) * 4, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10);
-=======
         batch.draw(checkBox1, checkBoxPosX, Gdx.graphics.getHeight() / 2);
         batch.draw(checkBox2, checkBoxPosX, Gdx.graphics.getHeight() / 2 - 150);
         //font.draw(batch, heading, Gdx.graphics.getWidth() / 2 - StartMenu.textWidth(heading, font), Gdx.graphics.getHeight() - StartMenu.textHeight(heading, font) - 200);
-        batch.draw(checkBox1, checkBoxPosX, checkBoxPosY);
-        batch.draw(checkBox2, checkBoxPosX, checkBoxPosY
-                - 150);
+        batch.draw(checkBox1, checkBoxPosX, checkBoxPos1Y);
+        batch.draw(checkBox2, checkBoxPosX, checkBoxPos2Y - 150);
         //font.draw(batch, heading, Gdx.graphics.getWidth() / 2 - StartMenu.textWidth(heading, font), Gdx.graphics.getHeight() - StartMenu.textHeight(heading, font) - 200);
->>>>>>> 5788fb2e2c562bc0d2934c48f536f49393f50ea0
         batch.end();
     }
 
     public void render() {
-        Gdx.gl.glClearColor(1, (float) 0.25, 0, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         update();
