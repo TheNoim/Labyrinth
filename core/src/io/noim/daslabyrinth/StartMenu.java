@@ -51,7 +51,7 @@ public class StartMenu implements Screen {
         music = Gdx.audio.newMusic(Gdx.files.internal("Spooky Fun.mp3"));
         music.setLooping(true);
 
-        if(music.isPlaying() == false) {
+        if(!music.isPlaying()) {
             if (playMusic) {
                 music.play();
             }
