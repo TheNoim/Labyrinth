@@ -45,14 +45,14 @@ public class Settings implements Screen {
         background = new Texture("background.png");
         font_heading = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
         font_text = new BitmapFont(Gdx.files.internal("Verdana.fnt"));
-        if (StartMenu.playMusic == 1) {
+        if (StartMenu.playMusic) {
             checkBox1 = new Texture("checkbox_checked.png");
             checkBox1Checked = true;
         } else {
             checkBox1 = new Texture("checkbox.png");
             checkBox1Checked = false;
         }
-        if (StartMenu.playSounds == 1) {
+        if (StartMenu.playSounds) {
             checkBox2 = new Texture("checkbox_checked.png");
             checkBox2Checked = true;
         } else {
