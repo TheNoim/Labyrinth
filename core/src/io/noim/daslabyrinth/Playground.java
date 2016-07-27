@@ -46,7 +46,7 @@ public class Playground implements Screen {
     Vector3 newfieldvector = new Vector3();
 
     public void create() {
-        
+        StartMenu.whichClass = 1;
         Functions.generateRandomeField();
         Functions.printField();
         int tcount = 0;
