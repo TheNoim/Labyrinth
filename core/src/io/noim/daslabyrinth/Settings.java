@@ -18,7 +18,6 @@ public class Settings extends ApplicationAdapter {
     Texture background;
     Music music;
     BitmapFont font;
-    Label label;
     String heading = "EINSTELLUNGEN";
     Vector3 touchPosition = new Vector3();
 
@@ -28,8 +27,6 @@ public class Settings extends ApplicationAdapter {
     boolean checkBox2Checked = false;
     float checkBoxPosX;
     float checkBoxPosY;
-
-    Label.LabelStyle style;
 
     @Override
     public void create() {
@@ -45,8 +42,6 @@ public class Settings extends ApplicationAdapter {
         music.setLooping(true);
         music.play();
         font = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
-        style = new Label.LabelStyle(font, Color.BLUE);
-        label = new Label(heading, style);
     }
 
     private void update() {
@@ -78,8 +73,7 @@ public class Settings extends ApplicationAdapter {
         batch.draw(background, camera.position.x - background.getWidth() / 2, 0);
         batch.draw(checkBox1, checkBoxPosX, Gdx.graphics.getHeight() / 2);
         batch.draw(checkBox2, checkBoxPosX, Gdx.graphics.getHeight() / 2 - 150);
-        //font.draw(batch, heading, Gdx.graphics.getWidth() / 2 - StartMenu.textWidth(heading, font), Gdx.graphics.getHeight() - StartMenu.textHeight(heading, font) - 200);
-        label.draw(batch,5);
+        font.draw(batch, heading, Gdx.graphics.getWidth() / 2 - StartMenu.textWidth(heading, font), Gdx.graphics.getHeight() - StartMenu.textHeight(heading, font) - 200);
         batch.end();
     }
 
