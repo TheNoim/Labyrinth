@@ -28,5 +28,6 @@ public class Player {
     }
     public void addScore(int s){
         this.score += s;
+        StartMenu.pref.putInteger("Score", +1);
     }
 }
