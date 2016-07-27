@@ -71,13 +71,13 @@ public class Settings implements Screen {
                     StartMenu.music.play();
                     checkBox1 = new Texture("checkbox_checked.png");
                     checkBox1Checked = true;
-                    StartMenu.pref.putInteger("Music", 1);
+                    StartMenu.pref.putBoolean("Music", true);
                     StartMenu.pref.flush();
                 } else {
                     StartMenu.music.pause();
                     checkBox1 = new Texture("checkbox.png");
                     checkBox1Checked = false;
-                    StartMenu.pref.putInteger("Music", 0);
+                    StartMenu.pref.putBoolean("Music", false);
                     StartMenu.pref.flush();
                 }
             }
@@ -85,12 +85,12 @@ public class Settings implements Screen {
                 if (!checkBox2Checked) {
                     checkBox2 = new Texture("checkbox_checked.png");
                     checkBox2Checked = true;
-                    StartMenu.pref.putInteger("Sounds", 1);
+                    StartMenu.pref.putBoolean("Sounds", true);
                     StartMenu.pref.flush();
                 } else {
                     checkBox2 = new Texture("checkbox.png");
                     checkBox2Checked = false;
-                    StartMenu.pref.putInteger("Sounds", 0);
+                    StartMenu.pref.putBoolean("Sounds", false);
                     StartMenu.pref.flush();
                 }
             }
