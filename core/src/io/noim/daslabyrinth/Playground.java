@@ -1,7 +1,7 @@
 package io.noim.daslabyrinth;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -9,7 +9,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
 
-public class Playground extends ApplicationAdapter {
+public class Playground implements Screen {
+
+    public Playground(final DasLabyrinth main){
+        create();
+    }
 
     Array<GameField> gameFields = new Array<GameField>();
     SpriteBatch batch;
@@ -23,7 +27,6 @@ public class Playground extends ApplicationAdapter {
     ShapeRenderer shaper;
     OrthographicCamera camera;
 
-    @Override
     public void create() {
         Functions.generateRandomeField();
         Functions.printField();
@@ -89,8 +92,7 @@ public class Playground extends ApplicationAdapter {
     public void update() {
     }
 
-    @Override
-    public void render() {
+    public void render(float delta) {
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -101,19 +103,16 @@ public class Playground extends ApplicationAdapter {
         draw();
     }
 
-    @Override
+    public void resize(int width, int height) {  }
+    public void show() {
+        create();
+    }
+    public void hide() {  }
+    public void pause() {  }
+    public void resume() {  }
+
     public void dispose() {
         batch.dispose();
     }
 
-    class PlayGround {
-
-        int width;
-        int hight;
-
-        public void PlayerGround(int width, int hight) {
-            this.width = width;
-            this.hight = hight;
-        }
-    }
 }
