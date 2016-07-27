@@ -3,14 +3,12 @@ package io.noim.daslabyrinth;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 public class Settings extends ApplicationAdapter {
     SpriteBatch batch;
@@ -32,8 +30,8 @@ public class Settings extends ApplicationAdapter {
     public void create() {
         checkBox1 = new Texture("checkbox.png");
         checkBox2 = new Texture("checkbox.png");
-        checkBoxPosX = (Gdx.graphics.getWidth() / 2) - (checkBox1.getWidth() / 2);
-        checkBoxPosY = Gdx.graphics.getHeight() / 2;
+        checkBoxPosX = 100;
+        checkBoxPosY = 700;
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -71,8 +69,9 @@ public class Settings extends ApplicationAdapter {
     private void draw() {
         batch.begin();
         batch.draw(background, camera.position.x - background.getWidth() / 2, 0);
-        batch.draw(checkBox1, checkBoxPosX, Gdx.graphics.getHeight() / 2);
-        batch.draw(checkBox2, checkBoxPosX, Gdx.graphics.getHeight() / 2 - 150);
+        batch.draw(checkBox1, checkBoxPosX, checkBoxPosY);
+        batch.draw(checkBox2, checkBoxPosX, checkBoxPosY
+                - 150);
         font.draw(batch, heading, Gdx.graphics.getWidth() / 2 - StartMenu.textWidth(heading, font), Gdx.graphics.getHeight() - StartMenu.textHeight(heading, font) - 200);
         batch.end();
     }
