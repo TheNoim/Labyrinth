@@ -19,6 +19,7 @@ public class Player {
     }
 
     public void movePlayer(GameField nextgamefield){
+        this.currentfield = nextgamefield;
 
     }
 }
