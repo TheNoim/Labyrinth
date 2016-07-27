@@ -16,14 +16,14 @@ public class Functions {
     public static Texture dvl_tcross = new Texture("labyrinth_tcross.png"); //3
     public static Texture treasure_min = new Texture("treasure.png");
     public static Texture treasure_max = new Texture("treasure2.png");
+    public static int treasurecountermin = 3;
+    public static int treasurcountermax = 5;
 
     public static Array<GameField> gameFields = new Array<GameField>();
     public static void generateRandomeField() {
         gameFields.clear();
         int x = 1;
         int y = 1;
-        int treasurecountermin = 3;
-        int treasurcountermax = 5;
         for (int i = 0; i < 20; i++) {
             int _type = randomWithRange(0, 3);
             GameField gf = new GameField(getTextureByType(_type), randomBooleanT(), x, y, i, _type, randomWithRange(0, 3));
