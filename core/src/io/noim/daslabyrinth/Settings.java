@@ -43,7 +43,7 @@ public class Settings extends ApplicationAdapter {
         music.setLooping(true);
         music.play();
         font_heading = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
-        font_text = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
+        font_text = new BitmapFont(Gdx.files.internal("Verdana.fnt"));
     }
 
     private void update() {
@@ -73,12 +73,12 @@ public class Settings extends ApplicationAdapter {
 
     private void draw() {
         batch.begin();
-        batch.draw(background, camera.position.x - background.getWidth() / 2, 0);
+        batch.draw(background, 0, 0, Gdx.graphics.getWidth(),  Gdx.graphics.getHeight());
         batch.draw(checkBox1, checkBoxPosX, checkBoxPos1Y);
         batch.draw(checkBox2, checkBoxPosX, checkBoxPos2Y);
         font_heading.draw(batch, heading, Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 5) * 4, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10);
-        font_text.draw(batch, "MUSIK", checkBoxPosX + 100, checkBoxPos1Y + 50);
-        font_text.draw(batch, "SOUNDS", checkBoxPosX + 100, checkBoxPos2Y + 50);
+        font_text.draw(batch, "Musik", checkBoxPosX + 100, checkBoxPos1Y + 50);
+        font_text.draw(batch, "Sounds", checkBoxPosX + 100, checkBoxPos2Y + 50);
         batch.end();
     }
 
