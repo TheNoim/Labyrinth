@@ -11,8 +11,12 @@ import com.badlogic.gdx.utils.Array;
 
 public class Playground implements Screen {
 
+    public DasLabyrinth main;
+
     public Playground(final DasLabyrinth main){
         create();
+        this.main = main;
+
     }
 
     Array<GameField> gameFields = new Array<GameField>();
@@ -85,7 +89,6 @@ public class Playground implements Screen {
                 }
             }
         }
-
         batch.end();
     }
 
