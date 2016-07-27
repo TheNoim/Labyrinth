@@ -25,14 +25,16 @@ public class Settings extends ApplicationAdapter {
     boolean checkBox1Checked = false;
     boolean checkBox2Checked = false;
     float checkBoxPosX;
-    float checkBoxPosY;
+    float checkBoxPos1Y;
+    float checkBoxPos2Y;
 
     @Override
     public void create() {
         checkBox1 = new Texture("checkbox.png");
         checkBox2 = new Texture("checkbox.png");
         checkBoxPosX = 75;
-        checkBoxPosY = 800;
+        checkBoxPos1Y = 800;
+        checkBoxPos2Y = 650;
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -47,7 +49,7 @@ public class Settings extends ApplicationAdapter {
         if(Gdx.input.justTouched()) {
             touchPosition.set(Gdx.input.getX(),Gdx.input.getY(), 0);
             camera.unproject(touchPosition);
-            if(touchPosition.x >= (Gdx.graphics.getWidth() / 2 - checkBox1.getWidth() / 2) &&  touchPosition.x <= (Gdx.graphics.getWidth() / 2 + checkBox1.getWidth() / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 + checkBox1.getHeight()) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 + 2 * checkBox1.getHeight())) {
+            if(touchPosition.x >= (checkBoxPosX -10) &&  touchPosition.x <= (checkBoxPosX + 60) && touchPosition.y >= (checkBoxPos1Y -10) && touchPosition.y <= (checkBoxPos1Y + 60)) {
                 if (!checkBox1Checked) {
                     checkBox1 = new Texture("checkbox_checked.png");
                     checkBox1Checked = true;
@@ -55,7 +57,8 @@ public class Settings extends ApplicationAdapter {
                     checkBox1 = new Texture("checkbox.png");
                     checkBox1Checked = false;
                 }
-            } else if(touchPosition.x >= (Gdx.graphics.getWidth() / 2 - checkBox2.getWidth() / 2) &&  touchPosition.x <= (Gdx.graphics.getWidth() / 2 + checkBox2.getWidth() / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 + checkBox2.getHeight()) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 + 2 * checkBox2.getHeight())) {
+            }
+            if(touchPosition.x >= (checkBoxPosX -10) &&  touchPosition.x <= (checkBoxPosX + 60) && touchPosition.y >= (checkBoxPos2Y -10) && touchPosition.y <= (checkBoxPos2Y + 60)) {
                 if (!checkBox2Checked) {
                     checkBox2 = new Texture("checkbox_checked.png");
                     checkBox2Checked = true;
@@ -70,8 +73,8 @@ public class Settings extends ApplicationAdapter {
     private void draw() {
         batch.begin();
         batch.draw(background, camera.position.x - background.getWidth() / 2, 0);
-        batch.draw(checkBox1, checkBoxPosX, checkBoxPosY);
-        batch.draw(checkBox2, checkBoxPosX, checkBoxPosY - 150);
+        batch.draw(checkBox1, checkBoxPosX, checkBoxPos1Y);
+        batch.draw(checkBox2, checkBoxPosX, checkBoxPos2Y);
         font.draw(batch, heading, Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 5) * 4, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10);
         batch.end();
     }
