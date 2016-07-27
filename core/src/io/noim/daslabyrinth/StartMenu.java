@@ -1,6 +1,7 @@
 package io.noim.daslabyrinth;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
@@ -18,6 +19,7 @@ public class StartMenu implements Screen {
     OrthographicCamera camera;
     Texture background;
     public static Music music;
+    public static Preferences pref;
     BitmapFont font;
     Texture button;
     Texture button_pushed;
@@ -30,6 +32,8 @@ public class StartMenu implements Screen {
     int ButtonWidth;
     public DasLabyrinth main;
     public Settings Settings;
+    public static Boolean playMusic;
+    public static Boolean playSound;
 
     public StartMenu(final DasLabyrinth main) {
         create();
@@ -45,9 +49,17 @@ public class StartMenu implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         background = new Texture("background.png");
+
+        pref = Gdx.app.getPreferences("labyrinth.dat");
+        playMusic = pref.getBoolean("Music", true);
+        playSound = pref.getBoolean("Sounds", true);
+
         music = Gdx.audio.newMusic(Gdx.files.internal("Spooky Fun.mp3"));
         music.setLooping(true);
-        music.play();
+
+        if(playMusic){
+            music.play();
+        }
 
         font = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
         font_color = new Color(119, 179, 212, 1);
@@ -87,10 +99,10 @@ public class StartMenu implements Screen {
         batch.draw(button, Gdx.graphics.getWidth() / 2 - ButtonWidth / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() / 2, ButtonWidth, button.getHeight());
         batch.draw(button, Gdx.graphics.getWidth() / 2 - ButtonWidth / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() * 2, ButtonWidth, button.getHeight());
 
-        font.draw(batch, heading, Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 20) * 17, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10);
-        font.draw(batch, play, (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) + 32, Gdx.graphics.getHeight() / 2 + 2 * button.getHeight() - ((button.getHeight() - 46) / 2), ButtonWidth, 10, false);
-        font.draw(batch, ranking, (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) + 32, Gdx.graphics.getHeight() / 2 + (button.getHeight() / 2) - ((button.getHeight() - 46) / 2), ButtonWidth, 10, false);
-        font.draw(batch, settings, (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) + 32, Gdx.graphics.getHeight() / 2 - button.getHeight() - ((button.getHeight() - 46) / 2), ButtonWidth, 10, false);
+        font.draw(batch, heading, 0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10, Gdx.graphics.getWidth(), 1, false);
+        font.draw(batch, play, (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2), Gdx.graphics.getHeight() / 2 + 2 * button.getHeight() - ((button.getHeight() - 46) / 2), ButtonWidth, 1, false);
+        font.draw(batch, ranking, (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2), Gdx.graphics.getHeight() / 2 + (button.getHeight() / 2) - ((button.getHeight() - 46) / 2), ButtonWidth, 1, false);
+        font.draw(batch, settings, (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2), Gdx.graphics.getHeight() / 2 - button.getHeight() - ((button.getHeight() - 46) / 2), ButtonWidth, 1, false);
 
         batch.end();
     }
