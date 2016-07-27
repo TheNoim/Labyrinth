@@ -65,6 +65,7 @@ public class Settings implements Screen {
             checkBox2 = new Texture("checkbox.png");
             checkBox2Checked = false;
         }
+        back = new Texture("back.png");
     }
 
     private void update() {
@@ -90,13 +91,13 @@ public class Settings implements Screen {
                 if (!checkBox2Checked) {
                     checkBox2 = new Texture("checkbox_checked.png");
                     checkBox2Checked = true;
-                    pref.putInteger("Sounds", 1);
-                    pref.flush();
+                    //pref.putInteger("Sounds", 1);
+                    //pref.flush();
                 } else {
                     checkBox2 = new Texture("checkbox.png");
                     checkBox2Checked = false;
-                    pref.putInteger("Sounds", 0);
-                    pref.flush();
+                    //pref.putInteger("Sounds", 0);
+                    //pref.flush();
                 }
             }
         }
@@ -107,6 +108,7 @@ public class Settings implements Screen {
         batch.draw(background, 0, 0, Gdx.graphics.getWidth(),  Gdx.graphics.getHeight());
         batch.draw(checkBox1, checkBoxPosX, checkBoxPos1Y, Gdx.graphics.getWidth() / 10, Gdx.graphics.getWidth() / 10);
         batch.draw(checkBox2, checkBoxPosX, checkBoxPos2Y, Gdx.graphics.getWidth() / 10, Gdx.graphics.getWidth() / 10);
+        batch.draw(back, Gdx.graphics.getWidth() / 20, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30, Gdx.graphics.getWidth() / 10, Gdx.graphics.getWidth() / 10);
         font_heading.draw(batch, heading, Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 20) * 17, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10);
         font_text.draw(batch, "Musik", checkBoxPosX + 100, checkBoxPos1Y + Gdx.graphics.getWidth() / 10);
         font_text.draw(batch, "Sounds", checkBoxPosX + 100, checkBoxPos2Y + Gdx.graphics.getWidth() / 10);
