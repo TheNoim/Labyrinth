@@ -19,7 +19,7 @@ public class StartMenu implements Screen {
     SpriteBatch batch;
     OrthographicCamera camera;
     Texture background;
-    Music music;
+    public Music music;
     BitmapFont font;
     Texture button;
     Texture button_pushed;
@@ -39,7 +39,6 @@ public class StartMenu implements Screen {
     }
 
     public StartMenu(final Settings Settings){
-        create();
         this.Settings = Settings;
     }
 
@@ -108,7 +107,6 @@ public class StartMenu implements Screen {
 
     public void resize(int width, int height) {  }
     public void show() {
-        create();
     }
     public void hide() {  }
     public void pause() {  }
