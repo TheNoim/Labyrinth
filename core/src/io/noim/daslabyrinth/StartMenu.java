@@ -76,7 +76,7 @@ public class StartMenu implements Screen {
         play = "SPIEL STARTEN";
         ranking = "RANKING";
         settings = "EINSTELLUNGEN";
-        font.getData().setScale(scaleText(settings, font, ButtonWidth-20));
+        font.getData().setScale(scaleText(settings, font, ButtonWidth - 30));
     }
 
     private void update() {
@@ -96,12 +96,18 @@ public class StartMenu implements Screen {
         }
     }
 
-    public static float textWidth(String text, BitmapFont font){
-        GlyphLayout layout = new GlyphLayout(); //dont do this every frame! Store it as member
-        layout.setText(font, text);
+    public static float textWidth(String largestText, BitmapFont font){
+        GlyphLayout layout = new GlyphLayout(); //don't do this every frame! Store it as member
+        layout.setText(font, largestText);
         float width = layout.width;// contains the width of the current set text
-        //float height = layout.height; // contains the height of the current set text
         return width;
+    }
+
+    public static float textHeight(String text, BitmapFont font){
+        GlyphLayout layout = new GlyphLayout(); //don't do this every frame! Store it as member
+        layout.setText(font, text);
+        float height = layout.height; // contains the height of the current set text
+        return height;
     }
 
     public static float scaleText(String text, BitmapFont font, int targetWidth) {
@@ -119,7 +125,7 @@ public class StartMenu implements Screen {
         batch.draw(button, Gdx.graphics.getWidth() / 2 - ButtonWidth / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() / 2, ButtonWidth, button.getHeight());
         batch.draw(button, Gdx.graphics.getWidth() / 2 - ButtonWidth / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() * 2, ButtonWidth, button.getHeight());
 
-        font.draw(batch, heading, 0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10, Gdx.graphics.getWidth(), 1, false);
+        font.draw(batch, heading, 0, (Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 2 + 2 * button.getHeight())) / 2 + textHeight(heading, font) / 2, Gdx.graphics.getWidth(), 1, false);
         font.draw(batch, play, (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2), Gdx.graphics.getHeight() / 2 + 2 * button.getHeight() - ((button.getHeight() - 46) / 2), ButtonWidth, 1, false);
         font.draw(batch, ranking, (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2), Gdx.graphics.getHeight() / 2 + (button.getHeight() / 2) - ((button.getHeight() - 46) / 2), ButtonWidth, 1, false);
         font.draw(batch, settings, (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2), Gdx.graphics.getHeight() / 2 - button.getHeight() - ((button.getHeight() - 46) / 2), ButtonWidth, 1, false);
