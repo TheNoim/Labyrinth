@@ -112,6 +112,12 @@ public class Functions {
             } else {
                 gameFields.get(rnd).isTreasure = true;
             }
+            int rnd2 = randomWithRange(0, 100);
+            if (rnd2 > 20){
+                gameFields.get(rnd).treasure = new Treasure(treasure_min, 3);
+            } else {
+                gameFields.get(rnd).treasure = new Treasure(treasure_max, 5);
+            }
         }
     }
 
