@@ -12,6 +12,8 @@ public class Player {
     protected int treasurescount;
     protected Vector3 playervector = new Vector3();
     protected int score;
+    protected int spawnx;
+    protected int spawny;
 
     Array<Player> players = new Array<Player>();
 
@@ -29,5 +31,8 @@ public class Player {
     public void addScore(int s){
         this.score += s;
         StartMenu.pref.putInteger("Score", +1);
+    }
+    public void setScore(int s){
+        this.score = s;
     }
 }
