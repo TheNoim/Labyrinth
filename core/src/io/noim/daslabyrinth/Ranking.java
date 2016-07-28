@@ -44,7 +44,7 @@ public class Ranking implements Screen {
                     touchPosition.x <= Gdx.graphics.getWidth() / 20 + (Gdx.graphics.getWidth() / 10 / 5 * 6) &&
                     touchPosition.y >= (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30) - (back.getHeight() / 3) - (Gdx.graphics.getWidth() / 10 / 5) &&
                     touchPosition.y <= (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30) - (back.getHeight() / 3) + (Gdx.graphics.getWidth() / 10 / 5 * 6)) {
-                StartMenu.click();
+                DasLabyrinth.click();
                 callClass();
             }
         }
@@ -89,11 +89,11 @@ public class Ranking implements Screen {
     }
 
     public void callClass() {
-        if (StartMenu.whichClass == 0) {
-            StartMenu.music.stop();
+        if (DasLabyrinth.whichClass == 0) {
+            DasLabyrinth.music.stop();
             main.setScreen(new StartMenu(main));
-        } else if (StartMenu.whichClass == 1) {
-            StartMenu.music.stop();
+        } else if (DasLabyrinth.whichClass == 1) {
+            DasLabyrinth.music.stop();
             main.setScreen(new Playground(main));
         }
     }

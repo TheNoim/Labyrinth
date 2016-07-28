@@ -61,9 +61,9 @@ public class Save implements Screen {
     private void exit() {
         Timer.schedule(new Timer.Task(){
             @Override
-            public void run() {if (StartMenu.whichClass == 0) {
+            public void run() {if (DasLabyrinth.whichClass == 0) {
                 main.setScreen(new StartMenu(main));
-            } else if (StartMenu.whichClass == 1) {
+            } else if (DasLabyrinth.whichClass == 1) {
                 main.setScreen(new Playground(main));
             }
             }

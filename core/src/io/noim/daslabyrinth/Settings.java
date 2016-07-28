@@ -50,21 +50,21 @@ public class Settings implements Screen {
         background = new Texture("background.png");
         font_heading = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
         font_text = new BitmapFont(Gdx.files.internal("Verdana.fnt"));
-        if (StartMenu.playMusic) {
+        if (DasLabyrinth.playMusic) {
             checkBox1 = new Texture("checkbox_checked.png");
             checkBox1Checked = true;
         } else {
             checkBox1 = new Texture("checkbox.png");
             checkBox1Checked = false;
         }
-        if (StartMenu.playSounds) {
+        if (DasLabyrinth.playSounds) {
             checkBox2 = new Texture("checkbox_checked.png");
             checkBox2Checked = true;
         } else {
             checkBox2 = new Texture("checkbox.png");
             checkBox2Checked = false;
         }
-        if (StartMenu.vibration) {
+        if (DasLabyrinth.vibration) {
             checkBox3 = new Texture("checkbox_checked.png");
             checkBox3Checked = true;
         } else {
@@ -83,27 +83,27 @@ public class Settings implements Screen {
                touchPosition.y >= checkBoxPos1Y - (checkBoxSize / 5) &&
                touchPosition.y <= checkBoxPos1Y + (checkBoxSize / 5 * 6)) {
                 if (!checkBox1Checked) {
-                    if (StartMenu.whichClass == 0) {
-                        StartMenu.music.play();
-                    } else if (StartMenu.whichClass == 1) {
+                    if (DasLabyrinth.whichClass == 0) {
+                        DasLabyrinth.music.play();
+                    } else if (DasLabyrinth.whichClass == 1) {
                         Playground.music.play();
                     }
                     checkBox1 = new Texture("checkbox_checked.png");
                     checkBox1Checked = true;
-                    StartMenu.pref.putBoolean("Music", true);
-                    StartMenu.pref.flush();
-                    StartMenu.click();
+                    DasLabyrinth.pref.putBoolean("Music", true);
+                    DasLabyrinth.pref.flush();
+                    DasLabyrinth.click();
                 } else {
-                    if (StartMenu.whichClass == 0) {
-                        StartMenu.music.pause();
-                    } else if (StartMenu.whichClass == 1) {
+                    if (DasLabyrinth.whichClass == 0) {
+                        DasLabyrinth.music.pause();
+                    } else if (DasLabyrinth.whichClass == 1) {
                         Playground.music.pause();
                     }
                     checkBox1 = new Texture("checkbox.png");
                     checkBox1Checked = false;
-                    StartMenu.pref.putBoolean("Music", false);
-                    StartMenu.pref.flush();
-                    StartMenu.click();
+                    DasLabyrinth.pref.putBoolean("Music", false);
+                    DasLabyrinth.pref.flush();
+                    DasLabyrinth.click();
                 }
             }
             if(touchPosition.x >= checkBoxPosX - (checkBoxSize / 5) &&
@@ -113,15 +113,15 @@ public class Settings implements Screen {
                 if (!checkBox2Checked) {
                     checkBox2 = new Texture("checkbox_checked.png");
                     checkBox2Checked = true;
-                    StartMenu.pref.putBoolean("Sounds", true);
-                    StartMenu.pref.flush();
-                    StartMenu.click();
+                    DasLabyrinth.pref.putBoolean("Sounds", true);
+                    DasLabyrinth.pref.flush();
+                    DasLabyrinth.click();
                 } else {
                     checkBox2 = new Texture("checkbox.png");
                     checkBox2Checked = false;
-                    StartMenu.pref.putBoolean("Sounds", false);
-                    StartMenu.pref.flush();
-                    StartMenu.click();
+                    DasLabyrinth.pref.putBoolean("Sounds", false);
+                    DasLabyrinth.pref.flush();
+                    DasLabyrinth.click();
                 }
             }
             if(touchPosition.x >= checkBoxPosX - (checkBoxSize / 5) &&
@@ -131,22 +131,22 @@ public class Settings implements Screen {
                 if (!checkBox3Checked) {
                     checkBox3 = new Texture("checkbox_checked.png");
                     checkBox3Checked = true;
-                    StartMenu.pref.putBoolean("Vibration", true);
-                    StartMenu.pref.flush();
-                    StartMenu.click();
+                    DasLabyrinth.pref.putBoolean("Vibration", true);
+                    DasLabyrinth.pref.flush();
+                    DasLabyrinth.click();
                 } else {
                     checkBox3 = new Texture("checkbox.png");
                     checkBox3Checked = false;
-                    StartMenu.pref.putBoolean("Vibration", false);
-                    StartMenu.pref.flush();
-                    StartMenu.click();
+                    DasLabyrinth.pref.putBoolean("Vibration", false);
+                    DasLabyrinth.pref.flush();
+                    DasLabyrinth.click();
                 }
             }
             if(touchPosition.x >= Gdx.graphics.getWidth() / 20 - (checkBoxSize / 5) &&
                     touchPosition.x <= Gdx.graphics.getWidth() / 20 + (checkBoxSize / 5 * 6) &&
                     touchPosition.y >= (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30) - (back.getHeight() / 3) - (checkBoxSize / 5) &&
                     touchPosition.y <= (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30) - (back.getHeight() / 3) + (checkBoxSize / 5 * 6)) {
-                StartMenu.click();
+                DasLabyrinth.click();
                 callClass();
             }
         }
@@ -186,7 +186,7 @@ public class Settings implements Screen {
     }
 
     private void callClass() {
-            StartMenu.music.stop();
+            DasLabyrinth.music.stop();
             main.setScreen(new Save(main));
     }
 }

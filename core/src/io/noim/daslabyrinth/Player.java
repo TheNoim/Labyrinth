@@ -30,7 +30,7 @@ public class Player {
     }
     public void addScore(int s){
         this.score += s;
-        StartMenu.pref.putInteger("Score", +1);
+        DasLabyrinth.pref.putInteger("Score", +1);
     }
     public void setScore(int s){
         this.score = s;
