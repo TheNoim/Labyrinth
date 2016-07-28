@@ -35,6 +35,8 @@ public class DasLabyrinth extends Game {
 		click = Gdx.audio.newSound(Gdx.files.internal("blop.wav"));
 		music = Gdx.audio.newMusic(Gdx.files.internal("Spooky Fun.mp3"));
 
+		font.getData().setScale(Functions.scaleText(StartMenu.settings, DasLabyrinth.font, StartMenu.ButtonWidth - 40));
+
 		playMusic = pref.getBoolean("Music", true);
 		playSounds = pref.getBoolean("Sounds", true);
 		vibration = pref.getBoolean("Vibration", true);
@@ -53,7 +55,7 @@ public class DasLabyrinth extends Game {
 
 		//Functions.generateRandomeField();
 		//Functions.printField();
-		setScreen(new StartMenu(this));
+		setScreen(new Animation(this));
     }
 
 	@Override

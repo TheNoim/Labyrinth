@@ -12,10 +12,11 @@ public class Animation implements Screen {
     Texture banner = new Texture("banner.png");
     String heading = "DAS LABYRINTH";
     SpriteBatch batch;
+    Boolean animate = false;
 
-    public StartMenu main;
+    public DasLabyrinth main;
 
-    public void create () {
+    public void create() {
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -25,17 +26,19 @@ public class Animation implements Screen {
         } else {
             DasLabyrinth.music.stop();
         }
-
     }
 
     private void update() {
 
     }
 
-    public Animation(final StartMenu main) {
+    public Animation(final DasLabyrinth main) {
         create();
         this.main = main;
     }
+
+    double yAnim = 0.5;
+    double yDelta = 0.05;
 
     private void draw() {
         batch.begin();
@@ -43,11 +46,19 @@ public class Animation implements Screen {
         batch.draw(DasLabyrinth.background, 0, 0, (float) Gdx.graphics.getWidth(), (float) Gdx.graphics.getHeight());
 
         if (Gdx.input.justTouched()) {
-            for (double i = 0.5; i <= 0.9185; i += 0.0001){
-                batch.draw(banner, 0, ((float) (i-0.1685) * Gdx.graphics.getHeight()), Gdx.graphics.getWidth(), (float) 0.2 * Gdx.graphics.getHeight());
-                DasLabyrinth.font.draw(batch, heading, 0, (float) i * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 1, false);
-            }
-            //main.setScreen(new StartMenu(main));
+            animate = true;
+        }
+        if(animate == true){
+//            for (double i = 0.5; i <= 0.9185; i += 0.0005) {
+            yAnim += yDelta; // += 0.005;
+            yDelta *= 0.9;
+                batch.draw(banner, 0, ((float) (yAnim - 0.1685) * Gdx.graphics.getHeight()), Gdx.graphics.getWidth(), (float) 0.2 * Gdx.graphics.getHeight());
+
+                DasLabyrinth.font.draw(batch, heading, 0, (float) yAnim * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 1, false);
+                if(yAnim >= 0.9185){
+                    main.setScreen(new StartMenu(main));
+                }
+ //           }
         } else {
             batch.draw(banner, 0, ((float) 0.3315 * Gdx.graphics.getHeight()), Gdx.graphics.getWidth(), (float) 0.2 * Gdx.graphics.getHeight());
             DasLabyrinth.font.draw(batch, heading, 0, (float) 0.5 * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 1, false);

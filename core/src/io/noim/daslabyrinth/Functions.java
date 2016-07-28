@@ -2,6 +2,8 @@ package io.noim.daslabyrinth;
 
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.utils.Array;
 
 import java.util.Arrays;
@@ -349,6 +351,26 @@ public class Functions {
         }
         System.out.println("SIZE:" + gameFields.size);
 
+    }
+
+    public static float textWidth(String largestText, BitmapFont font) {
+        GlyphLayout layout = new GlyphLayout(); //don't do this every frame! Store it as member
+        layout.setText(font, largestText);
+        float width = layout.width;// contains the width of the current set text
+        return width;
+    }
+
+    public static float textHeight(String text, BitmapFont font) {
+        GlyphLayout layout = new GlyphLayout(); //don't do this every frame! Store it as member
+        layout.setText(font, text);
+        float height = layout.height; // contains the height of the current set text
+        return height;
+    }
+
+    public static float scaleText(String text, BitmapFont font, int targetWidth) {
+        float textWidth = textWidth(text, font);
+        float proportion = targetWidth / textWidth;
+        return proportion;
     }
 
 }
