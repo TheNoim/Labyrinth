@@ -211,7 +211,7 @@ public class Functions {
         if (fromx){
             // for umdrehen
             for (int i = gameFields.size - 1; i > 0; i--){
-                if (finished == false){
+                if (!finished){
                     if (gameFields.get(i).x == x){
                         if(last){
                             Playground.newgf = gameFields.get(i);
