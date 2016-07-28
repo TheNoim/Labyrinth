@@ -140,7 +140,7 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
         batch.draw(button, X, Gdx.graphics.getHeight() / 2 - (textHeight(play, font) * 3) / 2, ButtonWidth, textHeight(ranking, font) * 3);
         batch.draw(button, X, Gdx.graphics.getHeight() / 2 - (textHeight(play, font) * 3) * 2, ButtonWidth, textHeight(settings, font) * 3);
 
-        font.draw(batch, heading, 0, (float) 0.9 * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 1, false);
+        font.draw(batch, heading, 0, (float) 0.9185 * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 1, false);
         font.draw(batch, play, X, Gdx.graphics.getHeight() / 2 + 2 * (textHeight(play, font) * 3) - (((textHeight(play, font) * 3) - textHeight(play, font)) / 2), ButtonWidth, 1, false);
         font.draw(batch, ranking, X, Gdx.graphics.getHeight() / 2 + ((textHeight(play, font) * 3) / 2) - (((textHeight(play, font) * 3) - textHeight(ranking, font)) / 2), ButtonWidth, 1, false);
         font.draw(batch, settings, X, Gdx.graphics.getHeight() / 2 - (textHeight(play, font) * 3) - (((textHeight(play, font) * 3) - textHeight(settings, font)) / 2), ButtonWidth, 1, false);
