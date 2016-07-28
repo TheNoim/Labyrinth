@@ -104,17 +104,17 @@ public class Settings implements Screen {
                     touchPosition.y >= checkBoxPos2Y - (checkBoxSize / 5) &&
                     touchPosition.y <= checkBoxPos2Y + (checkBoxSize / 5 * 6)) {
                 if (!checkBox2Checked) {
-                    StartMenu.click();
                     checkBox2 = new Texture("checkbox_checked.png");
                     checkBox2Checked = true;
                     StartMenu.pref.putBoolean("Sounds", true);
                     StartMenu.pref.flush();
-                } else {
                     StartMenu.click();
+                } else {
                     checkBox2 = new Texture("checkbox.png");
                     checkBox2Checked = false;
                     StartMenu.pref.putBoolean("Sounds", false);
                     StartMenu.pref.flush();
+                    StartMenu.click();
                 }
             }
             if(touchPosition.x >= checkBoxPosX - (checkBoxSize / 5) &&
