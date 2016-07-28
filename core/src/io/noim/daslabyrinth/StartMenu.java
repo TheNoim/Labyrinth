@@ -23,7 +23,7 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
     public static Music music, sound;
     public static Preferences pref;
     BitmapFont font;
-    Texture background, button, button_pushed;
+    Texture background, button, button_pushed, banner;
     String heading, play, ranking, settings;
     Vector3 touchPosition = new Vector3();
     int ButtonWidth;
@@ -76,6 +76,7 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
 
 
         font = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
+        banner = new Texture("banner.png");
         button = new Texture("button.png");
         button_pushed = new Texture("button_pushed.png");
         heading = "DAS LABYRINTH";
@@ -90,16 +91,16 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
         if (Gdx.input.justTouched()) {
             touchPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(touchPosition);
-            if (touchPosition.x >= (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) && touchPosition.x <= (Gdx.graphics.getWidth() / 2 + ButtonWidth / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 + button.getHeight()) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 + 2 * button.getHeight())) {
+            if (touchPosition.x >= (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) && touchPosition.x <= (Gdx.graphics.getWidth() / 2 + ButtonWidth / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 + (textHeight(play, font) + 80)) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 + 2 * (textHeight(play, font) + 80))) {
                 click();
                 music.stop();
                 main.setScreen(new Playground(main));
             }
-            if (touchPosition.x >= (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) && touchPosition.x <= (Gdx.graphics.getWidth() / 2 + ButtonWidth / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 - button.getHeight() / 2) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 + button.getHeight() / 2)) {
+            if (touchPosition.x >= (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) && touchPosition.x <= (Gdx.graphics.getWidth() / 2 + ButtonWidth / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 - (textHeight(play, font) + 80) / 2) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 + (textHeight(play, font) + 80) / 2)) {
                 click();
                 //main.setScreen(new Ranking(main));
             }
-            if (touchPosition.x >= (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) && touchPosition.x <= (Gdx.graphics.getWidth() / 2 + ButtonWidth / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 - button.getHeight() * 2) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 - button.getHeight())) {
+            if (touchPosition.x >= (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) && touchPosition.x <= (Gdx.graphics.getWidth() / 2 + ButtonWidth / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 - (textHeight(play, font) + 80) * 2) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 - (textHeight(play, font) + 80))) {
                 click();
                 main.setScreen(new Settings(main));
             }
@@ -130,6 +131,7 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
         batch.begin();
 
         batch.draw(background, 0, 0, (float) Gdx.graphics.getWidth(), (float) Gdx.graphics.getHeight());
+
 
         batch.draw(button, X, Gdx.graphics.getHeight() / 2 + (textHeight(play, font) + 80), ButtonWidth, textHeight(play, font) + 80);
         batch.draw(button, X, Gdx.graphics.getHeight() / 2 - (textHeight(play, font) + 80) / 2, ButtonWidth, textHeight(ranking, font) + 80);
