@@ -117,7 +117,7 @@ public class Playground implements Screen {
         for (GameField gf : gameFields) {
             if (gf.x == x && gf.y <= 5) {
                 Matrix4 rotMatrix = new Matrix4();
-                rotMatrix.translate(yy, xx , 0);
+                rotMatrix.translate(yy, xx, 0);
                 rotMatrix.translate(heightandwidthperfield / 2, heightandwidthperfield / 2, 0);
                 rotMatrix.rotate(0, 0, 1, 90.0f * gf.facing);
                 rotMatrix.translate(-heightandwidthperfield / 2, -heightandwidthperfield / 2, 0);
@@ -157,42 +157,35 @@ public class Playground implements Screen {
             newfieldv.x = yy;
             newfieldv.y = xx - dd;
             newfieldw = heightandwidthperfield;
+            if (newgf.isTreasure) {
+                rotMatrix.setToRotation(0, 0, 1, 0.0F);
+                int tr_texture_width = newgf.treasure.textureRegion.getRegionWidth();
+                int g = heightandwidthperfield - tr_texture_width;
+                int h = g / 2;
+                newgf.treasure.position.x = yy + heightandwidthperfield / 4;
+                newgf.treasure.position.y = xx + heightandwidthperfield / 4;
+                batch.draw(newgf.treasure.textureRegion, newgf.x + heightandwidthperfield / 4, newgf.y + heightandwidthperfield / 4, heightandwidthperfield / 2, heightandwidthperfield / 2);
+            }
             batch.setTransformMatrix(originalMatrix);
         }
         batch.end();
     }
 
     public void update() {
-        if (Gdx.input.isTouched()){
+        if (Gdx.input.isTouched()) {
 
-            //newfieldvector.x = newfieldv.x;
-            //newfieldvector.y = newfieldv.y;
-            //if (istmovingnewfield){
-                /*
-                int ddd = newfieldw / 2;
-                newfieldvector.set(Gdx.input.getX(),Gdx.input.getY(), 0);
-                camera.unproject(newfieldvector);
-                newfieldvector.x -= ddd;
-                newfieldvector.y -= ddd;*/
-            //} else {
-                Vector3 touch = new Vector3();
-                touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-                camera.unproject(touch);
-                if (touch.x >= newfieldv.x && touch.x <= newfieldv.x + newfieldw && touch.y >= newfieldv.y && touch.y <= newfieldv.y + newfieldw){
-                    /*
-                    System.out.println("Test");
-                    System.out.println(newfieldv.x + "  " + newfieldv.y);
-                    istmovingnewfield = true;*/
-                    if (!notallowedtotouch){
-                        Functions.moveFields(2, 0, true, newgf, false);
-                        rendertimer = 0;
-                        notallowedtotouch = true;
-                    }
+            Vector3 touch = new Vector3();
+            touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+            camera.unproject(touch);
+            if (touch.x >= newfieldv.x && touch.x <= newfieldv.x + newfieldw && touch.y >= newfieldv.y && touch.y <= newfieldv.y + newfieldw) {
+                if (!notallowedtotouch) {
+                    Functions.moveFields(2, 0, true, newgf, false);
+                    notallowedtotouch = true;
                 }
-            //}
+            }
 
         } else {
-            istmovingnewfield = false;
+            notallowedtotouch = false;
         }
     }
 
@@ -205,14 +198,6 @@ public class Playground implements Screen {
         //Functions.printField();
         update();
         draw();
-        if (notallowedtotouch){
-            if (rendertimer < 120){
-                rendertimer++;
-            } else {
-                notallowedtotouch = false;
-                rendertimer = 0;
-            }
-        }
     }
 
     public void resize(int width, int height) {
