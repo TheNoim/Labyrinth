@@ -22,11 +22,18 @@ public class DasLabyrinth extends Game {
 	public static Sound treasure, click;
 	public static Preferences pref;
 	public static Vector3 touchPosition = new Vector3();
+	public static int ButtonWidth = (int) (Gdx.graphics.getWidth() * (float) 0.9);
+	public static String heading, play, ranking, settings;
 
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		whichClass = 0;
+
+		heading = "DAS LABYRINTH";
+		play = "SPIEL STARTEN";
+		ranking = "RANKING";
+		settings = "EINSTELLUNGEN";
 
 		pref = Gdx.app.getPreferences("labyrinth.dat");
 		background = new Texture("background.png");
@@ -35,7 +42,7 @@ public class DasLabyrinth extends Game {
 		click = Gdx.audio.newSound(Gdx.files.internal("blop.wav"));
 		music = Gdx.audio.newMusic(Gdx.files.internal("Spooky Fun.mp3"));
 
-		font.getData().setScale(Functions.scaleText(StartMenu.settings, DasLabyrinth.font, StartMenu.ButtonWidth - 40));
+		font.getData().setScale(Functions.scaleText(settings, DasLabyrinth.font, ButtonWidth - 40));
 
 		playMusic = pref.getBoolean("Music", true);
 		playSounds = pref.getBoolean("Sounds", true);

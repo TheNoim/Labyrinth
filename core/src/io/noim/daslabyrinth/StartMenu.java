@@ -15,8 +15,6 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
     SpriteBatch batch;
     OrthographicCamera camera;
     Texture button, button_pushed, banner;
-    public static String heading, play, ranking, settings;
-    public static int ButtonWidth;
     float X;
 
     public DasLabyrinth main;
@@ -43,8 +41,6 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        ButtonWidth = (int) (Gdx.graphics.getWidth() * (float) 0.9);
-
         if (!DasLabyrinth.music.isPlaying() && DasLabyrinth.playMusic) {
             DasLabyrinth.music.play();
         } else {
@@ -54,27 +50,23 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
         banner = new Texture("banner.png");
         button = new Texture("button.png");
         button_pushed = new Texture("button_pushed.png");
-        heading = "DAS LABYRINTH";
-        play = "SPIEL STARTEN";
-        ranking = "RANKING";
-        settings = "EINSTELLUNGEN";
-        X = Gdx.graphics.getWidth() / 2 - ButtonWidth / 2;
+        X = Gdx.graphics.getWidth() / 2 - DasLabyrinth.ButtonWidth / 2;
     }
 
     private void update() {
         if (Gdx.input.justTouched()) {
             DasLabyrinth.touchPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(DasLabyrinth.touchPosition);
-            if (DasLabyrinth.touchPosition.x >= (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) && DasLabyrinth.touchPosition.x <= (Gdx.graphics.getWidth() / 2 + ButtonWidth / 2) && DasLabyrinth.touchPosition.y >= (Gdx.graphics.getHeight() / 2 + (Functions.textHeight(play, DasLabyrinth.font) * 3)) && DasLabyrinth.touchPosition.y <= (Gdx.graphics.getHeight() / 2 + 2 * (Functions.textHeight(play, DasLabyrinth.font) * 3))) {
+            if (DasLabyrinth.touchPosition.x >= (Gdx.graphics.getWidth() / 2 - DasLabyrinth.ButtonWidth / 2) && DasLabyrinth.touchPosition.x <= (Gdx.graphics.getWidth() / 2 + DasLabyrinth.ButtonWidth / 2) && DasLabyrinth.touchPosition.y >= (Gdx.graphics.getHeight() / 2 + (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3)) && DasLabyrinth.touchPosition.y <= (Gdx.graphics.getHeight() / 2 + 2 * (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3))) {
                 DasLabyrinth.click();
                 DasLabyrinth.music.stop();
                 main.setScreen(new Playground(main));
             }
-            if (DasLabyrinth.touchPosition.x >= (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) && DasLabyrinth.touchPosition.x <= (Gdx.graphics.getWidth() / 2 + ButtonWidth / 2) && DasLabyrinth.touchPosition.y >= (Gdx.graphics.getHeight() / 2 - (Functions.textHeight(play, DasLabyrinth.font) * 3) / 2) && DasLabyrinth.touchPosition.y <= (Gdx.graphics.getHeight() / 2 + (Functions.textHeight(play, DasLabyrinth.font) * 3) / 2)) {
+            if (DasLabyrinth.touchPosition.x >= (Gdx.graphics.getWidth() / 2 - DasLabyrinth.ButtonWidth / 2) && DasLabyrinth.touchPosition.x <= (Gdx.graphics.getWidth() / 2 + DasLabyrinth.ButtonWidth / 2) && DasLabyrinth.touchPosition.y >= (Gdx.graphics.getHeight() / 2 - (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) / 2) && DasLabyrinth.touchPosition.y <= (Gdx.graphics.getHeight() / 2 + (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) / 2)) {
                 DasLabyrinth.click();
                 //main.setScreen(new Ranking(main));
             }
-            if (DasLabyrinth.touchPosition.x >= (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) && DasLabyrinth.touchPosition.x <= (Gdx.graphics.getWidth() / 2 + ButtonWidth / 2) && DasLabyrinth.touchPosition.y >= (Gdx.graphics.getHeight() / 2 - (Functions.textHeight(play, DasLabyrinth.font) * 3) * 2) && DasLabyrinth.touchPosition.y <= (Gdx.graphics.getHeight() / 2 - (Functions.textHeight(play, DasLabyrinth.font) * 3))) {
+            if (DasLabyrinth.touchPosition.x >= (Gdx.graphics.getWidth() / 2 - DasLabyrinth.ButtonWidth / 2) && DasLabyrinth.touchPosition.x <= (Gdx.graphics.getWidth() / 2 + DasLabyrinth.ButtonWidth / 2) && DasLabyrinth.touchPosition.y >= (Gdx.graphics.getHeight() / 2 - (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) * 2) && DasLabyrinth.touchPosition.y <= (Gdx.graphics.getHeight() / 2 - (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3))) {
                 DasLabyrinth.click();
                 main.setScreen(new Settings(main));
             }
@@ -87,14 +79,14 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
         batch.draw(DasLabyrinth.background, 0, 0, (float) Gdx.graphics.getWidth(), (float) Gdx.graphics.getHeight());
 
         batch.draw(banner, 0, ((float) 0.75 * Gdx.graphics.getHeight()), Gdx.graphics.getWidth(), (float) 0.2 * Gdx.graphics.getHeight());
-        batch.draw(button, X, Gdx.graphics.getHeight() / 2 + (Functions.textHeight(play, DasLabyrinth.font) * 3), ButtonWidth, Functions.textHeight(play, DasLabyrinth.font) * 3);
-        batch.draw(button, X, Gdx.graphics.getHeight() / 2 - (Functions.textHeight(play, DasLabyrinth.font) * 3) / 2, ButtonWidth, Functions.textHeight(ranking, DasLabyrinth.font) * 3);
-        batch.draw(button, X, Gdx.graphics.getHeight() / 2 - (Functions.textHeight(play, DasLabyrinth.font) * 3) * 2, ButtonWidth, Functions.textHeight(settings, DasLabyrinth.font) * 3);
+        batch.draw(button, X, Gdx.graphics.getHeight() / 2 + (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3), DasLabyrinth.ButtonWidth, Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3);
+        batch.draw(button, X, Gdx.graphics.getHeight() / 2 - (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) / 2, DasLabyrinth.ButtonWidth, Functions.textHeight(DasLabyrinth.ranking, DasLabyrinth.font) * 3);
+        batch.draw(button, X, Gdx.graphics.getHeight() / 2 - (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) * 2, DasLabyrinth.ButtonWidth, Functions.textHeight(DasLabyrinth.settings, DasLabyrinth.font) * 3);
 
-        DasLabyrinth.font.draw(batch, heading, 0, (float) 0.9185 * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 1, false);
-        DasLabyrinth.font.draw(batch, play, X, Gdx.graphics.getHeight() / 2 + 2 * (Functions.textHeight(play, DasLabyrinth.font) * 3) - (((Functions.textHeight(play, DasLabyrinth.font) * 3) - Functions.textHeight(play, DasLabyrinth.font)) / 2), ButtonWidth, 1, false);
-        DasLabyrinth.font.draw(batch, ranking, X, Gdx.graphics.getHeight() / 2 + ((Functions.textHeight(play, DasLabyrinth.font) * 3) / 2) - (((Functions.textHeight(play, DasLabyrinth.font) * 3) - Functions.textHeight(ranking, DasLabyrinth.font)) / 2), ButtonWidth, 1, false);
-        DasLabyrinth.font.draw(batch, settings, X, Gdx.graphics.getHeight() / 2 - (Functions.textHeight(play, DasLabyrinth.font) * 3) - (((Functions.textHeight(play, DasLabyrinth.font) * 3) - Functions.textHeight(settings, DasLabyrinth.font)) / 2), ButtonWidth, 1, false);
+        DasLabyrinth.font.draw(batch, DasLabyrinth.heading, 0, (float) 0.9185 * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 1, false);
+        DasLabyrinth.font.draw(batch, DasLabyrinth.play, X, Gdx.graphics.getHeight() / 2 + 2 * (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) - (((Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) - Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font)) / 2), DasLabyrinth.ButtonWidth, 1, false);
+        DasLabyrinth.font.draw(batch, DasLabyrinth.ranking, X, Gdx.graphics.getHeight() / 2 + ((Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) / 2) - (((Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) - Functions.textHeight(DasLabyrinth.ranking, DasLabyrinth.font)) / 2), DasLabyrinth.ButtonWidth, 1, false);
+        DasLabyrinth.font.draw(batch, DasLabyrinth.settings, X, Gdx.graphics.getHeight() / 2 - (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) - (((Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) - Functions.textHeight(DasLabyrinth.settings, DasLabyrinth.font)) / 2), DasLabyrinth.ButtonWidth, 1, false);
 
         batch.end();
     }
