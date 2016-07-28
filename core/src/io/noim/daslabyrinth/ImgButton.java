@@ -21,8 +21,12 @@ public class ImgButton {
     protected SpriteBatch batch;
     protected int height;
     protected int width;
+    protected GameField gf;
+    protected int shouldx;
+    protected int shouldy;
+    protected boolean fromx;
 
-    public ImgButton(Texture tex, Vector2 vec, float rot, SpriteBatch batch, int height, int width){
+    public ImgButton(Texture tex, Vector2 vec, float rot, SpriteBatch batch, int height, int width, boolean fromx){
         this.tex = tex;
         this.texr = new TextureRegion(this.tex);
         this.vec = vec;
@@ -30,11 +34,13 @@ public class ImgButton {
         this.batch = batch;
         this.height = height;
         this.width = width;
+        this.fromx = fromx;
     }
 
     public void draw(){
         float x = this.vec.x;
         float y = this.vec.y;
+        /*
         Matrix4 orgMatrix = new Matrix4();
         Matrix4 rotMatrix = new Matrix4();
         rotMatrix.translate(y, x, 0);
@@ -44,6 +50,8 @@ public class ImgButton {
         batch.setTransformMatrix(rotMatrix);
         batch.draw(this.texr, 0, 0, this.height, this.width);
         batch.setTransformMatrix(orgMatrix);
+        */
+        batch.draw(this.texr, x, y, this.width / 2, this.height / 2, this.width, this.height, 1,1, this.rot);
     }
 
     public boolean isClicked(){
