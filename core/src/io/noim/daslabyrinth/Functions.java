@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.utils.Array;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -92,20 +91,12 @@ public class Functions {
 
     public static boolean randomBoolean() {
         int ii = randomWithRange(0, 1);
-        if (ii == 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return ii == 1;
     }
 
     public static boolean randomBooleanT() {
         int ii = randomWithRange(0, 100);
-        if (ii <= 15) {
-            return true;
-        } else {
-            return false;
-        }
+        return ii <= 15;
     }
 
     public static void makeMoreTreasures(int b) {
@@ -206,7 +197,6 @@ public class Functions {
 
     public static void moveFields(int x, int y, boolean fromx, GameField gff, boolean reverse) {
         if (reverse) {
-            //gameFields.reverse();
             for (GameField gf: gameFields){
                 System.out.print(gf.index + ",");
             }
@@ -229,7 +219,6 @@ public class Functions {
         hashx.clear();
         hashy.clear();
         if (fromx) {
-            // for umdrehen
             for (int i = gameFields.size - 1; i > 0; i--) {
                 if (gameFields.get(i).x == x) {
                     if (last == false) {
@@ -252,13 +241,9 @@ public class Functions {
                                     int __x = gameFields.get(u).x;
                                     int __y = gameFields.get(u).y;
                                     int __index = gameFields.get(u).index;
-                                    //gameFields.set(u, gff);
                                     hash.put(u, gff);
-                                    //gameFields.get(u).x = __x;
                                     hashx.put(u, __x);
-                                    //gameFields.get(u).y = __y;
                                     hashy.put(u, __y);
-                                    //gameFields.get(u).index = __index;
                                     hashindex.put(u, __index);
                                     sizerarray.add(u);
                                     System.out.println("FIRST");
@@ -268,13 +253,9 @@ public class Functions {
                             int _x = gameFields.get(i).x;
                             int _y = gameFields.get(i).y;
                             int _index = gameFields.get(i).index;
-                            //gameFields.set(i, gameFields.get(u));
                             hash.put(i, gameFields.get(u));
-                            //gameFields.get(i).x = _x;
                             hashx.put(i, _x);
-                            //gameFields.get(i).y = _y;
                             hashy.put(i, _y);
-                            //gameFields.get(i).index = _index;
                             hashindex.put(i, _index);
                             sizerarray.add(i);
                             System.out.println("Replace Field at X: " + gameFields.get(i).x + " Y: " + gameFields.get(i).y + " with the Field at the Position X: " + gameFields.get(u).x + " Y: " + gameFields.get(u).y + " U:" + u + " I: " + i);
