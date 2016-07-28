@@ -4,6 +4,9 @@ package io.noim.daslabyrinth;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class Functions {
@@ -201,7 +204,14 @@ public class Functions {
 
     public static void moveFields(int x, int y, boolean fromx, GameField gff, boolean reverse) {
         if (reverse) {
-            gameFields.reverse();
+            //gameFields.reverse();
+            for (GameField gf: gameFields){
+                System.out.print(gf.index + ",");
+            }
+            Collections.reverse(Arrays.asList(gameFields));
+            for (GameField gf: gameFields){
+                System.out.print(gf.index + ",");
+            }
         }
         GameField newx;
         boolean finished = false;
@@ -331,7 +341,11 @@ public class Functions {
             gameFields.get(sizerarray.get(i)).y = thisy;
         }
         if (reverse) {
-            gameFields.reverse();
+            //gameFields.reverse();
+            Collections.reverse(Arrays.asList(gameFields));
+            for (GameField gf: gameFields){
+                System.out.print(gf.index + ",");
+            }
         }
         System.out.println("SIZE:" + gameFields.size);
 

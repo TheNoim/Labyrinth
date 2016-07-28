@@ -68,7 +68,7 @@ public class ImgButton {
         Vector3 t = new Vector3();
         t.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         Playground.camera.unproject(t);
-        if (t.x >= this.vec.x && t.x <= this.vec.x + this.width && t.y >= this.vec.y && t.y <= this.vec.y + this.height){
+        if (t.x >= this.vec.x - 10 && t.x <= this.vec.x + this.width + 10 && t.y >= this.vec.y - 10 && t.y <= this.vec.y + this.height + 10){
             return true;
         }
         return false;
