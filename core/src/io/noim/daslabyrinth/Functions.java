@@ -206,54 +206,37 @@ public class Functions {
             gameFields.reverse();
         }
         GameField newx;
-        HashMap<Integer, GameField> hash1 = new HashMap<Integer, GameField>();
-        HashMap<Integer, GameField> hash2 = new HashMap<Integer, GameField>();
+        boolean finished = false;
+        boolean last = false;
         if (fromx){
-            for (int i = 0; i < gameFields.size; i++){
-                if (gameFields.get(i).x == x){
-                    GameField first = null;
-                    for (int ui = 0; ui < gameFields.size; ui++){
-                        if (gameFields.get(ui).x == x){
-                            first = gameFields.get(ui);
-                            break;
+            // for umdrehen
+            for (int i = gameFields.size - 1; i > 0; i--){
+                if (finished == false){
+                    if (gameFields.get(i).x == x){
+                        if(last){
+                            Playground.newgf = gameFields.get(i);
+                            last = true;
                         }
-                    }
-                    if (gameFields.get(i) == first){
-                        for (int ii = 0; ii < gameFields.size; ii++){
-                            if (gameFields.get(ii).x == x && ii > i){
-                                //gameFields.set(ii, gameFields.get(i));
-                                hash1.put(ii, gameFields.get(i));
-                                hash2.put(ii, gameFields.get(ii));
-                                hash2.put(i, gameFields.get(i));
-                                gameFields.set(i, gff);
+                        GameField first = null;
+                        for (int c = 0; c < gameFields.size; c++) {
+                            if (gameFields.get(c).x == x) {
+                                first = gameFields.get(c);
                                 break;
                             }
                         }
-                    } else {
-                        if (i <= 14){
-                            for (int ii = 0; ii < gameFields.size; ii++){
-                                if (gameFields.get(ii).x == x && ii > i){
-                                    hash1.put(ii, gameFields.get(i));
-                                    gameFields.set(ii, gameFields.get(i));
-                                    break;
-                                }
-                            }
-                        } else {
-                            for (int ii = 0; ii < gameFields.size; ii++){
-                                if (gameFields.get(ii).x == x && ii > i){
-                                    newx = gameFields.get(ii);
-                                    gameFields.set(ii, gameFields.get(i));
-                                    break;
+                        for (int u = i - 1; u > 0; u--){
+                            if (gameFields.get(u).x == x){
+                                gameFields.set(i, gameFields.get(u));
+                                if (gameFields.get(u) == first){
+                                    gameFields.set(u, gff);
+                                    finished = true;
                                 }
                             }
                         }
                     }
-
                 }
             }
         }
-
-
         if (reverse){
             gameFields.reverse();
         }

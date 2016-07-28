@@ -172,10 +172,10 @@ public class Playground implements Screen {
                 touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
                 camera.unproject(touch);
                 if (touch.x >= newfieldv.x && touch.x <= newfieldv.x + newfieldw && touch.y >= newfieldv.y && touch.y <= newfieldv.y + newfieldw){
-                    System.out.println("Test");
+                    /*System.out.println("Test");
                     System.out.println(newfieldv.x + "  " + newfieldv.y);
-                    istmovingnewfield = true;
-                    //Functions.moveFields(2, 0, true, newgf, true);
+                    istmovingnewfield = true;*/
+                    Functions.moveFields(2, 0, true, newgf, true);
                 }
             }
         } else {
