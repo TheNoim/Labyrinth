@@ -147,34 +147,40 @@ public class Playground implements Screen {
             roboto.setColor(Color.BLACK);
             roboto.getData().setScale((float) 1.5, (float) 1.5);
             roboto.draw(batch, "Your next Card !", yy, xx - dd - dd / 16);
-            if (istmovingnewfield){
-                batch.draw(newgf.fieldTextureRegion, newfieldvector.x, newfieldvector.y, heightandwidthperfield, heightandwidthperfield);
-            } else {
-                batch.draw(newgf.fieldTextureRegion, yy, xx - dd, heightandwidthperfield, heightandwidthperfield);
-            }
+            Matrix4 rotMatrix = new Matrix4();
+            rotMatrix.translate(yy, xx - dd, 0);
+            rotMatrix.translate(heightandwidthperfield / 2, heightandwidthperfield / 2, 0);
+            rotMatrix.rotate(0, 0, 1, 90.0f * newgf.facing);
+            rotMatrix.translate(-heightandwidthperfield / 2, -heightandwidthperfield / 2, 0);
+            batch.setTransformMatrix(rotMatrix);
+            batch.draw(newgf.fieldTextureRegion, 0, 0, heightandwidthperfield, heightandwidthperfield);
             newfieldv.x = yy;
             newfieldv.y = xx - dd;
             newfieldw = heightandwidthperfield;
+            batch.setTransformMatrix(originalMatrix);
         }
         batch.end();
     }
 
     public void update() {
         if (Gdx.input.isTouched()){
-            newfieldvector.x = newfieldv.x;
-            newfieldvector.y = newfieldv.y;
-            if (istmovingnewfield){
+
+            //newfieldvector.x = newfieldv.x;
+            //newfieldvector.y = newfieldv.y;
+            //if (istmovingnewfield){
+                /*
                 int ddd = newfieldw / 2;
                 newfieldvector.set(Gdx.input.getX(),Gdx.input.getY(), 0);
                 camera.unproject(newfieldvector);
                 newfieldvector.x -= ddd;
-                newfieldvector.y -= ddd;
-            } else {
+                newfieldvector.y -= ddd;*/
+            //} else {
                 Vector3 touch = new Vector3();
                 touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
                 camera.unproject(touch);
                 if (touch.x >= newfieldv.x && touch.x <= newfieldv.x + newfieldw && touch.y >= newfieldv.y && touch.y <= newfieldv.y + newfieldw){
-                    /*System.out.println("Test");
+                    /*
+                    System.out.println("Test");
                     System.out.println(newfieldv.x + "  " + newfieldv.y);
                     istmovingnewfield = true;*/
                     if (!notallowedtotouch){
@@ -183,7 +189,8 @@ public class Playground implements Screen {
                         notallowedtotouch = true;
                     }
                 }
-            }
+            //}
+
         } else {
             istmovingnewfield = false;
         }
