@@ -272,6 +272,61 @@ public class Functions {
 
                 }
             }
+        } else {
+            for (int i = gameFields.size - 1; i > 0; i--) {
+                if (gameFields.get(i).y == y) {
+                    if (last == false) {
+                        Playground.newgf = gameFields.get(i);
+                        last = true;
+                        System.out.println("Last X: " + gameFields.get(i).x + " Y: " + gameFields.get(i).y);
+                    }
+                    GameField first = null;
+                    for (int c = 0; c < gameFields.size; c++) {
+                        if (gameFields.get(c).y == y) {
+                            first = gameFields.get(c);
+                            System.out.println("First X: " + gameFields.get(c).x + " Y: " + gameFields.get(c).y);
+                            break;
+                        }
+                    }
+                    for (int u = i - 1; u > 0; u--) {
+                        if (gameFields.get(u).y == y) {
+                            if (finished == false) {
+                                if (gameFields.get(u).x == first.x && gameFields.get(u).y == first.y) {
+                                    int __x = gameFields.get(u).x;
+                                    int __y = gameFields.get(u).y;
+                                    int __index = gameFields.get(u).index;
+                                    //gameFields.set(u, gff);
+                                    hash.put(u, gff);
+                                    //gameFields.get(u).x = __x;
+                                    hashx.put(u, __x);
+                                    //gameFields.get(u).y = __y;
+                                    hashy.put(u, __y);
+                                    //gameFields.get(u).index = __index;
+                                    hashindex.put(u, __index);
+                                    sizerarray.add(u);
+                                    System.out.println("FIRST");
+                                    finished = true;
+                                }
+                            }
+                            int _x = gameFields.get(i).x;
+                            int _y = gameFields.get(i).y;
+                            int _index = gameFields.get(i).index;
+                            //gameFields.set(i, gameFields.get(u));
+                            hash.put(i, gameFields.get(u));
+                            //gameFields.get(i).x = _x;
+                            hashx.put(i, _x);
+                            //gameFields.get(i).y = _y;
+                            hashy.put(i, _y);
+                            //gameFields.get(i).index = _index;
+                            hashindex.put(i, _index);
+                            sizerarray.add(i);
+                            System.out.println("Replace Field at X: " + gameFields.get(i).x + " Y: " + gameFields.get(i).y + " with the Field at the Position X: " + gameFields.get(u).x + " Y: " + gameFields.get(u).y + " U:" + u + " I: " + i);
+                            break;
+                        }
+                    }
+
+                }
+            }
         }
         for (int i = 0; i < sizerarray.size; i++){
             GameField gamfield = hash.get(sizerarray.get(i));

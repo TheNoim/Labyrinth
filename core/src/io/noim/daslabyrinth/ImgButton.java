@@ -25,8 +25,9 @@ public class ImgButton {
     protected int shouldx;
     protected int shouldy;
     protected boolean fromx;
+    protected boolean reverse;
 
-    public ImgButton(Texture tex, Vector2 vec, float rot, SpriteBatch batch, int height, int width, boolean fromx){
+    public ImgButton(Texture tex, Vector2 vec, float rot, SpriteBatch batch, int height, int width, boolean fromx, boolean reverse){
         this.tex = tex;
         this.texr = new TextureRegion(this.tex);
         this.vec = vec;
@@ -35,6 +36,7 @@ public class ImgButton {
         this.height = height;
         this.width = width;
         this.fromx = fromx;
+        this.reverse = reverse;
     }
 
     public void draw(){
