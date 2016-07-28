@@ -31,7 +31,7 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
     public DasLabyrinth main;
     public Settings Settings;
     public Ranking Ranking;
-    public static Boolean playMusic, playSounds;
+    public static Boolean playMusic, playSounds, vibration;
     public static int whichClass;
 
     public StartMenu(final DasLabyrinth main) {
@@ -61,6 +61,7 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
         pref = Gdx.app.getPreferences("labyrinth.dat");
         playMusic = pref.getBoolean("Music", true);
         playSounds = pref.getBoolean("Sounds", true);
+        vibration = pref.getBoolean("Vibration", true);
 
         music = Gdx.audio.newMusic(Gdx.files.internal("Spooky Fun.mp3"));
         music.setLooping(true);
