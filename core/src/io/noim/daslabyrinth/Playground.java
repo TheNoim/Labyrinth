@@ -50,6 +50,7 @@ public class Playground implements Screen {
     Vector3 newfieldvector = new Vector3();
     boolean notallowedtotouch;
     int rendertimer = 0;
+    Array<ImgButton> imgButtons = new Array<ImgButton>();
 
     public void create() {
         StartMenu.whichClass = 1;
@@ -109,6 +110,13 @@ public class Playground implements Screen {
         startx = (int) Math.round(q / 1.07);
         roboto = new BitmapFont(Gdx.files.internal("Roboto.fnt"));
         istmovingnewfield = false;
+        int k = 0;
+        for (int i = 0; i < 18; i++){
+            if (i <= 5){
+                Vector2 v = new Vector2();
+                ImgButton bt = new ImgButton(new Texture("pfeil.gif"), v, -90.0F,batch, heightandwidthperfield / 16, q);
+            }
+        }
     }
 
     public void draw() {
