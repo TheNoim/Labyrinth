@@ -1,6 +1,9 @@
 package io.noim.daslabyrinth;
 
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
@@ -14,7 +17,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 
 
-public class StartMenu implements Screen {
+public class StartMenu implements Screen, ApplicationListener, InputProcessor {
 
     SpriteBatch batch;
     OrthographicCamera camera;
@@ -46,6 +49,8 @@ public class StartMenu implements Screen {
     }
 
     public void create() {
+        Gdx.input.setInputProcessor(this);
+        Gdx.input.setCatchBackKey(true);
         whichClass = 0;
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
@@ -87,7 +92,7 @@ public class StartMenu implements Screen {
                 main.setScreen(new Playground(main));
             }
             if (touchPosition.x >= (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) && touchPosition.x <= (Gdx.graphics.getWidth() / 2 + ButtonWidth / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 - button.getHeight() / 2) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 + button.getHeight() / 2)) {
-                main.setScreen(new Ranking(main));
+                //main.setScreen(new Ranking(main));
             }
             if (touchPosition.x >= (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) && touchPosition.x <= (Gdx.graphics.getWidth() / 2 + ButtonWidth / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 - button.getHeight() * 2) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 - button.getHeight())) {
                 main.setScreen(new Settings(main));
@@ -143,6 +148,11 @@ public class StartMenu implements Screen {
     public void resize(int width, int height) {
     }
 
+    @Override
+    public void render() {
+
+    }
+
     public void show() {
     }
 
@@ -157,5 +167,58 @@ public class StartMenu implements Screen {
 
     public void dispose() {
         batch.dispose();
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        if (keycode == Input.Keys.BACK) {
+            callClass();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
+    }
+
+    private void callClass() {
+        if (StartMenu.whichClass == 0) {
+            StartMenu.music.stop();
+            main.setScreen(new StartMenu(main));
+        } else if (StartMenu.whichClass == 1) {
+            StartMenu.music.stop();
+            main.setScreen(new Playground(main));
+        }
     }
 }
