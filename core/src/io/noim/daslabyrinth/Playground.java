@@ -116,7 +116,7 @@ public class Playground implements Screen {
                         Vector2 v = new Vector2();
                         v.x = gf.posx + heightandwidthperfield / 2;
                         v.y = gf.posy - 20;
-                        ImgButton bt = new ImgButton(pfeil, v, -90.0F,batch, heightandwidthperfield / 4, heightandwidthperfield /4, true, false);
+                        ImgButton bt = new ImgButton(pfeil, v, batch, heightandwidthperfield / 4, heightandwidthperfield /4, Richtung.Unten);
                         bt.gf = gf;
                         bt.shouldx = gf.x;
                         bt.shouldy = gf.y;
@@ -128,7 +128,7 @@ public class Playground implements Screen {
                 for (GameField gf : Functions.gameFields){
                     if (gf.y == 5){
                         Vector2 v = new Vector2();
-                        ImgButton bt = new ImgButton(pfeil, v, 90.0F,batch, heightandwidthperfield / 4, heightandwidthperfield /4, true, true);
+                        ImgButton bt = new ImgButton(pfeil, v, batch, heightandwidthperfield / 4, heightandwidthperfield /4, Richtung.Oben);
                         bt.gf = gf;
                         bt.shouldx = gf.x;
                         bt.shouldy = gf.y;
@@ -140,7 +140,7 @@ public class Playground implements Screen {
                 for (GameField gf : Functions.gameFields){
                     if (gf.x == 1){
                         Vector2 v = new Vector2();
-                        ImgButton bt = new ImgButton(pfeil, v, -180.0F,batch, heightandwidthperfield / 4, heightandwidthperfield /4, false, false);
+                        ImgButton bt = new ImgButton(pfeil, v,batch, heightandwidthperfield / 4, heightandwidthperfield /4, Richtung.Links);
                         bt.gf = gf;
                         bt.shouldx = gf.x;
                         bt.shouldy = gf.y;
@@ -233,21 +233,27 @@ public class Playground implements Screen {
                     }
                 }
             }
-            if (img.shouldy == 1){
+            if (img.rich == Richtung.Unten){
                 img.vec.x = img.gf.posx + heightandwidthperfield / 2;
                 img.vec.x = img.vec.x - img.width / 2;
                 img.vec.y = img.gf.posy - img.height;
             }
-            if (img.shouldy == 5){
+            if (img.rich == Richtung.Oben){
                 img.vec.x = img.gf.posx + heightandwidthperfield / 2;
                 img.vec.x = img.vec.x - img.width / 2;
                 img.vec.y = img.gf.posy + heightandwidthperfield;
             }
-            if (img.shouldx == 1 && img.shouldy > 2){
+            if (img.rich == Richtung.Links){
                 img.vec.x = img.gf.posx - img.width;
                 img.vec.y = img.gf.posy + heightandwidthperfield / 2;
                 img.vec.y = img.vec.y - img.height;
                 img.vec.y = img.vec.y + img.height / 2;
+            }
+            if (img.rich == Richtung.Rechts){
+                img.vec.x = img.gf.posx + img.width;
+                img.vec.y = img.gf.posy - heightandwidthperfield / 2;
+                img.vec.y = img.vec.y + img.height;
+                img.vec.y = img.vec.y - img.height / 2;
             }
         }
         if (Gdx.input.isTouched()) {

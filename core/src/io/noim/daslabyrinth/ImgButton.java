@@ -26,17 +26,16 @@ public class ImgButton {
     protected int shouldy;
     protected boolean fromx;
     protected boolean reverse;
+    protected Richtung rich;
 
-    public ImgButton(Texture tex, Vector2 vec, float rot, SpriteBatch batch, int height, int width, boolean fromx, boolean reverse){
+    public ImgButton(Texture tex, Vector2 vec, SpriteBatch batch, int height, int width, Richtung rich){
         this.tex = tex;
         this.texr = new TextureRegion(this.tex);
         this.vec = vec;
-        this.rot = rot;
         this.batch = batch;
         this.height = height;
         this.width = width;
-        this.fromx = fromx;
-        this.reverse = reverse;
+        this.rich = rich;
     }
 
     public void draw(){
@@ -53,7 +52,16 @@ public class ImgButton {
         batch.draw(this.texr, 0, 0, this.height, this.width);
         batch.setTransformMatrix(orgMatrix);
         */
-        batch.draw(this.texr, x, y, this.width / 2, this.height / 2, this.width, this.height, 1,1, this.rot);
+        if (this.rich == Richtung.Unten){
+            batch.draw(this.texr, x, y, this.width / 2, this.height / 2, this.width, this.height, 1,1, -90.0F);
+        } else if(this.rich == Richtung.Oben){
+            batch.draw(this.texr, x, y, this.width / 2, this.height / 2, this.width, this.height, 1,1, 90.0F);
+        } else if(this.rich == Richtung.Links){
+            batch.draw(this.texr, x, y, this.width / 2, this.height / 2, this.width, this.height, 1,1, -180.0F);
+        } else if(this.rich == Richtung.Rechts){
+            batch.draw(this.texr, x, y, this.width / 2, this.height / 2, this.width, this.height, 1,1, 0F);
+        }
+        //batch.draw(this.texr, x, y, this.width / 2, this.height / 2, this.width, this.height, 1,1, this.rot);
     }
 
     public boolean isClicked(){
@@ -66,6 +74,17 @@ public class ImgButton {
         return false;
     }
     public void move(){
-        Functions.moveFields(this.shouldx, this.shouldy, this.fromx, this.gf, this.reverse);
+        if (this.rich == Richtung.Unten){
+            Functions.moveFields(this.shouldx, 0, true, this.gf, false);
+        } else if(this.rich == Richtung.Oben){
+            Functions.moveFields(this.shouldx, 0, true, this.gf, true);
+        } else if(this.rich == Richtung.Links){
+            Functions.moveFields(0, this.shouldy, false, this.gf, false);
+        } else if(this.rich == Richtung.Rechts){
+            Functions.moveFields(0, this.shouldy, false, this.gf, true);
+        } else {
+            Functions.moveFields(this.shouldx, this.shouldy, this.fromx, this.gf, this.reverse);
+        }
+        //Functions.moveFields(this.shouldx, this.shouldy, this.fromx, this.gf, this.reverse);
     }
 }
