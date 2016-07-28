@@ -25,7 +25,6 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
     public static Preferences pref;
     BitmapFont font;
     Texture background, button, button_pushed;
-    Color font_color;
     String heading, play, ranking, settings;
     Vector3 touchPosition = new Vector3();
     int ButtonWidth;
@@ -66,7 +65,7 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
         music = Gdx.audio.newMusic(Gdx.files.internal("Spooky Fun.mp3"));
         music.setLooping(true);
 
-        if(!music.isPlaying() && playMusic) {
+        if (!music.isPlaying() && playMusic) {
             music.play();
         } else {
             music.stop();
@@ -100,14 +99,14 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
         }
     }
 
-    public static float textWidth(String largestText, BitmapFont font){
+    public static float textWidth(String largestText, BitmapFont font) {
         GlyphLayout layout = new GlyphLayout(); //don't do this every frame! Store it as member
         layout.setText(font, largestText);
         float width = layout.width;// contains the width of the current set text
         return width;
     }
 
-    public static float textHeight(String text, BitmapFont font){
+    public static float textHeight(String text, BitmapFont font) {
         GlyphLayout layout = new GlyphLayout(); //don't do this every frame! Store it as member
         layout.setText(font, text);
         float height = layout.height; // contains the height of the current set text
@@ -212,7 +211,7 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
         return false;
     }
 
-    private void callClass() {
+    public void callClass() {
         if (whichClass == 0) {
             music.stop();
             main.setScreen(new StartMenu(main));
