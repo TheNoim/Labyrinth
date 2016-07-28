@@ -101,7 +101,7 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
             }
             if (touchPosition.x >= (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) && touchPosition.x <= (Gdx.graphics.getWidth() / 2 + ButtonWidth / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 - (textHeight(play, font) * 3) / 2) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 + (textHeight(play, font) * 3) / 2)) {
                 click();
-                main.setScreen(new Ranking(main));
+                //main.setScreen(new Ranking(main));
             }
             if (touchPosition.x >= (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) && touchPosition.x <= (Gdx.graphics.getWidth() / 2 + ButtonWidth / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 - (textHeight(play, font) * 3) * 2) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 - (textHeight(play, font) * 3))) {
                 click();

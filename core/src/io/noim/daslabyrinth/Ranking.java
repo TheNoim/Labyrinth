@@ -91,10 +91,10 @@ public class Ranking implements Screen {
     public void callClass() {
         if (StartMenu.whichClass == 0) {
             StartMenu.music.stop();
-            main.setScreen(new Save(main));
+            main.setScreen(new StartMenu(main));
         } else if (StartMenu.whichClass == 1) {
             StartMenu.music.stop();
-            main.setScreen(new Save(main));
+            main.setScreen(new Playground(main));
         }
     }
 }
