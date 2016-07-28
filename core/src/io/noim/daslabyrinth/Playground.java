@@ -118,45 +118,33 @@ public class Playground implements Screen {
                         v.y = gf.posy - 20;
                         ImgButton bt = new ImgButton(pfeil, v, -90.0F,batch, heightandwidthperfield / 4, heightandwidthperfield /4, true, false);
                         bt.gf = gf;
-                        bt.shouldx = k;
-                        bt.shouldy = 1;
+                        bt.shouldx = gf.x;
+                        bt.shouldy = gf.y;
                         imgButtons.add(bt);
-                        if (k == 5){
-                            k = 0;
-                        }
-                        k++;
                     }
                 }
             }
-            if (i <= 9 && i >= 6){
+            if (i <= 10 && i >= 6){
                 for (GameField gf : Functions.gameFields){
                     if (gf.y == 5){
                         Vector2 v = new Vector2();
                         ImgButton bt = new ImgButton(pfeil, v, 90.0F,batch, heightandwidthperfield / 4, heightandwidthperfield /4, true, true);
                         bt.gf = gf;
-                        bt.shouldx = k;
-                        bt.shouldy = 5;
+                        bt.shouldx = gf.x;
+                        bt.shouldy = gf.y;
                         imgButtons.add(bt);
-                        if (k == 5){
-                            k = 0;
-                        }
-                        k++;
                     }
                 }
             }
-            if (i <= 14 && i >= 10){
+            if (i <= 15 && i >= 10){
                 for (GameField gf : Functions.gameFields){
                     if (gf.x == 1){
                         Vector2 v = new Vector2();
                         ImgButton bt = new ImgButton(pfeil, v, -180.0F,batch, heightandwidthperfield / 4, heightandwidthperfield /4, false, false);
                         bt.gf = gf;
-                        bt.shouldx = 1;
-                        bt.shouldy = k;
+                        bt.shouldx = gf.x;
+                        bt.shouldy = gf.y;
                         imgButtons.add(bt);
-                        if (k == 4){
-                            k = 0;
-                        }
-                        k++;
                     }
                 }
             }
@@ -241,15 +229,16 @@ public class Playground implements Screen {
                 for (GameField ggf : gameFields){
                     if (ggf.x == img.shouldx && ggf.y == img.shouldy){
                         img.gf = ggf;
+                        System.out.println("Change");
                     }
                 }
             }
-            if (img.shouldy == 1 && img.shouldx > 2){
+            if (img.shouldy == 1){
                 img.vec.x = img.gf.posx + heightandwidthperfield / 2;
                 img.vec.x = img.vec.x - img.width / 2;
                 img.vec.y = img.gf.posy - img.height;
             }
-            if (img.shouldy == 5 && img.shouldx > 2){
+            if (img.shouldy == 5){
                 img.vec.x = img.gf.posx + heightandwidthperfield / 2;
                 img.vec.x = img.vec.x - img.width / 2;
                 img.vec.y = img.gf.posy + heightandwidthperfield;
