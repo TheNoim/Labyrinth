@@ -133,17 +133,12 @@ public class Settings implements Screen {
     }
     public void resize(int width, int height) {  }
 
-    public void render() {
-
-    }
-
     public void show() {
         create();
     }
     public void hide() {  }
     public void pause() {  }
     public void resume() {  }
-
     public void dispose() {
         batch.dispose();
     }
