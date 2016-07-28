@@ -295,13 +295,9 @@ public class Functions {
                                     int __x = gameFields.get(u).x;
                                     int __y = gameFields.get(u).y;
                                     int __index = gameFields.get(u).index;
-                                    //gameFields.set(u, gff);
                                     hash.put(u, gff);
-                                    //gameFields.get(u).x = __x;
                                     hashx.put(u, __x);
-                                    //gameFields.get(u).y = __y;
                                     hashy.put(u, __y);
-                                    //gameFields.get(u).index = __index;
                                     hashindex.put(u, __index);
                                     sizerarray.add(u);
                                     System.out.println("FIRST");
@@ -311,13 +307,9 @@ public class Functions {
                             int _x = gameFields.get(i).x;
                             int _y = gameFields.get(i).y;
                             int _index = gameFields.get(i).index;
-                            //gameFields.set(i, gameFields.get(u));
                             hash.put(i, gameFields.get(u));
-                            //gameFields.get(i).x = _x;
                             hashx.put(i, _x);
-                            //gameFields.get(i).y = _y;
                             hashy.put(i, _y);
-                            //gameFields.get(i).index = _index;
                             hashindex.put(i, _index);
                             sizerarray.add(i);
                             System.out.println("Replace Field at X: " + gameFields.get(i).x + " Y: " + gameFields.get(i).y + " with the Field at the Position X: " + gameFields.get(u).x + " Y: " + gameFields.get(u).y + " U:" + u + " I: " + i);

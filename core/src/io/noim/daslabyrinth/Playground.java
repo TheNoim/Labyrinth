@@ -148,6 +148,18 @@ public class Playground implements Screen {
                     }
                 }
             }
+            if (i <= 20 && i >= 15){
+                for (GameField gf : Functions.gameFields){
+                    if (gf.x == 4){
+                        Vector2 v = new Vector2();
+                        ImgButton bt = new ImgButton(pfeil, v,batch, heightandwidthperfield / 4, heightandwidthperfield /4, Richtung.Rechts);
+                        bt.gf = gf;
+                        bt.shouldx = gf.x;
+                        bt.shouldy = gf.y;
+                        imgButtons.add(bt);
+                    }
+                }
+            }
         }
     }
 
@@ -250,10 +262,10 @@ public class Playground implements Screen {
                 img.vec.y = img.vec.y + img.height / 2;
             }
             if (img.rich == Richtung.Rechts){
-                img.vec.x = img.gf.posx + img.width;
-                img.vec.y = img.gf.posy - heightandwidthperfield / 2;
-                img.vec.y = img.vec.y + img.height;
-                img.vec.y = img.vec.y - img.height / 2;
+                img.vec.x = img.gf.posx + heightandwidthperfield;
+                img.vec.y = img.gf.posy;
+                img.vec.y = img.vec.y + heightandwidthperfield / 4;
+                img.vec.y = img.vec.y + img.height / 2;
             }
         }
         if (Gdx.input.isTouched()) {

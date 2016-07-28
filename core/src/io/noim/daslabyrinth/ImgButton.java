@@ -75,13 +75,13 @@ public class ImgButton {
     }
     public void move(){
         if (this.rich == Richtung.Unten){
-            Functions.moveFields(this.shouldx, 0, true, this.gf, false);
+            Functions.moveFields(this.shouldx, 0, true, Playground.newgf, false);
         } else if(this.rich == Richtung.Oben){
-            Functions.moveFields(this.shouldx, 0, true, this.gf, true);
+            Functions.moveFields(this.shouldx, 0, true, Playground.newgf, true);
         } else if(this.rich == Richtung.Links){
-            Functions.moveFields(0, this.shouldy, false, this.gf, false);
+            Functions.moveFields(0, this.shouldy, false, Playground.newgf, false);
         } else if(this.rich == Richtung.Rechts){
-            Functions.moveFields(0, this.shouldy, false, this.gf, true);
+            Functions.moveFields(0, this.shouldy, false, Playground.newgf, true);
         } else {
             Functions.moveFields(this.shouldx, this.shouldy, this.fromx, this.gf, this.reverse);
         }
