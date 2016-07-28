@@ -38,7 +38,7 @@ public class Save implements Screen {
 
     private void draw() {
         batch.begin();
-        font_heading.draw(batch, "SAVEING...", 0, Gdx.graphics.getHeight() / 2, Gdx.graphics.getWidth(), 1, false);
+        font_heading.draw(batch, "SAVING...", 0, Gdx.graphics.getHeight() / 2, Gdx.graphics.getWidth(), 1, false);
         batch.end();
     }
 
