@@ -218,6 +218,7 @@ public class Functions {
         hashy.clear();
         if (fromx) {
             // for umdrehen
+<<<<<<< HEAD
             for (int i = gameFields.size - 1; i > 0; i--) {
                 if (gameFields.get(i).x == x) {
                     if (last == false) {
@@ -231,6 +232,21 @@ public class Functions {
                             first = gameFields.get(c);
                             System.out.println("First X: " + gameFields.get(c).x + " Y: " + gameFields.get(c).y);
                             break;
+=======
+            for (int i = gameFields.size - 1; i > 0; i--){
+                if (!finished){
+                    if (gameFields.get(i).x == x){
+                        if(last){
+                            Playground.newgf = gameFields.get(i);
+                            last = true;
+                        }
+                        GameField first = null;
+                        for (int c = 0; c < gameFields.size; c++) {
+                            if (gameFields.get(c).x == x) {
+                                first = gameFields.get(c);
+                                break;
+                            }
+>>>>>>> 75d6148acb5a7dd308d27494a4d10c3a7586eb3b
                         }
                     }
                     for (int u = i - 1; u > 0; u--) {

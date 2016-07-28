@@ -7,7 +7,6 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -25,14 +24,14 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
     public static Preferences pref;
     BitmapFont font;
     Texture background, button, button_pushed;
-    Color font_color;
     String heading, play, ranking, settings;
     Vector3 touchPosition = new Vector3();
     int ButtonWidth;
+    float X;
     public DasLabyrinth main;
     public Settings Settings;
     public Ranking Ranking;
-    public static Boolean playMusic, playSounds;
+    public static Boolean playMusic, playSounds, vibration;
     public static int whichClass;
 
     public StartMenu(final DasLabyrinth main) {
@@ -62,11 +61,12 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
         pref = Gdx.app.getPreferences("labyrinth.dat");
         playMusic = pref.getBoolean("Music", true);
         playSounds = pref.getBoolean("Sounds", true);
+        vibration = pref.getBoolean("Vibration", true);
 
         music = Gdx.audio.newMusic(Gdx.files.internal("Spooky Fun.mp3"));
         music.setLooping(true);
 
-        if(!music.isPlaying() && playMusic) {
+        if (!music.isPlaying() && playMusic) {
             music.play();
         } else {
             music.stop();
@@ -80,6 +80,7 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
         play = "SPIEL STARTEN";
         ranking = "RANKING";
         settings = "EINSTELLUNGEN";
+        X = Gdx.graphics.getWidth() / 2 - ButtonWidth / 2;
         font.getData().setScale(scaleText(settings, font, ButtonWidth - 40));
     }
 
@@ -100,14 +101,14 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
         }
     }
 
-    public static float textWidth(String largestText, BitmapFont font){
+    public static float textWidth(String largestText, BitmapFont font) {
         GlyphLayout layout = new GlyphLayout(); //don't do this every frame! Store it as member
         layout.setText(font, largestText);
         float width = layout.width;// contains the width of the current set text
         return width;
     }
 
-    public static float textHeight(String text, BitmapFont font){
+    public static float textHeight(String text, BitmapFont font) {
         GlyphLayout layout = new GlyphLayout(); //don't do this every frame! Store it as member
         layout.setText(font, text);
         float height = layout.height; // contains the height of the current set text
@@ -125,14 +126,14 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
 
         batch.draw(background, 0, 0, (float) Gdx.graphics.getWidth(), (float) Gdx.graphics.getHeight());
 
-        batch.draw(button, Gdx.graphics.getWidth() / 2 - ButtonWidth / 2, Gdx.graphics.getHeight() / 2 + button.getHeight(), ButtonWidth, button.getHeight());
-        batch.draw(button, Gdx.graphics.getWidth() / 2 - ButtonWidth / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() / 2, ButtonWidth, button.getHeight());
-        batch.draw(button, Gdx.graphics.getWidth() / 2 - ButtonWidth / 2, Gdx.graphics.getHeight() / 2 - button.getHeight() * 2, ButtonWidth, button.getHeight());
+        batch.draw(button, X, Gdx.graphics.getHeight() / 2 + button.getHeight(), ButtonWidth, button.getHeight());
+        batch.draw(button, X, Gdx.graphics.getHeight() / 2 - button.getHeight() / 2, ButtonWidth, button.getHeight());
+        batch.draw(button, X, Gdx.graphics.getHeight() / 2 - button.getHeight() * 2, ButtonWidth, button.getHeight());
 
         font.draw(batch, heading, 0, (Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 2 + 2 * button.getHeight())) / 2 + (textHeight(heading, font) + Gdx.graphics.getHeight() / 2 + 2 * button.getHeight()), Gdx.graphics.getWidth(), 1, false);
-        font.draw(batch, play, (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2), Gdx.graphics.getHeight() / 2 + 2 * button.getHeight() - ((button.getHeight() - textHeight(play, font)) / 2), ButtonWidth, 1, false);
-        font.draw(batch, ranking, (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2), Gdx.graphics.getHeight() / 2 + (button.getHeight() / 2) - ((button.getHeight() - textHeight(ranking, font)) / 2), ButtonWidth, 1, false);
-        font.draw(batch, settings, (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2), Gdx.graphics.getHeight() / 2 - button.getHeight() - ((button.getHeight() - textHeight(settings, font)) / 2), ButtonWidth, 1, false);
+        font.draw(batch, play, X, Gdx.graphics.getHeight() / 2 + 2 * button.getHeight() - ((button.getHeight() - textHeight(play, font)) / 2), ButtonWidth, 1, false);
+        font.draw(batch, ranking, X, Gdx.graphics.getHeight() / 2 + (button.getHeight() / 2) - ((button.getHeight() - textHeight(ranking, font)) / 2), ButtonWidth, 1, false);
+        font.draw(batch, settings, X, Gdx.graphics.getHeight() / 2 - button.getHeight() - ((button.getHeight() - textHeight(settings, font)) / 2), ButtonWidth, 1, false);
 
         batch.end();
     }
@@ -212,12 +213,12 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
         return false;
     }
 
-    private void callClass() {
-        if (StartMenu.whichClass == 0) {
-            StartMenu.music.stop();
+    public void callClass() {
+        if (whichClass == 0) {
+            music.stop();
             main.setScreen(new StartMenu(main));
         } else if (StartMenu.whichClass == 1) {
-            StartMenu.music.stop();
+            music.stop();
             main.setScreen(new Playground(main));
         }
     }
