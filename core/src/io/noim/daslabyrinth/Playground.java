@@ -82,7 +82,9 @@ public class Playground implements Screen {
         camera.setToOrtho(false, screen_hight, screen_width);
         music = Gdx.audio.newMusic(Gdx.files.internal("Epic Suspense.mp3"));
         music.setLooping(true);
-        music.play();
+        if (StartMenu.pref.getBoolean("Music", true)){
+            music.play();
+        }
         gameFields = Functions.gameFields;
         int temp_a = 0;
         for (GameField gf : gameFields) {
