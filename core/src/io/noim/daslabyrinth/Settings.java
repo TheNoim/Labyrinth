@@ -108,6 +108,7 @@ public class Settings implements Screen {
                     touchPosition.x <= Gdx.graphics.getWidth() / 20 + (checkBoxSize / 5 * 6) &&
                     touchPosition.y >= (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30) - (back.getHeight() / 3) - (checkBoxSize / 5) &&
                     touchPosition.y <= (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30) - (back.getHeight() / 3) + (checkBoxSize / 5 * 6)) {
+                callClass();
             }
         }
     }
@@ -141,5 +142,15 @@ public class Settings implements Screen {
     public void resume() {  }
     public void dispose() {
         batch.dispose();
+    }
+
+    public void callClass() {
+        if (StartMenu.whichClass == 0) {
+            StartMenu.music.stop();
+            main.setScreen(new StartMenu(main));
+        } else if (StartMenu.whichClass == 1) {
+            StartMenu.music.stop();
+            main.setScreen(new Playground(main));
+        }
     }
 }
