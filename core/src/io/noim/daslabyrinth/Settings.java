@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
-import com.sun.tools.javadoc.Start;
 
 
 public class Settings implements Screen {
@@ -37,12 +36,10 @@ public class Settings implements Screen {
     float checkBoxPos2Y;
     float checkBoxPos3Y;
     float checkBoxSize;
-    public static Music sound;
 
 
 
     public void create() {
-        sound = Gdx.audio.newMusic(Gdx.files.internal("blob.wav"));
         checkBoxSize = Gdx.graphics.getWidth() / 10;
         checkBoxPosX = Gdx.graphics.getWidth() / 10;
         checkBoxPos1Y = Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10 * 3;
@@ -87,19 +84,19 @@ public class Settings implements Screen {
                touchPosition.y >= checkBoxPos1Y - (checkBoxSize / 5) &&
                touchPosition.y <= checkBoxPos1Y + (checkBoxSize / 5 * 6)) {
                 if (!checkBox1Checked) {
-                    StartMenu.click();
                     StartMenu.music.play();
                     checkBox1 = new Texture("checkbox_checked.png");
                     checkBox1Checked = true;
                     StartMenu.pref.putBoolean("Music", true);
                     StartMenu.pref.flush();
-                } else {
                     StartMenu.click();
+                } else {
                     StartMenu.music.pause();
                     checkBox1 = new Texture("checkbox.png");
                     checkBox1Checked = false;
                     StartMenu.pref.putBoolean("Music", false);
                     StartMenu.pref.flush();
+                    StartMenu.click();
                 }
             }
             if(touchPosition.x >= checkBoxPosX - (checkBoxSize / 5) &&
@@ -108,7 +105,6 @@ public class Settings implements Screen {
                     touchPosition.y <= checkBoxPos2Y + (checkBoxSize / 5 * 6)) {
                 if (!checkBox2Checked) {
                     StartMenu.click();
-                    sound.play();
                     checkBox2 = new Texture("checkbox_checked.png");
                     checkBox2Checked = true;
                     StartMenu.pref.putBoolean("Sounds", true);
@@ -126,17 +122,17 @@ public class Settings implements Screen {
                     touchPosition.y >= checkBoxPos3Y - (checkBoxSize / 5) &&
                     touchPosition.y <= checkBoxPos3Y + (checkBoxSize / 5 * 6)) {
                 if (!checkBox3Checked) {
-                    StartMenu.click();
                     checkBox3 = new Texture("checkbox_checked.png");
                     checkBox3Checked = true;
                     StartMenu.pref.putBoolean("Vibration", true);
                     StartMenu.pref.flush();
-                } else {
                     StartMenu.click();
+                } else {
                     checkBox3 = new Texture("checkbox.png");
                     checkBox3Checked = false;
                     StartMenu.pref.putBoolean("Vibration", false);
                     StartMenu.pref.flush();
+                    StartMenu.click();
                 }
             }
             if(touchPosition.x >= Gdx.graphics.getWidth() / 20 - (checkBoxSize / 5) &&
@@ -189,16 +185,6 @@ public class Settings implements Screen {
         } else if (StartMenu.whichClass == 1) {
             StartMenu.music.stop();
             main.setScreen(new Playground(main));
-        }
-    }
-
-    public static void click() {
-        StartMenu.pref = Gdx.app.getPreferences("labyrinth.dat");
-        if (StartMenu.pref.getBoolean("Sounds", true)) {
-            sound.play();
-        }
-        if (StartMenu.pref.getBoolean("Vibration", true)) {
-            Gdx.input.vibrate(new long[] {0, 100}, -1);
         }
     }
 }
