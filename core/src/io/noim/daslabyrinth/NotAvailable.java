@@ -10,11 +10,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Timer;
 
 
-public class Save implements Screen {
+public class NotAvailable implements Screen {
 
     public DasLabyrinth main;
 
-    public Save(final DasLabyrinth main){
+    public NotAvailable(final DasLabyrinth main){
         this.main = main;
     }
     SpriteBatch batch;
@@ -36,7 +36,7 @@ public class Save implements Screen {
 
     private void draw() {
         batch.begin();
-        font_heading.draw(batch, "SAVING...", 0, Gdx.graphics.getHeight() / 2, Gdx.graphics.getWidth(), 1, false);
+        font_heading.draw(batch, "NOT AVAILABLE YET", 0, Gdx.graphics.getHeight() / 2, Gdx.graphics.getWidth(), 1, false);
         batch.end();
     }
 
@@ -61,13 +61,10 @@ public class Save implements Screen {
     private void exit() {
         Timer.schedule(new Timer.Task(){
             @Override
-            public void run() {if (StartMenu.whichClass == 0) {
+            public void run() {
                 main.setScreen(new StartMenu(main));
-            } else if (StartMenu.whichClass == 1) {
-                main.setScreen(new Playground(main));
             }
-            }
-        }, (float) 0.25);
+        }, 2);
 
     }
 }

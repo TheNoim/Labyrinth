@@ -27,6 +27,7 @@ public class Ranking implements Screen {
     }
 
     public void create() {
+        main.setScreen(new NotAvailable(main));
         heading = "RANKING";
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
