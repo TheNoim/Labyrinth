@@ -2,8 +2,6 @@ package io.noim.daslabyrinth;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -84,14 +82,22 @@ public class Settings implements Screen {
                touchPosition.y >= checkBoxPos1Y - (checkBoxSize / 5) &&
                touchPosition.y <= checkBoxPos1Y + (checkBoxSize / 5 * 6)) {
                 if (!checkBox1Checked) {
-                    StartMenu.music.play();
+                    if (StartMenu.whichClass == 0) {
+                        StartMenu.music.play();
+                    } else if (StartMenu.whichClass == 1) {
+                        Playground.music.play();
+                    }
                     checkBox1 = new Texture("checkbox_checked.png");
                     checkBox1Checked = true;
                     StartMenu.pref.putBoolean("Music", true);
                     StartMenu.pref.flush();
                     StartMenu.click();
                 } else {
-                    StartMenu.music.pause();
+                    if (StartMenu.whichClass == 0) {
+                        StartMenu.music.pause();
+                    } else if (StartMenu.whichClass == 1) {
+                        Playground.music.pause();
+                    }
                     checkBox1 = new Texture("checkbox.png");
                     checkBox1Checked = false;
                     StartMenu.pref.putBoolean("Music", false);
