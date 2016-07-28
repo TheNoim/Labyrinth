@@ -13,7 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 
 
-public class Settings implements Screen, ApplicationListener, InputProcessor {
+public class Settings implements Screen {
 
     public DasLabyrinth main;
 
@@ -39,8 +39,6 @@ public class Settings implements Screen, ApplicationListener, InputProcessor {
 
 
     public void create() {
-        Gdx.input.setInputProcessor(this);
-        Gdx.input.setCatchBackKey(true);
         checkBoxSize = Gdx.graphics.getWidth() / 10;
         checkBoxPosX = Gdx.graphics.getWidth() / 10;
         checkBoxPos1Y = Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10 * 3;
@@ -110,7 +108,6 @@ public class Settings implements Screen, ApplicationListener, InputProcessor {
                     touchPosition.x <= Gdx.graphics.getWidth() / 20 + (checkBoxSize / 5 * 6) &&
                     touchPosition.y >= (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30) - (back.getHeight() / 3) - (checkBoxSize / 5) &&
                     touchPosition.y <= (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30) - (back.getHeight() / 3) + (checkBoxSize / 5 * 6)) {
-                callClass();
             }
         }
     }
@@ -136,7 +133,6 @@ public class Settings implements Screen, ApplicationListener, InputProcessor {
     }
     public void resize(int width, int height) {  }
 
-    @Override
     public void render() {
 
     }
@@ -150,58 +146,5 @@ public class Settings implements Screen, ApplicationListener, InputProcessor {
 
     public void dispose() {
         batch.dispose();
-    }
-
-    @Override
-    public boolean keyDown(int keycode) {
-        if(keycode == Input.Keys.BACK){
-            callClass();
-    }
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(int amount) {
-        return false;
-    }
-
-    private void callClass() {
-        if (StartMenu.whichClass == 0) {
-            StartMenu.music.stop();
-            main.setScreen(new StartMenu(main));
-        } else if (StartMenu.whichClass == 1) {
-            StartMenu.music.stop();
-            main.setScreen(new Playground(main));
-        }
     }
 }
