@@ -213,11 +213,11 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
     }
 
     private void callClass() {
-        if (StartMenu.whichClass == 0) {
-            StartMenu.music.stop();
+        if (whichClass == 0) {
+            music.stop();
             main.setScreen(new StartMenu(main));
         } else if (StartMenu.whichClass == 1) {
-            StartMenu.music.stop();
+            music.stop();
             main.setScreen(new Playground(main));
         }
     }
