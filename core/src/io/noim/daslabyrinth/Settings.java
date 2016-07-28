@@ -64,11 +64,11 @@ public class Settings implements Screen {
             checkBox2Checked = false;
         }
         if (StartMenu.vibration) {
-            checkBox2 = new Texture("checkbox_checked.png");
-            checkBox2Checked = true;
+            checkBox3 = new Texture("checkbox_checked.png");
+            checkBox3Checked = true;
         } else {
-            checkBox2 = new Texture("checkbox.png");
-            checkBox2Checked = false;
+            checkBox3 = new Texture("checkbox.png");
+            checkBox3Checked = false;
         }
         back = new Texture("back.png");
     }
