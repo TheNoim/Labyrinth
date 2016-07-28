@@ -51,6 +51,8 @@ public class Playground implements Screen {
     boolean notallowedtotouch;
     int rendertimer = 0;
     Array<ImgButton> imgButtons = new Array<ImgButton>();
+    boolean alreadypressed;
+    Texture pfeil = new Texture("pfeil.gif");
 
     public void create() {
         StartMenu.whichClass = 1;
@@ -107,14 +109,48 @@ public class Playground implements Screen {
         heightandwidthperfield = availablehight / 4;
         int usedwidth = heightandwidthperfield * 5;
         int q = screen_width - usedwidth;
-        startx = (int) Math.round(q / 1.07);
+        startx = (int) Math.round(q / 1.1);
         roboto = new BitmapFont(Gdx.files.internal("Roboto.fnt"));
         istmovingnewfield = false;
-        int k = 0;
+        int k = startx;
         for (int i = 0; i < 18; i++){
             if (i <= 5){
-                Vector2 v = new Vector2();
-                ImgButton bt = new ImgButton(new Texture("pfeil.gif"), v, -90.0F,batch, heightandwidthperfield / 16, q);
+                for (GameField gf : Functions.gameFields){
+                    if (gf.y == 1 && gf.x == i){
+                        Vector2 v = new Vector2();
+                        v.x = gf.posx + heightandwidthperfield / 2;
+                        v.y = gf.posy - 20;
+                        ImgButton bt = new ImgButton(pfeil, v, -90.0F,batch, heightandwidthperfield / 4, heightandwidthperfield /4, false);
+                        bt.gf = gf;
+                        bt.shouldx = i;
+                        bt.shouldy = 1;
+                        imgButtons.add(bt);
+                    }
+                }
+            }
+            if (i <= 10 && i >= 6){
+                for (GameField gf : Functions.gameFields){
+                    if (gf.y == 5){
+                        Vector2 v = new Vector2();
+                        ImgButton bt = new ImgButton(pfeil, v, 90.0F,batch, heightandwidthperfield / 4, heightandwidthperfield /4, false);
+                        bt.gf = gf;
+                        bt.shouldx = i;
+                        bt.shouldy = 5;
+                        imgButtons.add(bt);
+                    }
+                }
+            }
+            if (i <= 15 && i >= 11){
+                for (GameField gf : Functions.gameFields){
+                    if (gf.x == 1){
+                        Vector2 v = new Vector2();
+                        ImgButton bt = new ImgButton(pfeil, v, -180.0F,batch, heightandwidthperfield / 4, heightandwidthperfield /4, true);
+                        bt.gf = gf;
+                        bt.shouldx = 1;
+                        bt.shouldy = i;
+                        imgButtons.add(bt);
+                    }
+                }
             }
         }
     }
@@ -138,6 +174,9 @@ public class Playground implements Screen {
                 batch.setTransformMatrix(rotMatrix);
                 batch.draw(gf.fieldTextureRegion, 0, 0, heightandwidthperfield, heightandwidthperfield);
                 batch.setTransformMatrix(originalMatrix);
+                gf.posx = yy;
+                gf.posy = xx;
+
                 if (gf.isTreasure) {
                     int tr_texture_width = gf.treasure.textureRegion.getRegionWidth();
                     int g = heightandwidthperfield - tr_texture_width;
@@ -182,10 +221,37 @@ public class Playground implements Screen {
             }
             batch.setTransformMatrix(originalMatrix);
         }
+        for (ImgButton imb : imgButtons){
+            imb.draw();
+        }
         batch.end();
     }
 
     public void update() {
+        for (ImgButton img : imgButtons){
+            if (img.gf.x != img.shouldx || img.gf.y != img.shouldy){
+                for (GameField ggf : gameFields){
+                    if (ggf.x == img.shouldx && ggf.y == img.shouldy){
+                        img.gf = ggf;
+                    }
+                }
+            }
+            if (img.shouldy == 1){
+                img.vec.x = img.gf.posx + heightandwidthperfield / 2;
+                img.vec.x = img.vec.x - img.width / 2;
+                img.vec.y = img.gf.posy - img.height;
+            }
+            if (img.shouldy == 5){
+                img.vec.x = img.gf.posx + heightandwidthperfield / 2;
+                img.vec.x = img.vec.x - img.width / 2;
+                img.vec.y = img.gf.posy + heightandwidthperfield;
+            }
+            if (img.shouldx == 1){
+                img.vec.x = img.gf.posx - img.width;
+                img.vec.y = img.gf.posy + heightandwidthperfield / 2;
+                img.vec.y = img.gf.posy - img.width;
+            }
+        }
         if (Gdx.input.isTouched()) {
 
             Vector3 touch = new Vector3();
@@ -197,9 +263,23 @@ public class Playground implements Screen {
                     notallowedtotouch = true;
                 }
             }
-
+            if (!alreadypressed){
+                for (ImgButton imgb : imgButtons){
+                    if (imgb.isClicked()){
+                        boolean rev;
+                        if (imgb.shouldy >= 5){
+                            rev = true;
+                        } else {
+                            rev = false;
+                        }
+                        Functions.moveFields(imgb.gf.x, imgb.gf.y, true, newgf, imgb.fromx);
+                        alreadypressed = true;
+                    }
+                }
+            }
         } else {
             notallowedtotouch = false;
+            alreadypressed = false;
         }
     }
 
@@ -232,6 +312,9 @@ public class Playground implements Screen {
 
     public void dispose() {
         batch.dispose();
+    }
+    public void t(){
+        System.out.println("Test");
     }
 
 }

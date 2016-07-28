@@ -185,10 +185,8 @@ public class Settings implements Screen {
         batch.dispose();
     }
 
-    public void callClass() {
-        if (StartMenu.whichClass == 0) {
+    private void callClass() {
             StartMenu.music.stop();
             main.setScreen(new Save(main));
-        }
     }
 }
