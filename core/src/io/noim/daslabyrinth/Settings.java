@@ -2,6 +2,8 @@ package io.noim.daslabyrinth;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -35,7 +37,6 @@ public class Settings implements Screen {
     float checkBoxPos2Y;
     float checkBoxPos3Y;
     float checkBoxSize;
-
 
     public void create() {
         checkBoxSize = Gdx.graphics.getWidth() / 10;
@@ -184,13 +185,8 @@ public class Settings implements Screen {
         batch.dispose();
     }
 
-    public void callClass() {
-        if (StartMenu.whichClass == 0) {
+    private void callClass() {
             StartMenu.music.stop();
             main.setScreen(new Save(main));
-        } else if (StartMenu.whichClass == 1) {
-            StartMenu.music.stop();
-            main.setScreen(new Save(main));
-        }
     }
 }

@@ -21,7 +21,6 @@ public class Save implements Screen {
     OrthographicCamera camera;
     Texture background;
     BitmapFont font_heading;
-    BitmapFont font_text;
 
 
     public void create() {
@@ -30,7 +29,6 @@ public class Save implements Screen {
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         background = new Texture("background.png");
         font_heading = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
-        font_text = new BitmapFont(Gdx.files.internal("Verdana.fnt"));
         exit();
     }
 
@@ -38,15 +36,13 @@ public class Save implements Screen {
 
     private void draw() {
         batch.begin();
-        font_heading.draw(batch, "SAVEING...", 0, Gdx.graphics.getHeight() / 2, Gdx.graphics.getWidth(), 1, false);
+        font_heading.draw(batch, "SAVING...", 0, Gdx.graphics.getHeight() / 2, Gdx.graphics.getWidth(), 1, false);
         batch.end();
     }
 
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        update();
         draw();
     }
     public void resize(int width, int height) {  }
