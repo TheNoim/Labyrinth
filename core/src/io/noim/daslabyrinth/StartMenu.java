@@ -65,7 +65,7 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
         vibration = pref.getBoolean("Vibration", true);
 
         music = Gdx.audio.newMusic(Gdx.files.internal("Spooky Fun.mp3"));
-        //sound = Gdx.audio.newMusic(Gdx.files.internal("blob.wav"));
+        sound = Gdx.audio.newMusic(Gdx.files.internal("blop.wav"));
         music.setLooping(true);
 
         if (!music.isPlaying() && playMusic) {
@@ -132,7 +132,7 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
         batch.draw(button, X, Gdx.graphics.getHeight() / 2 - (textHeight(play, font) + 80) / 2, ButtonWidth, textHeight(ranking, font) + 80);
         batch.draw(button, X, Gdx.graphics.getHeight() / 2 - (textHeight(play, font) + 80) * 2, ButtonWidth, textHeight(settings, font) + 80);
 
-        font.draw(batch, heading, X, (int) ((float) 0.85 * Gdx.graphics.getHeight()), Gdx.graphics.getHeight(), 1, false);
+        font.draw(batch, heading, X, ((float) 0.85 * Gdx.graphics.getHeight()), Gdx.graphics.getWidth(), 1, false);
         font.draw(batch, play, X, Gdx.graphics.getHeight() / 2 + 2 * (textHeight(play, font) + 80) - (((textHeight(play, font) + 80) - textHeight(play, font)) / 2), ButtonWidth, 1, false);
         font.draw(batch, ranking, X, Gdx.graphics.getHeight() / 2 + ((textHeight(play, font) + 80) / 2) - (((textHeight(play, font) + 80) - textHeight(ranking, font)) / 2), ButtonWidth, 1, false);
         font.draw(batch, settings, X, Gdx.graphics.getHeight() / 2 - (textHeight(play, font) + 80) - (((textHeight(play, font) + 80) - textHeight(settings, font)) / 2), ButtonWidth, 1, false);
@@ -226,7 +226,6 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
     }
 
     public static void click() {
-        StartMenu.pref = Gdx.app.getPreferences("labyrinth.dat");
         if (StartMenu.pref.getBoolean("Sounds", true)) {
             sound.play();
         }
