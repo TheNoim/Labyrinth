@@ -36,6 +36,8 @@ public class Settings implements Screen {
     float checkBoxSize;
 
     public void create() {
+        font_text = new BitmapFont(Gdx.files.internal("Verdana.fnt"));
+        font_text.getData().setScale(Functions.scaleText("Vibration", font_text, Gdx.graphics.getWidth() / 3));
         checkBoxSize = Gdx.graphics.getWidth() / 10;
         checkBoxPosX = Gdx.graphics.getWidth() / 10;
         checkBoxPos1Y = Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10 * 3;
@@ -45,7 +47,6 @@ public class Settings implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         background = new Texture("background.png");
-        font_text = new BitmapFont(Gdx.files.internal("Verdana.fnt"));
         if (DasLabyrinth.playMusic) {
             checkBox1 = new Texture("checkbox_checked.png");
             checkBox1Checked = true;
