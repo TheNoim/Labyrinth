@@ -128,7 +128,7 @@ public class Playground implements Screen {
                     }
                 }
             }
-            if (i <= 10 && i >= 6){
+            if (i <= 9 && i >= 6){
                 for (GameField gf : Functions.gameFields){
                     if (gf.y == 5){
                         Vector2 v = new Vector2();
@@ -144,7 +144,7 @@ public class Playground implements Screen {
                     }
                 }
             }
-            if (i <= 14 && i >= 11){
+            if (i <= 14 && i >= 10){
                 for (GameField gf : Functions.gameFields){
                     if (gf.x == 1){
                         Vector2 v = new Vector2();
@@ -244,12 +244,12 @@ public class Playground implements Screen {
                     }
                 }
             }
-            if (img.shouldy == 1){
+            if (img.shouldy == 1 && img.shouldx > 2){
                 img.vec.x = img.gf.posx + heightandwidthperfield / 2;
                 img.vec.x = img.vec.x - img.width / 2;
                 img.vec.y = img.gf.posy - img.height;
             }
-            if (img.shouldy == 5){
+            if (img.shouldy == 5 && img.shouldx > 2){
                 img.vec.x = img.gf.posx + heightandwidthperfield / 2;
                 img.vec.x = img.vec.x - img.width / 2;
                 img.vec.y = img.gf.posy + heightandwidthperfield;
@@ -275,8 +275,8 @@ public class Playground implements Screen {
             if (!alreadypressed){
                 for (ImgButton imgb : imgButtons){
                     if (imgb.isClicked()){
-                        boolean rev;
-                        Functions.moveFields(imgb.gf.x, imgb.gf.y, imgb.fromx, newgf, imgb.reverse);
+                        //Functions.moveFields(imgb.gf.x, imgb.gf.y, imgb.fromx, newgf, imgb.reverse);
+                        imgb.move();
                         alreadypressed = true;
                     }
                 }

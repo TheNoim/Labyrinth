@@ -65,4 +65,7 @@ public class ImgButton {
         }
         return false;
     }
+    public void move(){
+        Functions.moveFields(this.shouldx, this.shouldy, this.fromx, this.gf, this.reverse);
+    }
 }
