@@ -44,6 +44,8 @@ public class Playground implements Screen {
     Vector2 newfieldv = new Vector2();
     int newfieldw;
     Vector3 newfieldvector = new Vector3();
+    boolean notallowedtotouch;
+    int rendertimer = 0;
 
     public void create() {
         StartMenu.whichClass = 1;
@@ -175,7 +177,11 @@ public class Playground implements Screen {
                     /*System.out.println("Test");
                     System.out.println(newfieldv.x + "  " + newfieldv.y);
                     istmovingnewfield = true;*/
-                    Functions.moveFields(2, 0, true, newgf, true);
+                    if (!notallowedtotouch){
+                        Functions.moveFields(2, 0, true, newgf, false);
+                        rendertimer = 0;
+                        notallowedtotouch = true;
+                    }
                 }
             }
         } else {
@@ -192,6 +198,14 @@ public class Playground implements Screen {
         //Functions.printField();
         update();
         draw();
+        if (notallowedtotouch){
+            if (rendertimer < 120){
+                rendertimer++;
+            } else {
+                notallowedtotouch = false;
+                rendertimer = 0;
+            }
+        }
     }
 
     public void resize(int width, int height) {
