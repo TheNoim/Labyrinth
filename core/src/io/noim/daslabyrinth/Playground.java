@@ -8,16 +8,12 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Array;
 
 public class Playground implements Screen {
@@ -112,7 +108,7 @@ public class Playground implements Screen {
         startx = (int) Math.round(q / 1.1);
         roboto = new BitmapFont(Gdx.files.internal("Roboto.fnt"));
         istmovingnewfield = false;
-        int k = startx;
+        int k = 1;
         for (int i = 0; i < 18; i++){
             if (i <= 5){
                 for (GameField gf : Functions.gameFields){
@@ -122,9 +118,13 @@ public class Playground implements Screen {
                         v.y = gf.posy - 20;
                         ImgButton bt = new ImgButton(pfeil, v, -90.0F,batch, heightandwidthperfield / 4, heightandwidthperfield /4, true, false);
                         bt.gf = gf;
-                        bt.shouldx = i;
+                        bt.shouldx = k;
                         bt.shouldy = 1;
                         imgButtons.add(bt);
+                        if (k == 5){
+                            k = 0;
+                        }
+                        k++;
                     }
                 }
             }
@@ -134,21 +134,29 @@ public class Playground implements Screen {
                         Vector2 v = new Vector2();
                         ImgButton bt = new ImgButton(pfeil, v, 90.0F,batch, heightandwidthperfield / 4, heightandwidthperfield /4, true, true);
                         bt.gf = gf;
-                        bt.shouldx = i;
+                        bt.shouldx = k;
                         bt.shouldy = 5;
                         imgButtons.add(bt);
+                        if (k == 5){
+                            k = 0;
+                        }
+                        k++;
                     }
                 }
             }
-            if (i <= 15 && i >= 11){
+            if (i <= 14 && i >= 11){
                 for (GameField gf : Functions.gameFields){
                     if (gf.x == 1){
                         Vector2 v = new Vector2();
                         ImgButton bt = new ImgButton(pfeil, v, -180.0F,batch, heightandwidthperfield / 4, heightandwidthperfield /4, false, false);
                         bt.gf = gf;
                         bt.shouldx = 1;
-                        bt.shouldy = i;
+                        bt.shouldy = k;
                         imgButtons.add(bt);
+                        if (k == 4){
+                            k = 0;
+                        }
+                        k++;
                     }
                 }
             }
@@ -260,7 +268,7 @@ public class Playground implements Screen {
             camera.unproject(touch);
             if (touch.x >= newfieldv.x && touch.x <= newfieldv.x + newfieldw && touch.y >= newfieldv.y && touch.y <= newfieldv.y + newfieldw) {
                 if (!notallowedtotouch) {
-                    Functions.moveFields(2, 0, true, newgf, false);
+                    Functions.moveFields(0, 2, false, newgf, false);
                     notallowedtotouch = true;
                 }
             }
@@ -268,7 +276,6 @@ public class Playground implements Screen {
                 for (ImgButton imgb : imgButtons){
                     if (imgb.isClicked()){
                         boolean rev;
-
                         Functions.moveFields(imgb.gf.x, imgb.gf.y, imgb.fromx, newgf, imgb.reverse);
                         alreadypressed = true;
                     }
