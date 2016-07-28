@@ -20,7 +20,6 @@ public class Settings implements Screen {
     SpriteBatch batch;
     OrthographicCamera camera;
     Texture background;
-    BitmapFont font_heading;
     BitmapFont font_text;
     String heading = "SETTINGS";
     Vector3 touchPosition = new Vector3();
@@ -46,7 +45,6 @@ public class Settings implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         background = new Texture("background.png");
-        font_heading = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
         font_text = new BitmapFont(Gdx.files.internal("Verdana.fnt"));
         if (DasLabyrinth.playMusic) {
             checkBox1 = new Texture("checkbox_checked.png");
@@ -157,7 +155,7 @@ public class Settings implements Screen {
         batch.draw(checkBox2, checkBoxPosX, checkBoxPos2Y, checkBoxSize, checkBoxSize);
         batch.draw(checkBox3, checkBoxPosX, checkBoxPos3Y, checkBoxSize, checkBoxSize);
         batch.draw(back, Gdx.graphics.getWidth() / 20, (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30) - (back.getHeight() / 3), Gdx.graphics.getWidth() / 10, Gdx.graphics.getWidth() / 10);
-        font_heading.draw(batch, heading, 0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10, Gdx.graphics.getWidth(), 1, false);
+        DasLabyrinth.font.draw(batch, heading, 0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10, Gdx.graphics.getWidth(), 1, false);
         font_text.draw(batch, "Musik", checkBoxPosX + (Gdx.graphics.getWidth() / 5), (checkBoxPos1Y + Gdx.graphics.getWidth() / 10) - Gdx.graphics.getWidth() / 40);
         font_text.draw(batch, "Sounds", checkBoxPosX + (Gdx.graphics.getWidth() / 5), (checkBoxPos2Y + Gdx.graphics.getWidth() / 10) - Gdx.graphics.getWidth() / 40);
         font_text.draw(batch, "Vibration", checkBoxPosX + (Gdx.graphics.getWidth() / 5), (checkBoxPos3Y + Gdx.graphics.getWidth() / 10) - Gdx.graphics.getWidth() / 40);
