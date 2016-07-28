@@ -31,7 +31,7 @@ public class Playground implements Screen {
     int screen_width;
     int screen_hight;
     double prozenthight = 0.1;
-    Music music;
+    public static Music music;
     int startx;
     int heightandwidthperfield;
     int halffinalprozent;
