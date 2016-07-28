@@ -1,9 +1,6 @@
 package io.noim.daslabyrinth;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -30,11 +27,13 @@ public class Settings implements Screen {
 
     Texture checkBox1;
     Texture checkBox2;
+    Texture checkBox3;
     Texture back;
-    boolean checkBox1Checked, checkBox2Checked;
+    boolean checkBox1Checked, checkBox2Checked, checkBox3Checked;
     float checkBoxPosX;
     float checkBoxPos1Y;
     float checkBoxPos2Y;
+    float checkBoxPos3Y;
     float checkBoxSize;
 
 
@@ -43,6 +42,7 @@ public class Settings implements Screen {
         checkBoxPosX = Gdx.graphics.getWidth() / 10;
         checkBoxPos1Y = Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10 * 3;
         checkBoxPos2Y = Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10 * 4;
+        checkBoxPos3Y = Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10 * 5;
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -57,6 +57,13 @@ public class Settings implements Screen {
             checkBox1Checked = false;
         }
         if (StartMenu.playSounds) {
+            checkBox2 = new Texture("checkbox_checked.png");
+            checkBox2Checked = true;
+        } else {
+            checkBox2 = new Texture("checkbox.png");
+            checkBox2Checked = false;
+        }
+        if (StartMenu.vibration) {
             checkBox2 = new Texture("checkbox_checked.png");
             checkBox2Checked = true;
         } else {
@@ -104,6 +111,22 @@ public class Settings implements Screen {
                     StartMenu.pref.flush();
                 }
             }
+            if(touchPosition.x >= checkBoxPosX - (checkBoxSize / 5) &&
+                    touchPosition.x <= checkBoxPosX + (checkBoxSize / 5 * 6) &&
+                    touchPosition.y >= checkBoxPos3Y - (checkBoxSize / 5) &&
+                    touchPosition.y <= checkBoxPos3Y + (checkBoxSize / 5 * 6)) {
+                if (!checkBox3Checked) {
+                    checkBox3 = new Texture("checkbox_checked.png");
+                    checkBox3Checked = true;
+                    StartMenu.pref.putBoolean("Vibration", true);
+                    StartMenu.pref.flush();
+                } else {
+                    checkBox3 = new Texture("checkbox.png");
+                    checkBox3Checked = false;
+                    StartMenu.pref.putBoolean("Vibration", false);
+                    StartMenu.pref.flush();
+                }
+            }
             if(touchPosition.x >= Gdx.graphics.getWidth() / 20 - (checkBoxSize / 5) &&
                     touchPosition.x <= Gdx.graphics.getWidth() / 20 + (checkBoxSize / 5 * 6) &&
                     touchPosition.y >= (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30) - (back.getHeight() / 3) - (checkBoxSize / 5) &&
@@ -118,10 +141,12 @@ public class Settings implements Screen {
         batch.draw(background, 0, 0, Gdx.graphics.getWidth(),  Gdx.graphics.getHeight());
         batch.draw(checkBox1, checkBoxPosX, checkBoxPos1Y, checkBoxSize, checkBoxSize);
         batch.draw(checkBox2, checkBoxPosX, checkBoxPos2Y, checkBoxSize, checkBoxSize);
+        batch.draw(checkBox3, checkBoxPosX, checkBoxPos3Y, checkBoxSize, checkBoxSize);
         batch.draw(back, Gdx.graphics.getWidth() / 20, (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30) - (back.getHeight() / 3), Gdx.graphics.getWidth() / 10, Gdx.graphics.getWidth() / 10);
         font_heading.draw(batch, heading, Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 20) * 17, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10);
         font_text.draw(batch, "Musik", checkBoxPosX + (Gdx.graphics.getWidth() / 5), (checkBoxPos1Y + Gdx.graphics.getWidth() / 10) - Gdx.graphics.getWidth() / 40);
         font_text.draw(batch, "Sounds", checkBoxPosX + (Gdx.graphics.getWidth() / 5), (checkBoxPos2Y + Gdx.graphics.getWidth() / 10) - Gdx.graphics.getWidth() / 40);
+        font_text.draw(batch, "Vibration", checkBoxPosX + (Gdx.graphics.getWidth() / 5), (checkBoxPos3Y + Gdx.graphics.getWidth() / 10) - Gdx.graphics.getWidth() / 40);
         batch.end();
     }
 
