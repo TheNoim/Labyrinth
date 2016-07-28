@@ -22,7 +22,7 @@ public class DasLabyrinth extends Game {
 	public static Sound treasure, click;
 	public static Preferences pref;
 	public static Vector3 touchPosition = new Vector3();
-	public static int ButtonWidth = (int) (Gdx.graphics.getWidth() * (float) 0.9);
+	public static int ButtonWidth;
 	public static String heading, play, ranking, settings;
 
 	@Override
@@ -34,6 +34,8 @@ public class DasLabyrinth extends Game {
 		play = "SPIEL STARTEN";
 		ranking = "RANKING";
 		settings = "EINSTELLUNGEN";
+
+		ButtonWidth = (int) (Gdx.graphics.getWidth() * (float) 0.9);
 
 		pref = Gdx.app.getPreferences("labyrinth.dat");
 		background = new Texture("background.png");
