@@ -72,7 +72,7 @@ public class Save implements Screen {
                 main.setScreen(new Playground(main));
             }
             }
-        }, 1);
+        }, (float) 0.25);
 
     }
 }
