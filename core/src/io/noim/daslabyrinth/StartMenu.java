@@ -7,6 +7,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -20,7 +21,8 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
 
     SpriteBatch batch;
     OrthographicCamera camera;
-    public static Music music, sound;
+    public static Music music;
+    public static Sound treasure, click;
     public static Preferences pref;
     BitmapFont font;
     Texture background, button, button_pushed, banner;
@@ -65,7 +67,8 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
         vibration = pref.getBoolean("Vibration", true);
 
         music = Gdx.audio.newMusic(Gdx.files.internal("Spooky Fun.mp3"));
-        sound = Gdx.audio.newMusic(Gdx.files.internal("blop.wav"));
+        click = Gdx.audio.newSound(Gdx.files.internal("blop.wav"));
+        treasure = Gdx.audio.newSound(Gdx.files.internal("treasure.wav"));
         music.setLooping(true);
 
         if (!music.isPlaying() && playMusic) {
@@ -132,12 +135,12 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
 
         batch.draw(background, 0, 0, (float) Gdx.graphics.getWidth(), (float) Gdx.graphics.getHeight());
 
-        batch.draw(banner, 0, ((float) 0.85 * Gdx.graphics.getHeight() - textHeight(heading, font)), Gdx.graphics.getWidth(), 300);
+        batch.draw(banner, 0, ((float) 0.75 * Gdx.graphics.getHeight()), Gdx.graphics.getWidth(), textHeight(heading, font) + (float) 0.47 * banner.getHeight());
         batch.draw(button, X, Gdx.graphics.getHeight() / 2 + (textHeight(play, font) + 80), ButtonWidth, textHeight(play, font) + 80);
         batch.draw(button, X, Gdx.graphics.getHeight() / 2 - (textHeight(play, font) + 80) / 2, ButtonWidth, textHeight(ranking, font) + 80);
         batch.draw(button, X, Gdx.graphics.getHeight() / 2 - (textHeight(play, font) + 80) * 2, ButtonWidth, textHeight(settings, font) + 80);
 
-        font.draw(batch, heading, X, ((float) 0.85 * Gdx.graphics.getHeight()), Gdx.graphics.getWidth(), 0, false);
+        font.draw(batch, heading, 0, (float) 0.75 * Gdx.graphics.getHeight() +  (float) 0.53 * banner.getHeight(), Gdx.graphics.getWidth(), 1, false);
         font.draw(batch, play, X, Gdx.graphics.getHeight() / 2 + 2 * (textHeight(play, font) + 80) - (((textHeight(play, font) + 80) - textHeight(play, font)) / 2), ButtonWidth, 1, false);
         font.draw(batch, ranking, X, Gdx.graphics.getHeight() / 2 + ((textHeight(play, font) + 80) / 2) - (((textHeight(play, font) + 80) - textHeight(ranking, font)) / 2), ButtonWidth, 1, false);
         font.draw(batch, settings, X, Gdx.graphics.getHeight() / 2 - (textHeight(play, font) + 80) - (((textHeight(play, font) + 80) - textHeight(settings, font)) / 2), ButtonWidth, 1, false);
@@ -232,10 +235,16 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
 
     public static void click() {
         if (StartMenu.pref.getBoolean("Sounds", true)) {
-            sound.play();
+            click.play();
         }
         if (StartMenu.pref.getBoolean("Vibration", true)) {
             Gdx.input.vibrate(new long[] {0, 100}, -1);
+        }
+    }
+
+    public static void treasure() {
+        if (pref.getBoolean("Sounds", true)) {
+            treasure.play();
         }
     }
 }

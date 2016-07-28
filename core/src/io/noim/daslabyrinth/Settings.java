@@ -158,7 +158,7 @@ public class Settings implements Screen {
         batch.draw(checkBox2, checkBoxPosX, checkBoxPos2Y, checkBoxSize, checkBoxSize);
         batch.draw(checkBox3, checkBoxPosX, checkBoxPos3Y, checkBoxSize, checkBoxSize);
         batch.draw(back, Gdx.graphics.getWidth() / 20, (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30) - (back.getHeight() / 3), Gdx.graphics.getWidth() / 10, Gdx.graphics.getWidth() / 10);
-        font_heading.draw(batch, heading, Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 20) * 17, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10, Gdx.graphics.getWidth(), 1, true);
+        font_heading.draw(batch, heading, 0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10, Gdx.graphics.getWidth(), 1, false);
         font_text.draw(batch, "Musik", checkBoxPosX + (Gdx.graphics.getWidth() / 5), (checkBoxPos1Y + Gdx.graphics.getWidth() / 10) - Gdx.graphics.getWidth() / 40);
         font_text.draw(batch, "Sounds", checkBoxPosX + (Gdx.graphics.getWidth() / 5), (checkBoxPos2Y + Gdx.graphics.getWidth() / 10) - Gdx.graphics.getWidth() / 40);
         font_text.draw(batch, "Vibration", checkBoxPosX + (Gdx.graphics.getWidth() / 5), (checkBoxPos3Y + Gdx.graphics.getWidth() / 10) - Gdx.graphics.getWidth() / 40);
@@ -187,31 +187,10 @@ public class Settings implements Screen {
     public void callClass() {
         if (StartMenu.whichClass == 0) {
             StartMenu.music.stop();
-            main.setScreen(new StartMenu(main));
+            main.setScreen(new Save(main));
         } else if (StartMenu.whichClass == 1) {
             StartMenu.music.stop();
-            main.setScreen(new Playground(main));
+            main.setScreen(new Save(main));
         }
     }
-
-    /*
-    TODO          SIMON HIER IST DIE FUNKTION DIE IN DIE STARTMENU.java MUSS
-
-    //DAS HIER OBEN EINFÜGEN
-    public static Sound treasure;
-
-    //DAS HIER IN CREATE() EINFÜGEN
-    treasure = new Gdx.audio.Sound("treasure.wav");
-
-    //DIESE FUNKTION IRGENDWO IN STARTMENU.java EINFÜGEN
-    public static void treasure() {
-        if (pref.getBoolean("Sounds", true)) {
-            treasure.play();
-        }
-    }
-
-
-
-     TODO         P.s.: Bitte ändere den Namen sound zu click von der soundvariable. dann ist das übersichtlicher. danke :)
-     */
 }
