@@ -98,7 +98,7 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
             }
             if (touchPosition.x >= (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) && touchPosition.x <= (Gdx.graphics.getWidth() / 2 + ButtonWidth / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 - (textHeight(play, font) + 80) / 2) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 + (textHeight(play, font) + 80) / 2)) {
                 click();
-                //main.setScreen(new Ranking(main));
+                //TODO main.setScreen(new Ranking(main));
             }
             if (touchPosition.x >= (Gdx.graphics.getWidth() / 2 - ButtonWidth / 2) && touchPosition.x <= (Gdx.graphics.getWidth() / 2 + ButtonWidth / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 - (textHeight(play, font) + 80) * 2) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 - (textHeight(play, font) + 80))) {
                 click();
@@ -132,12 +132,12 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
 
         batch.draw(background, 0, 0, (float) Gdx.graphics.getWidth(), (float) Gdx.graphics.getHeight());
 
-
+        batch.draw(banner, 0, ((float) 0.85 * Gdx.graphics.getHeight() - textHeight(heading, font)), Gdx.graphics.getWidth(), 300);
         batch.draw(button, X, Gdx.graphics.getHeight() / 2 + (textHeight(play, font) + 80), ButtonWidth, textHeight(play, font) + 80);
         batch.draw(button, X, Gdx.graphics.getHeight() / 2 - (textHeight(play, font) + 80) / 2, ButtonWidth, textHeight(ranking, font) + 80);
         batch.draw(button, X, Gdx.graphics.getHeight() / 2 - (textHeight(play, font) + 80) * 2, ButtonWidth, textHeight(settings, font) + 80);
 
-        font.draw(batch, heading, X, ((float) 0.85 * Gdx.graphics.getHeight()), Gdx.graphics.getWidth(), 1, false);
+        font.draw(batch, heading, X, ((float) 0.85 * Gdx.graphics.getHeight()), Gdx.graphics.getWidth(), 0, false);
         font.draw(batch, play, X, Gdx.graphics.getHeight() / 2 + 2 * (textHeight(play, font) + 80) - (((textHeight(play, font) + 80) - textHeight(play, font)) / 2), ButtonWidth, 1, false);
         font.draw(batch, ranking, X, Gdx.graphics.getHeight() / 2 + ((textHeight(play, font) + 80) / 2) - (((textHeight(play, font) + 80) - textHeight(ranking, font)) / 2), ButtonWidth, 1, false);
         font.draw(batch, settings, X, Gdx.graphics.getHeight() / 2 - (textHeight(play, font) + 80) - (((textHeight(play, font) + 80) - textHeight(settings, font)) / 2), ButtonWidth, 1, false);
