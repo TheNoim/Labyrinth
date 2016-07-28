@@ -187,10 +187,10 @@ public class Settings implements Screen {
     public void callClass() {
         if (StartMenu.whichClass == 0) {
             StartMenu.music.stop();
-            main.setScreen(new StartMenu(main));
+            main.setScreen(new Save(main));
         } else if (StartMenu.whichClass == 1) {
             StartMenu.music.stop();
-            main.setScreen(new Playground(main));
+            main.setScreen(new Save(main));
         }
     }
 }
