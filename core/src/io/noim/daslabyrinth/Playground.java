@@ -51,7 +51,7 @@ public class Playground implements Screen {
     Texture pfeil = new Texture("pfeil.gif");
 
     public void create() {
-        StartMenu.whichClass = 1;
+        DasLabyrinth.whichClass = 1;
         Functions.generateRandomeField();
         Functions.printField();
         int tcount = 0;
@@ -85,7 +85,7 @@ public class Playground implements Screen {
         camera.setToOrtho(false, screen_hight, screen_width);
         music = Gdx.audio.newMusic(Gdx.files.internal("Epic Suspense.mp3"));
         music.setLooping(true);
-        if (StartMenu.pref.getBoolean("Music", true)){
+        if (DasLabyrinth.pref.getBoolean("Music", true)){
             music.play();
         }
         gameFields = Functions.gameFields;
