@@ -193,25 +193,4 @@ public class Settings implements Screen {
             main.setScreen(new Playground(main));
         }
     }
-
-    /*
-    TODO          SIMON HIER IST DIE FUNKTION DIE IN DIE STARTMENU.java MUSS
-
-    //DAS HIER OBEN EINFÜGEN
-    public static Sound treasure;
-
-    //DAS HIER IN CREATE() EINFÜGEN
-    treasure = new Gdx.audio.Sound("treasure.wav");
-
-    //DIESE FUNKTION IRGENDWO IN STARTMENU.java EINFÜGEN
-    public static void treasure() {
-        if (pref.getBoolean("Sounds", true)) {
-            treasure.play();
-        }
-    }
-
-
-
-     TODO         P.s.: Bitte ändere den Namen sound zu click von der soundvariable. dann ist das übersichtlicher. danke :)
-     */
 }
