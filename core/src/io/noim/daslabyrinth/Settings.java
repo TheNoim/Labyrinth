@@ -189,9 +189,6 @@ public class Settings implements Screen {
         if (StartMenu.whichClass == 0) {
             StartMenu.music.stop();
             main.setScreen(new Save(main));
-        } else if (StartMenu.whichClass == 1) {
-            StartMenu.music.stop();
-            main.setScreen(new Save(main));
         }
     }
 }
