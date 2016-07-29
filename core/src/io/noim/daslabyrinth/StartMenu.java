@@ -35,13 +35,19 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
     }
 
     public void create() {
+
+        DasLabyrinth.pref.flush();
+        DasLabyrinth.playMusic = DasLabyrinth.pref.getBoolean("Music", true);
+        DasLabyrinth.playSounds = DasLabyrinth.pref.getBoolean("Sounds", true);
+        DasLabyrinth.vibration = DasLabyrinth.pref.getBoolean("Vibration", true);
+
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCatchBackKey(true);
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        if (!DasLabyrinth.music.isPlaying() && DasLabyrinth.playMusic) {
+        if (DasLabyrinth.playMusic) {
             DasLabyrinth.music.play();
         } else {
             DasLabyrinth.music.stop();

@@ -36,6 +36,12 @@ public class Settings implements Screen {
     float checkBoxSize;
 
     public void create() {
+
+        DasLabyrinth.pref.flush();
+        DasLabyrinth.playMusic = DasLabyrinth.pref.getBoolean("Music", true);
+        DasLabyrinth.playSounds = DasLabyrinth.pref.getBoolean("Sounds", true);
+        DasLabyrinth.vibration = DasLabyrinth.pref.getBoolean("Vibration", true);
+
         font_text = new BitmapFont(Gdx.files.internal("Verdana.fnt"));
         font_text.getData().setScale(Functions.scaleText("Vibration", font_text, Gdx.graphics.getWidth() / 3));
         checkBoxSize = Gdx.graphics.getWidth() / 10;

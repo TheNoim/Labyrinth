@@ -4,6 +4,7 @@ package io.noim.daslabyrinth;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -32,6 +33,7 @@ public class Playground implements Screen {
     int screen_hight;
     double prozenthight = 0.1;
     public static Music music;
+    Sound move;
     int startx;
     int heightandwidthperfield;
     int halffinalprozent;
@@ -83,7 +85,11 @@ public class Playground implements Screen {
         shaper = new ShapeRenderer();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, screen_hight, screen_width);
+        DasLabyrinth.pref.flush();
+        DasLabyrinth.playSounds = DasLabyrinth.pref.getBoolean("Sounds", true);
+        DasLabyrinth.vibration = DasLabyrinth.pref.getBoolean("Vibration", true);
         music = Gdx.audio.newMusic(Gdx.files.internal("Epic Suspense.mp3"));
+        move = Gdx.audio.newSound(Gdx.files.internal("move.mp3"));
         music.setLooping(true);
         if (DasLabyrinth.pref.getBoolean("Music", true)){
             music.play();
@@ -285,6 +291,9 @@ public class Playground implements Screen {
                         //Functions.moveFields(imgb.gf.x, imgb.gf.y, imgb.fromx, newgf, imgb.reverse);
                         imgb.move();
                         alreadypressed = true;
+                        if(DasLabyrinth.playSounds){
+                            move.play();
+                        }
                     }
                 }
             }
