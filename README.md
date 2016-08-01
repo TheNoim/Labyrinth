@@ -5,4 +5,4 @@ In this Repository you can find a complete Android Studio Project which is free 
 
 
 
-#Be aware that the game is not finished yet
+# Be aware that the game is not finished yet
