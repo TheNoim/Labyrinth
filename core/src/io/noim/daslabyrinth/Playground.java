@@ -51,6 +51,7 @@ public class Playground implements Screen {
     Array<ImgButton> imgButtons = new Array<ImgButton>();
     boolean alreadypressed;
     Texture pfeil = new Texture("pfeil.gif");
+    Texture rotatePfeil = new Texture("rotate.png");
 
     public void create() {
         DasLabyrinth.whichClass = 1;
@@ -91,7 +92,7 @@ public class Playground implements Screen {
         music = Gdx.audio.newMusic(Gdx.files.internal("Epic Suspense.mp3"));
         move = Gdx.audio.newSound(Gdx.files.internal("move.mp3"));
         music.setLooping(true);
-        if (DasLabyrinth.pref.getBoolean("Music", true)){
+        if (DasLabyrinth.pref.getBoolean("Music", true)) {
             music.play();
         }
         gameFields = Functions.gameFields;
@@ -115,14 +116,14 @@ public class Playground implements Screen {
         roboto = new BitmapFont(Gdx.files.internal("Roboto.fnt"));
         istmovingnewfield = false;
         int k = 1;
-        for (int i = 0; i < 18; i++){
-            if (i <= 5){
-                for (GameField gf : Functions.gameFields){
-                    if (gf.y == 1 && gf.x == i){
+        for (int i = 0; i < 18; i++) {
+            if (i <= 5) {
+                for (GameField gf : Functions.gameFields) {
+                    if (gf.y == 1 && gf.x == i) {
                         Vector2 v = new Vector2();
                         v.x = gf.posx + heightandwidthperfield / 2;
                         v.y = gf.posy - 20;
-                        ImgButton bt = new ImgButton(pfeil, v, batch, heightandwidthperfield / 4, heightandwidthperfield /4, Richtung.Unten);
+                        ImgButton bt = new ImgButton(pfeil, v, batch, heightandwidthperfield / 4, heightandwidthperfield / 4, Richtung.Unten);
                         bt.gf = gf;
                         bt.shouldx = gf.x;
                         bt.shouldy = gf.y;
@@ -130,11 +131,11 @@ public class Playground implements Screen {
                     }
                 }
             }
-            if (i <= 10 && i >= 6){
-                for (GameField gf : Functions.gameFields){
-                    if (gf.y == 5){
+            if (i <= 10 && i >= 6) {
+                for (GameField gf : Functions.gameFields) {
+                    if (gf.y == 5) {
                         Vector2 v = new Vector2();
-                        ImgButton bt = new ImgButton(pfeil, v, batch, heightandwidthperfield / 4, heightandwidthperfield /4, Richtung.Oben);
+                        ImgButton bt = new ImgButton(pfeil, v, batch, heightandwidthperfield / 4, heightandwidthperfield / 4, Richtung.Oben);
                         bt.gf = gf;
                         bt.shouldx = gf.x;
                         bt.shouldy = gf.y;
@@ -142,11 +143,11 @@ public class Playground implements Screen {
                     }
                 }
             }
-            if (i <= 15 && i >= 10){
-                for (GameField gf : Functions.gameFields){
-                    if (gf.x == 1){
+            if (i <= 15 && i >= 10) {
+                for (GameField gf : Functions.gameFields) {
+                    if (gf.x == 1) {
                         Vector2 v = new Vector2();
-                        ImgButton bt = new ImgButton(pfeil, v,batch, heightandwidthperfield / 4, heightandwidthperfield /4, Richtung.Links);
+                        ImgButton bt = new ImgButton(pfeil, v, batch, heightandwidthperfield / 4, heightandwidthperfield / 4, Richtung.Links);
                         bt.gf = gf;
                         bt.shouldx = gf.x;
                         bt.shouldy = gf.y;
@@ -154,11 +155,11 @@ public class Playground implements Screen {
                     }
                 }
             }
-            if (i <= 20 && i >= 15){
-                for (GameField gf : Functions.gameFields){
-                    if (gf.x == 4){
+            if (i <= 20 && i >= 15) {
+                for (GameField gf : Functions.gameFields) {
+                    if (gf.x == 4) {
                         Vector2 v = new Vector2();
-                        ImgButton bt = new ImgButton(pfeil, v,batch, heightandwidthperfield / 4, heightandwidthperfield /4, Richtung.Rechts);
+                        ImgButton bt = new ImgButton(pfeil, v, batch, heightandwidthperfield / 4, heightandwidthperfield / 4, Richtung.Rechts);
                         bt.gf = gf;
                         bt.shouldx = gf.x;
                         bt.shouldy = gf.y;
@@ -235,39 +236,40 @@ public class Playground implements Screen {
             }
             batch.setTransformMatrix(originalMatrix);
         }
-        for (ImgButton imb : imgButtons){
+        for (ImgButton imb : imgButtons) {
             imb.draw();
         }
+        batch.draw(rotatePfeil, 2 * yy + heightandwidthperfield, xx - (int) Math.round(heightandwidthperfield * 1.25), heightandwidthperfield / 2, heightandwidthperfield / 2);
         batch.end();
     }
 
     public void update() {
-        for (ImgButton img : imgButtons){
-            if (img.gf.x != img.shouldx || img.gf.y != img.shouldy){
-                for (GameField ggf : gameFields){
-                    if (ggf.x == img.shouldx && ggf.y == img.shouldy){
+        for (ImgButton img : imgButtons) {
+            if (img.gf.x != img.shouldx || img.gf.y != img.shouldy) {
+                for (GameField ggf : gameFields) {
+                    if (ggf.x == img.shouldx && ggf.y == img.shouldy) {
                         img.gf = ggf;
                         System.out.println("Change");
                     }
                 }
             }
-            if (img.rich == Richtung.Unten){
+            if (img.rich == Richtung.Unten) {
                 img.vec.x = img.gf.posx + heightandwidthperfield / 2;
                 img.vec.x = img.vec.x - img.width / 2;
                 img.vec.y = img.gf.posy - img.height;
             }
-            if (img.rich == Richtung.Oben){
+            if (img.rich == Richtung.Oben) {
                 img.vec.x = img.gf.posx + heightandwidthperfield / 2;
                 img.vec.x = img.vec.x - img.width / 2;
                 img.vec.y = img.gf.posy + heightandwidthperfield;
             }
-            if (img.rich == Richtung.Links){
+            if (img.rich == Richtung.Links) {
                 img.vec.x = img.gf.posx - img.width;
                 img.vec.y = img.gf.posy + heightandwidthperfield / 2;
                 img.vec.y = img.vec.y - img.height;
                 img.vec.y = img.vec.y + img.height / 2;
             }
-            if (img.rich == Richtung.Rechts){
+            if (img.rich == Richtung.Rechts) {
                 img.vec.x = img.gf.posx + heightandwidthperfield;
                 img.vec.y = img.gf.posy;
                 img.vec.y = img.vec.y + heightandwidthperfield / 4;
@@ -285,13 +287,13 @@ public class Playground implements Screen {
                     notallowedtotouch = true;
                 }
             }
-            if (!alreadypressed){
-                for (ImgButton imgb : imgButtons){
-                    if (imgb.isClicked()){
+            if (!alreadypressed) {
+                for (ImgButton imgb : imgButtons) {
+                    if (imgb.isClicked()) {
                         //Functions.moveFields(imgb.gf.x, imgb.gf.y, imgb.fromx, newgf, imgb.reverse);
                         imgb.move();
                         alreadypressed = true;
-                        if(DasLabyrinth.playSounds){
+                        if (DasLabyrinth.playSounds) {
                             move.play();
                         }
                     }
@@ -333,7 +335,8 @@ public class Playground implements Screen {
     public void dispose() {
         batch.dispose();
     }
-    public void t(){
+
+    public void t() {
         System.out.println("Test");
     }
 
