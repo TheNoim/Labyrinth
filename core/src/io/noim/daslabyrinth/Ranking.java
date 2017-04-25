@@ -40,7 +40,7 @@ public class Ranking implements Screen {
         if (Gdx.input.justTouched()) {
             touchPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(touchPosition);
-            if(touchPosition.x >= Gdx.graphics.getWidth() / 20 - (Gdx.graphics.getWidth() / 10 / 5) &&
+            if (touchPosition.x >= Gdx.graphics.getWidth() / 20 - (Gdx.graphics.getWidth() / 10 / 5) &&
                     touchPosition.x <= Gdx.graphics.getWidth() / 20 + (Gdx.graphics.getWidth() / 10 / 5 * 6) &&
                     touchPosition.y >= (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30) - (back.getHeight() / 3) - (Gdx.graphics.getWidth() / 10 / 5) &&
                     touchPosition.y <= (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30) - (back.getHeight() / 3) + (Gdx.graphics.getWidth() / 10 / 5 * 6)) {

@@ -17,7 +17,7 @@ public class Player {
 
     Array<Player> players = new Array<Player>();
 
-    public Player(GameField currentfield, int treasurescount){
+    public Player(GameField currentfield, int treasurescount) {
         PlayerManager.players.add(this);
         this.currentfield = currentfield;
         this.treasurescount = treasurescount;
@@ -25,14 +25,16 @@ public class Player {
         players.add(this);
     }
 
-    public void movePlayer(GameField nextgamefield){
+    public void movePlayer(GameField nextgamefield) {
         this.currentfield = nextgamefield;
     }
-    public void addScore(int s){
+
+    public void addScore(int s) {
         this.score += s;
         DasLabyrinth.pref.putInteger("Score", +1);
     }
-    public void setScore(int s){
+
+    public void setScore(int s) {
         this.score = s;
     }
 }

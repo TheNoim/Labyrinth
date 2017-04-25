@@ -5,7 +5,7 @@ package io.noim.daslabyrinth;
  */
 public class GameFieldManager {
 
-    public static boolean move(Player p){
+    public static boolean move(Player p) {
 
 
         return false;

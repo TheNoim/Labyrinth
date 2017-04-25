@@ -11,7 +11,7 @@ public class Treasure {
     protected Vector2 position = new Vector2();
     protected int value;
 
-    public Treasure(Texture texture, int value){
+    public Treasure(Texture texture, int value) {
         this.value = value;
         this.texture = texture;
         this.textureRegion = new TextureRegion(texture);

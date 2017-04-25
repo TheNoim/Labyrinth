@@ -197,18 +197,17 @@ public class Functions {
 
     public static void moveFields(int x, int y, boolean fromx, GameField gff, boolean reverse) {
         if (reverse) {
-            for (GameField gf: gameFields){
+            for (GameField gf : gameFields) {
                 System.out.print(gf.index + ",");
             }
             Collections.reverse(Arrays.asList(gameFields));
-            for (GameField gf: gameFields){
+            for (GameField gf : gameFields) {
                 System.out.print(gf.index + ",");
             }
         }
         GameField newx;
         boolean finished = false;
         boolean last = false;
-        System.out.println("SIZE:" + gameFields.size);
         HashMap<Integer, GameField> hash = new HashMap<Integer, GameField>();
         HashMap<Integer, Integer> hashx = new HashMap<Integer, Integer>();
         HashMap<Integer, Integer> hashy = new HashMap<Integer, Integer>();
@@ -313,7 +312,7 @@ public class Functions {
                 }
             }
         }
-        for (int i = 0; i < sizerarray.size; i++){
+        for (int i = 0; i < sizerarray.size; i++) {
             GameField gamfield = hash.get(sizerarray.get(i));
             int thisx = hashx.get(sizerarray.get(i));
             int thisy = hashy.get(sizerarray.get(i));
@@ -326,12 +325,10 @@ public class Functions {
         if (reverse) {
             //gameFields.reverse();
             Collections.reverse(Arrays.asList(gameFields));
-            for (GameField gf: gameFields){
+            for (GameField gf : gameFields) {
                 System.out.print(gf.index + ",");
             }
         }
-        System.out.println("SIZE:" + gameFields.size);
-
     }
 
     public static float textWidth(String largestText, BitmapFont font) {

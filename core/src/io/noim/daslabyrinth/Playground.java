@@ -286,6 +286,11 @@ public class Playground implements Screen {
                     Functions.moveFields(0, 2, false, newgf, false);
                     notallowedtotouch = true;
                 }
+            } else if (touch.x >= (2 * halffinalprozent + heightandwidthperfield) && touch.x <= (2 * halffinalprozent + heightandwidthperfield + heightandwidthperfield / 2) && touch.y >= (startx - (int) Math.round(heightandwidthperfield * 1.25)) && touch.y <= (startx - (int) Math.round(heightandwidthperfield * 1.25) + heightandwidthperfield / 2)) {
+                if (!notallowedtotouch) {
+                    newgf.facing += 1;
+                    notallowedtotouch = true;
+                }
             }
             if (!alreadypressed) {
                 for (ImgButton imgb : imgButtons) {

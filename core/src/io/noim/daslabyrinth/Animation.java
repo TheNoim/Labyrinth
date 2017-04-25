@@ -48,17 +48,15 @@ public class Animation implements Screen {
         if (Gdx.input.justTouched()) {
             animate = true;
         }
-        if(animate == true){
-//            for (double i = 0.5; i <= 0.9185; i += 0.0005) {
+        if (animate == true) {
             yAnim += yDelta; // += 0.005;
             yDelta *= 0.9;
-                batch.draw(banner, 0, ((float) (yAnim - 0.1685) * Gdx.graphics.getHeight()), Gdx.graphics.getWidth(), (float) 0.2 * Gdx.graphics.getHeight());
+            batch.draw(banner, 0, ((float) (yAnim - 0.1685) * Gdx.graphics.getHeight()), Gdx.graphics.getWidth(), (float) 0.2 * Gdx.graphics.getHeight());
 
-                DasLabyrinth.font.draw(batch, heading, 0, (float) yAnim * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 1, false);
-                if(yAnim >= 0.9185){
-                    main.setScreen(new StartMenu(main));
-                }
- //           }
+            DasLabyrinth.font.draw(batch, heading, 0, (float) yAnim * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 1, false);
+            if (yAnim >= 0.9185) {
+                main.setScreen(new StartMenu(main));
+            }
         } else {
             batch.draw(banner, 0, ((float) 0.3315 * Gdx.graphics.getHeight()), Gdx.graphics.getWidth(), (float) 0.2 * Gdx.graphics.getHeight());
             DasLabyrinth.font.draw(batch, heading, 0, (float) 0.5 * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 1, false);

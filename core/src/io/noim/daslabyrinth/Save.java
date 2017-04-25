@@ -14,9 +14,10 @@ public class Save implements Screen {
 
     public DasLabyrinth main;
 
-    public Save(final DasLabyrinth main){
+    public Save(final DasLabyrinth main) {
         this.main = main;
     }
+
     SpriteBatch batch;
     OrthographicCamera camera;
     Texture background;
@@ -32,7 +33,8 @@ public class Save implements Screen {
         exit();
     }
 
-    private void update() { }
+    private void update() {
+    }
 
     private void draw() {
         batch.begin();
@@ -45,27 +47,37 @@ public class Save implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         draw();
     }
-    public void resize(int width, int height) {  }
+
+    public void resize(int width, int height) {
+    }
 
     public void show() {
         create();
     }
-    public void hide() {  }
-    public void pause() {  }
-    public void resume() {  }
+
+    public void hide() {
+    }
+
+    public void pause() {
+    }
+
+    public void resume() {
+    }
+
     public void dispose() {
         batch.dispose();
     }
 
 
     private void exit() {
-        Timer.schedule(new Timer.Task(){
+        Timer.schedule(new Timer.Task() {
             @Override
-            public void run() {if (DasLabyrinth.whichClass == 0) {
-                main.setScreen(new StartMenu(main));
-            } else if (DasLabyrinth.whichClass == 1) {
-                main.setScreen(new Playground(main));
-            }
+            public void run() {
+                if (DasLabyrinth.whichClass == 0) {
+                    main.setScreen(new StartMenu(main));
+                } else if (DasLabyrinth.whichClass == 1) {
+                    main.setScreen(new Playground(main));
+                }
             }
         }, (float) 0.25);
 

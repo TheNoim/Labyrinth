@@ -14,9 +14,10 @@ public class Settings implements Screen {
 
     public DasLabyrinth main;
 
-    public Settings(final DasLabyrinth main){
+    public Settings(final DasLabyrinth main) {
         this.main = main;
     }
+
     SpriteBatch batch;
     OrthographicCamera camera;
     Texture background;
@@ -78,13 +79,13 @@ public class Settings implements Screen {
     }
 
     private void update() {
-        if(Gdx.input.justTouched()) {
-            touchPosition.set(Gdx.input.getX(),Gdx.input.getY(), 0);
+        if (Gdx.input.justTouched()) {
+            touchPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(touchPosition);
-            if(touchPosition.x >= checkBoxPosX - (checkBoxSize / 5) &&
-               touchPosition.x <= checkBoxPosX + (checkBoxSize / 5 * 6) &&
-               touchPosition.y >= checkBoxPos1Y - (checkBoxSize / 5) &&
-               touchPosition.y <= checkBoxPos1Y + (checkBoxSize / 5 * 6)) {
+            if (touchPosition.x >= checkBoxPosX - (checkBoxSize / 5) &&
+                    touchPosition.x <= checkBoxPosX + (checkBoxSize / 5 * 6) &&
+                    touchPosition.y >= checkBoxPos1Y - (checkBoxSize / 5) &&
+                    touchPosition.y <= checkBoxPos1Y + (checkBoxSize / 5 * 6)) {
                 if (!checkBox1Checked) {
                     if (DasLabyrinth.whichClass == 0) {
                         DasLabyrinth.music.play();
@@ -109,7 +110,7 @@ public class Settings implements Screen {
                     DasLabyrinth.click();
                 }
             }
-            if(touchPosition.x >= checkBoxPosX - (checkBoxSize / 5) &&
+            if (touchPosition.x >= checkBoxPosX - (checkBoxSize / 5) &&
                     touchPosition.x <= checkBoxPosX + (checkBoxSize / 5 * 6) &&
                     touchPosition.y >= checkBoxPos2Y - (checkBoxSize / 5) &&
                     touchPosition.y <= checkBoxPos2Y + (checkBoxSize / 5 * 6)) {
@@ -127,7 +128,7 @@ public class Settings implements Screen {
                     DasLabyrinth.click();
                 }
             }
-            if(touchPosition.x >= checkBoxPosX - (checkBoxSize / 5) &&
+            if (touchPosition.x >= checkBoxPosX - (checkBoxSize / 5) &&
                     touchPosition.x <= checkBoxPosX + (checkBoxSize / 5 * 6) &&
                     touchPosition.y >= checkBoxPos3Y - (checkBoxSize / 5) &&
                     touchPosition.y <= checkBoxPos3Y + (checkBoxSize / 5 * 6)) {
@@ -145,7 +146,7 @@ public class Settings implements Screen {
                     DasLabyrinth.click();
                 }
             }
-            if(touchPosition.x >= Gdx.graphics.getWidth() / 20 - (checkBoxSize / 5) &&
+            if (touchPosition.x >= Gdx.graphics.getWidth() / 20 - (checkBoxSize / 5) &&
                     touchPosition.x <= Gdx.graphics.getWidth() / 20 + (checkBoxSize / 5 * 6) &&
                     touchPosition.y >= (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30) - (back.getHeight() / 3) - (checkBoxSize / 5) &&
                     touchPosition.y <= (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30) - (back.getHeight() / 3) + (checkBoxSize / 5 * 6)) {
@@ -157,7 +158,7 @@ public class Settings implements Screen {
 
     private void draw() {
         batch.begin();
-        batch.draw(background, 0, 0, Gdx.graphics.getWidth(),  Gdx.graphics.getHeight());
+        batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.draw(checkBox1, checkBoxPosX, checkBoxPos1Y, checkBoxSize, checkBoxSize);
         batch.draw(checkBox2, checkBoxPosX, checkBoxPos2Y, checkBoxSize, checkBoxSize);
         batch.draw(checkBox3, checkBoxPosX, checkBoxPos3Y, checkBoxSize, checkBoxSize);
@@ -176,20 +177,29 @@ public class Settings implements Screen {
         update();
         draw();
     }
-    public void resize(int width, int height) {  }
+
+    public void resize(int width, int height) {
+    }
 
     public void show() {
         create();
     }
-    public void hide() {  }
-    public void pause() {  }
-    public void resume() {  }
+
+    public void hide() {
+    }
+
+    public void pause() {
+    }
+
+    public void resume() {
+    }
+
     public void dispose() {
         batch.dispose();
     }
 
     private void callClass() {
-            DasLabyrinth.music.stop();
-            main.setScreen(new Save(main));
+        DasLabyrinth.music.stop();
+        main.setScreen(new Save(main));
     }
 }
