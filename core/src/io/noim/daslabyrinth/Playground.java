@@ -2,6 +2,8 @@ package io.noim.daslabyrinth;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -17,7 +19,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
-public class Playground implements Screen {
+public class Playground implements Screen, InputProcessor {
 
     public DasLabyrinth main;
 
@@ -54,6 +56,9 @@ public class Playground implements Screen {
     Texture rotatePfeil = new Texture("rotate.png");
 
     public void create() {
+        Gdx.input.setInputProcessor(this);
+        Gdx.input.setCatchBackKey(true);
+
         DasLabyrinth.whichClass = 1;
         Functions.generateRandomeField();
         Functions.printField();
@@ -345,4 +350,47 @@ public class Playground implements Screen {
         System.out.println("Test");
     }
 
+    @Override
+    public boolean keyDown(int keycode) {
+        DasLabyrinth.click();
+        if (keycode == Input.Keys.BACK) {
+            main.setScreen(new StartMenu(main));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
+    }
 }
