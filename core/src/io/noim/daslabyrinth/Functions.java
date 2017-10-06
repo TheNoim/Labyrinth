@@ -1,6 +1,7 @@
 package io.noim.daslabyrinth;
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -36,10 +37,6 @@ public class Functions {
                     gf.treasure = new Treasure(treasure_min, 3);
                 } else {
                     gf.treasure = new Treasure(treasure_max, 5);
-                }
-                if (gf.treasure == null) {
-                    gf.treasure = new Treasure(treasure_min, 3);
-                    System.out.print("Null");
                 }
             }
             gameFields.add(gf);
@@ -200,7 +197,7 @@ public class Functions {
             for (GameField gf : gameFields) {
                 System.out.print(gf.index + ",");
             }
-            Collections.reverse(Arrays.asList(gameFields));
+            Collections.reverse(Collections.singletonList(gameFields));
             for (GameField gf : gameFields) {
                 System.out.print(gf.index + ",");
             }
@@ -217,10 +214,11 @@ public class Functions {
         hashindex.clear();
         hashx.clear();
         hashy.clear();
+        System.out.println("Fromx: " + fromx);
         if (fromx) {
             for (int i = gameFields.size - 1; i > 0; i--) {
                 if (gameFields.get(i).x == x) {
-                    if (last == false) {
+                    if (!last) {
                         Playground.newgf = gameFields.get(i);
                         last = true;
                         System.out.println("Last X: " + gameFields.get(i).x + " Y: " + gameFields.get(i).y);
@@ -235,7 +233,7 @@ public class Functions {
                     }
                     for (int u = i - 1; u > 0; u--) {
                         if (gameFields.get(u).x == x) {
-                            if (finished == false) {
+                            if (!finished) {
                                 if (gameFields.get(u).x == first.x && gameFields.get(u).y == first.y) {
                                     int __x = gameFields.get(u).x;
                                     int __y = gameFields.get(u).y;
@@ -267,7 +265,7 @@ public class Functions {
         } else {
             for (int i = gameFields.size - 1; i > 0; i--) {
                 if (gameFields.get(i).y == y) {
-                    if (last == false) {
+                    if (!last) {
                         Playground.newgf = gameFields.get(i);
                         last = true;
                         System.out.println("Last X: " + gameFields.get(i).x + " Y: " + gameFields.get(i).y);
@@ -282,7 +280,7 @@ public class Functions {
                     }
                     for (int u = i - 1; u > 0; u--) {
                         if (gameFields.get(u).y == y) {
-                            if (finished == false) {
+                            if (!finished) {
                                 if (gameFields.get(u).x == first.x && gameFields.get(u).y == first.y) {
                                     int __x = gameFields.get(u).x;
                                     int __y = gameFields.get(u).y;
@@ -324,7 +322,7 @@ public class Functions {
         }
         if (reverse) {
             //gameFields.reverse();
-            Collections.reverse(Arrays.asList(gameFields));
+            Collections.reverse(Collections.singletonList(gameFields));
             for (GameField gf : gameFields) {
                 System.out.print(gf.index + ",");
             }
@@ -351,4 +349,10 @@ public class Functions {
         return proportion;
     }
 
+    public static void scaleWindow() {
+        float height = (float) Gdx.graphics.getHeight();
+        float aspect_ratio = (float) 9 / (float) 16;
+        float width = height * aspect_ratio;
+        Gdx.graphics.setWindowedMode((int) width, Gdx.graphics.getHeight());
+    }
 }

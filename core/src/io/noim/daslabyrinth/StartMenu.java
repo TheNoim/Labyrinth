@@ -106,6 +106,7 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
     }
 
     public void resize(int width, int height) {
+        Functions.scaleWindow();
     }
 
     @Override
@@ -131,6 +132,7 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
+        DasLabyrinth.click();
         if (keycode == Input.Keys.BACK) {
             //Back button
         }

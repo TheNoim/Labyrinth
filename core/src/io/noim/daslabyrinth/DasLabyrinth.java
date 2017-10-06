@@ -44,7 +44,7 @@ public class DasLabyrinth extends Game {
         click = Gdx.audio.newSound(Gdx.files.internal("blop.wav"));
         music = Gdx.audio.newMusic(Gdx.files.internal("Spooky Fun.mp3"));
 
-        font.getData().setScale(Functions.scaleText(settings, DasLabyrinth.font, ButtonWidth - 40));
+        font.getData().setScale(Functions.scaleText(settings, font, ButtonWidth - 40));
 
         playMusic = pref.getBoolean("Music", true);
         playSounds = pref.getBoolean("Sounds", true);

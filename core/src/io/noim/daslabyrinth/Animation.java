@@ -48,7 +48,7 @@ public class Animation implements Screen {
         if (Gdx.input.justTouched()) {
             animate = true;
         }
-        if (animate == true) {
+        if (animate) {
             yAnim += yDelta; // += 0.005;
             yDelta *= 0.9;
             batch.draw(banner, 0, ((float) (yAnim - 0.1685) * Gdx.graphics.getHeight()), Gdx.graphics.getWidth(), (float) 0.2 * Gdx.graphics.getHeight());
@@ -73,6 +73,7 @@ public class Animation implements Screen {
     }
 
     public void resize(int width, int height) {
+        Functions.scaleWindow();
     }
 
     //@Override
