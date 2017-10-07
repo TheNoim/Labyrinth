@@ -216,7 +216,7 @@ public class Functions {
         hashy.clear();
         System.out.println("Fromx: " + fromx);
         if (fromx) {
-            for (int i = gameFields.size - 1; i > 0; i--) {
+            for (int i = gameFields.size - 1; i >= 0; i--) {
                 if (gameFields.get(i).x == x) {
                     if (!last) {
                         Playground.newgf = gameFields.get(i);
@@ -231,9 +231,9 @@ public class Functions {
                             break;
                         }
                     }
-                    for (int u = i - 1; u > 0; u--) {
+                    for (int u = i - 1; u >= 0; u--) {
                         if (gameFields.get(u).x == x) {
-                            if (!finished) {
+                            if (!finished && first != null) {
                                 if (gameFields.get(u).x == first.x && gameFields.get(u).y == first.y) {
                                     int __x = gameFields.get(u).x;
                                     int __y = gameFields.get(u).y;
@@ -263,7 +263,8 @@ public class Functions {
                 }
             }
         } else {
-            for (int i = gameFields.size - 1; i > 0; i--) {
+            for (int i = gameFields.size - 1; i >= 0; i--) {
+                System.out.println(i);
                 if (gameFields.get(i).y == y) {
                     if (!last) {
                         Playground.newgf = gameFields.get(i);
@@ -278,9 +279,9 @@ public class Functions {
                             break;
                         }
                     }
-                    for (int u = i - 1; u > 0; u--) {
+                    for (int u = i - 1; u >= 0; u--) {
                         if (gameFields.get(u).y == y) {
-                            if (!finished) {
+                            if (!finished && first != null) {
                                 if (gameFields.get(u).x == first.x && gameFields.get(u).y == first.y) {
                                     int __x = gameFields.get(u).x;
                                     int __y = gameFields.get(u).y;
