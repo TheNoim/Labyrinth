@@ -254,7 +254,6 @@ public class Playground implements Screen, InputProcessor {
                 for (GameField ggf : gameFields) {
                     if (ggf.x == img.shouldx && ggf.y == img.shouldy) {
                         img.gf = ggf;
-                        System.out.println("Change");
                     }
                 }
             }

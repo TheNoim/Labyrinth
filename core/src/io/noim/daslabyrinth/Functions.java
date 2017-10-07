@@ -214,7 +214,6 @@ public class Functions {
         hashindex.clear();
         hashx.clear();
         hashy.clear();
-        System.out.println("Fromx: " + fromx);
         if (fromx) {
             for (int i = gameFields.size - 1; i >= 0; i--) {
                 if (gameFields.get(i).x == x) {
@@ -264,7 +263,6 @@ public class Functions {
             }
         } else {
             for (int i = gameFields.size - 1; i >= 0; i--) {
-                System.out.println(i);
                 if (gameFields.get(i).y == y) {
                     if (!last) {
                         Playground.newgf = gameFields.get(i);
