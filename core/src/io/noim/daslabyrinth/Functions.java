@@ -331,21 +331,18 @@ public class Functions {
     public static float textWidth(String largestText, BitmapFont font) {
         GlyphLayout layout = new GlyphLayout(); //don't do this every frame! Store it as member
         layout.setText(font, largestText);
-        float width = layout.width;// contains the width of the current set text
-        return width;
+        return layout.width;
     }
 
     public static float textHeight(String text, BitmapFont font) {
         GlyphLayout layout = new GlyphLayout(); //don't do this every frame! Store it as member
         layout.setText(font, text);
-        float height = layout.height; // contains the height of the current set text
-        return height;
+        return layout.height;
     }
 
     public static float scaleText(String text, BitmapFont font, int targetWidth) {
         float textWidth = textWidth(text, font);
-        float proportion = targetWidth / textWidth;
-        return proportion;
+        return targetWidth / textWidth;
     }
 
     public static void scaleWindow() {

@@ -43,7 +43,7 @@ public class Animation implements Screen {
     private void draw() {
         batch.begin();
 
-        batch.draw(DasLabyrinth.background, 0, 0, (float) Gdx.graphics.getWidth(), (float) Gdx.graphics.getHeight());
+        batch.draw(DasLabyrinth.background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         if (Gdx.input.justTouched()) {
             animate = true;
@@ -65,7 +65,7 @@ public class Animation implements Screen {
     }
 
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         update();
