@@ -32,6 +32,7 @@ public class Player {
     public void addScore(int s) {
         this.score += s;
         DasLabyrinth.pref.putInteger("Score", +1);
+        DasLabyrinth.pref.flush();
     }
 
     public void setScore(int s) {

@@ -7,8 +7,8 @@ public class PlayerManager {
     public static Array<Player> players = new Array<Player>();
 
     public static void resetAllScores() {
-        for (Player p : players) {
-            p.setScore(0);
+        for (int i = 0; i < players.size; i++) {
+            players.get(i).setScore(0);
         }
     }
 

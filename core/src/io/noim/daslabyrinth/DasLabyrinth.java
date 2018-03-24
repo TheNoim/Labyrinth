@@ -62,7 +62,7 @@ public class DasLabyrinth extends Game {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        //Functions.generateRandomeField();
+        //Functions.generateRandomField();
         //Functions.printField();
         setScreen(new Animation(this));
     }

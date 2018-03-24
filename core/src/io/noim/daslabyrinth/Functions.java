@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.utils.Array;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -24,7 +23,7 @@ public class Functions {
 
     public static Array<GameField> gameFields = new Array<GameField>();
 
-    public static void generateRandomeField() {
+    public static void generateRandomField() {
         gameFields.clear();
         int x = 1;
         int y = 1;
@@ -194,12 +193,12 @@ public class Functions {
 
     public static void moveFields(int x, int y, boolean fromx, GameField gff, boolean reverse) {
         if (reverse) {
-            for (GameField gf : gameFields) {
-                System.out.print(gf.index + ",");
+            for (int i = 0; i < gameFields.size; i++){
+                System.out.print(gameFields.get(i).index + ",");
             }
             Collections.reverse(Collections.singletonList(gameFields));
-            for (GameField gf : gameFields) {
-                System.out.print(gf.index + ",");
+            for (int i = 0; i < gameFields.size; i++){
+                System.out.print(gameFields.get(i).index + ",");
             }
         }
         GameField newx;
@@ -322,8 +321,8 @@ public class Functions {
         if (reverse) {
             //gameFields.reverse();
             Collections.reverse(Collections.singletonList(gameFields));
-            for (GameField gf : gameFields) {
-                System.out.print(gf.index + ",");
+            for (int i = 0; i < gameFields.size; i++){
+                System.out.print(gameFields.get(i).index + ",");
             }
         }
     }

@@ -40,4 +40,9 @@ public class GameField {
         this.facing = facing;
         this.treasure = treasure;
     }
+
+    @Override
+    public String toString() {
+        return "Type " + this.type;
+    }
 }
