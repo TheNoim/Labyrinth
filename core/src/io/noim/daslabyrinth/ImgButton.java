@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
@@ -17,37 +16,32 @@ public class ImgButton {
     protected Texture tex;
     protected TextureRegion texr;
     protected Vector2 vec;
-    protected float rot;
-    protected SpriteBatch batch;
     protected int height;
     protected int width;
     protected GameField gf;
     protected int shouldx;
     protected int shouldy;
-    protected boolean fromx;
-    protected boolean reverse;
-    protected Richtung rich;
+    protected Direction direction;
 
-    public ImgButton(Texture tex, Vector2 vec, SpriteBatch batch, int height, int width, Richtung rich) {
+    public ImgButton(Texture tex, Vector2 vec, int height, int width, Direction direction) {
         this.tex = tex;
         this.texr = new TextureRegion(this.tex);
         this.vec = vec;
-        this.batch = batch;
         this.height = height;
         this.width = width;
-        this.rich = rich;
+        this.direction = direction;
     }
 
-    public void draw() {
+    public void draw(SpriteBatch batch) {
         float x = this.vec.x;
         float y = this.vec.y;
-        if (this.rich == Richtung.Unten) {
+        if (this.direction == Direction.Down) {
             batch.draw(this.texr, x, y, this.width / 2, this.height / 2, this.width, this.height, 1, 1, -90.0F);
-        } else if (this.rich == Richtung.Oben) {
+        } else if (this.direction == Direction.Up) {
             batch.draw(this.texr, x, y, this.width / 2, this.height / 2, this.width, this.height, 1, 1, 90.0F);
-        } else if (this.rich == Richtung.Links) {
+        } else if (this.direction == Direction.Left) {
             batch.draw(this.texr, x, y, this.width / 2, this.height / 2, this.width, this.height, 1, 1, -180.0F);
-        } else if (this.rich == Richtung.Rechts) {
+        } else if (this.direction == Direction.Right) {
             batch.draw(this.texr, x, y, this.width / 2, this.height / 2, this.width, this.height, 1, 1, 0F);
         }
     }
@@ -60,16 +54,56 @@ public class ImgButton {
     }
 
     public void move() {
-        if (this.rich == Richtung.Unten) {
-            Functions.moveFields(this.shouldx, 0, true, Playground.newgf, false);
-        } else if (this.rich == Richtung.Oben) {
-            Functions.moveFields(this.shouldx, 0, true, Playground.newgf, true);
-        } else if (this.rich == Richtung.Links) {
-            Functions.moveFields(0, this.shouldy, false, Playground.newgf, false);
-        } else if (this.rich == Richtung.Rechts) {
-            Functions.moveFields(0, this.shouldy, false, Playground.newgf, true);
-        } else {
-            Functions.moveFields(this.shouldx, this.shouldy, this.fromx, this.gf, this.reverse);
+        GameField[][] board = Functions.GamefieldToArray();
+        GameField first;
+        switch (this.direction) {
+            case Down:
+                first = board[this.shouldx - 1][board[0].length - 1];
+
+                for (int i = board[0].length - 1; i > 0; i--) {
+                    board[this.shouldx - 1][i] = board[this.shouldx - 1][i - 1];
+                }
+
+                board[this.shouldx - 1][0] = Playground.newgf;
+
+                Playground.newgf = first;
+                break;
+            case Up:
+                first = board[this.shouldx - 1][0];
+
+                for (int i = 0; i < board[0].length - 1; i++) {
+                    board[this.shouldx - 1][i] = board[this.shouldx - 1][i + 1];
+                }
+
+                board[this.shouldx - 1][board[0].length - 1] = Playground.newgf;
+
+                Playground.newgf = first;
+                break;
+            case Left:
+                first = board[board.length - 1][this.shouldy - 1];
+
+                for (int i = board.length - 1; i > 0; i--) {
+                    board[i][this.shouldy - 1] = board[i - 1][this.shouldy - 1];
+                }
+
+                board[0][this.shouldy - 1] = Playground.newgf;
+
+
+                Playground.newgf = first;
+                break;
+            case Right:
+                first = board[0][this.shouldy - 1];
+
+                for (int i = 0; i < board.length - 1; i++) {
+                    board[i][this.shouldy - 1] = board[i + 1][this.shouldy - 1];
+                }
+
+                board[board.length - 1][this.shouldy - 1] = Playground.newgf;
+
+
+                Playground.newgf = first;
+                break;
         }
+        Functions.ArrayToGamefield(board);
     }
 }

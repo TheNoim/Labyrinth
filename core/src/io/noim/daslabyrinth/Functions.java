@@ -7,9 +7,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.utils.Array;
 
-import java.util.Collections;
-import java.util.HashMap;
-
 public class Functions {
 
     public static Texture dvl_cross = new Texture("labyrinth_cross.png"); //0
@@ -27,7 +24,7 @@ public class Functions {
         gameFields.clear();
         int x = 1;
         int y = 1;
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < Playground.Height * Playground.Width; i++) {
             int _type = randomWithRange(0, 3);
             GameField gf = new GameField(getTextureByType(_type), randomBooleanT(), x, y, i, _type, randomWithRange(0, 3));
             if (gf.isTreasure) {
@@ -39,7 +36,7 @@ public class Functions {
                 }
             }
             gameFields.add(gf);
-            if (y == 5) {
+            if (y == Playground.Height) {
                 y = 1;
                 x++;
             } else {
@@ -96,7 +93,6 @@ public class Functions {
     }
 
     public static void makeMoreTreasures(int b) {
-        Array<GameField> bgamefields = new Array<GameField>();
         for (int i = 0; i < b; i++) {
             int rnd = randomWithRange(0, gameFields.size - 1);
             if (gameFields.get(rnd).isTreasure) {
@@ -167,13 +163,13 @@ public class Functions {
         System.out.println("3 | " + int3.get(0) + " | " + int3.get(1) + " | " + int3.get(2) + " | " + int3.get(3) + " |");
         System.out.println("2 | " + int2.get(0) + " | " + int2.get(1) + " | " + int2.get(2) + " | " + int2.get(3) + " |");
         System.out.println("1 | " + int1.get(0) + " | " + int1.get(1) + " | " + int1.get(2) + " | " + int1.get(3) + " |");
-        int truecount = 0;
+        int trueCount = 0;
         for (int i = 0; i < gameFields.size; i++) {
             if (gameFields.get(i).isTreasure) {
-                truecount++;
+                trueCount++;
             }
         }
-        System.out.println("Trues -> " + truecount);
+        System.out.println("Trues -> " + trueCount);
 
     }
 
@@ -191,138 +187,21 @@ public class Functions {
         return null;
     }
 
-    public static void moveFields(int x, int y, boolean fromx, GameField gff, boolean reverse) {
-        if (reverse) {
-            for (int i = 0; i < gameFields.size; i++){
-                System.out.print(gameFields.get(i).index + ",");
-            }
-            Collections.reverse(Collections.singletonList(gameFields));
-            for (int i = 0; i < gameFields.size; i++){
-                System.out.print(gameFields.get(i).index + ",");
-            }
+    public static GameField[][] GamefieldToArray() {
+        GameField board[][] = new GameField[Playground.Width][Playground.Height];
+        for (GameField field : gameFields) {
+            board[field.x - 1][field.y - 1] = field;
         }
-        GameField newx;
-        boolean finished = false;
-        boolean last = false;
-        HashMap<Integer, GameField> hash = new HashMap<Integer, GameField>();
-        HashMap<Integer, Integer> hashx = new HashMap<Integer, Integer>();
-        HashMap<Integer, Integer> hashy = new HashMap<Integer, Integer>();
-        HashMap<Integer, Integer> hashindex = new HashMap<Integer, Integer>();
-        Array<Integer> sizerarray = new Array<Integer>();
-        hash.clear();
-        hashindex.clear();
-        hashx.clear();
-        hashy.clear();
-        if (fromx) {
-            for (int i = gameFields.size - 1; i >= 0; i--) {
-                if (gameFields.get(i).x == x) {
-                    if (!last) {
-                        Playground.newgf = gameFields.get(i);
-                        last = true;
-                        System.out.println("Last X: " + gameFields.get(i).x + " Y: " + gameFields.get(i).y);
-                    }
-                    GameField first = null;
-                    for (int c = 0; c < gameFields.size; c++) {
-                        if (gameFields.get(c).x == x) {
-                            first = gameFields.get(c);
-                            System.out.println("First X: " + gameFields.get(c).x + " Y: " + gameFields.get(c).y);
-                            break;
-                        }
-                    }
-                    for (int u = i - 1; u >= 0; u--) {
-                        if (gameFields.get(u).x == x) {
-                            if (!finished && first != null) {
-                                if (gameFields.get(u).x == first.x && gameFields.get(u).y == first.y) {
-                                    int __x = gameFields.get(u).x;
-                                    int __y = gameFields.get(u).y;
-                                    int __index = gameFields.get(u).index;
-                                    hash.put(u, gff);
-                                    hashx.put(u, __x);
-                                    hashy.put(u, __y);
-                                    hashindex.put(u, __index);
-                                    sizerarray.add(u);
-                                    System.out.println("FIRST");
-                                    finished = true;
-                                }
-                            }
-                            int _x = gameFields.get(i).x;
-                            int _y = gameFields.get(i).y;
-                            int _index = gameFields.get(i).index;
-                            hash.put(i, gameFields.get(u));
-                            hashx.put(i, _x);
-                            hashy.put(i, _y);
-                            hashindex.put(i, _index);
-                            sizerarray.add(i);
-                            System.out.println("Replace Field at X: " + gameFields.get(i).x + " Y: " + gameFields.get(i).y + " with the Field at the Position X: " + gameFields.get(u).x + " Y: " + gameFields.get(u).y + " U:" + u + " I: " + i);
-                            break;
-                        }
-                    }
+        return board;
+    }
 
-                }
-            }
-        } else {
-            for (int i = gameFields.size - 1; i >= 0; i--) {
-                if (gameFields.get(i).y == y) {
-                    if (!last) {
-                        Playground.newgf = gameFields.get(i);
-                        last = true;
-                        System.out.println("Last X: " + gameFields.get(i).x + " Y: " + gameFields.get(i).y);
-                    }
-                    GameField first = null;
-                    for (int c = 0; c < gameFields.size; c++) {
-                        if (gameFields.get(c).y == y) {
-                            first = gameFields.get(c);
-                            System.out.println("First X: " + gameFields.get(c).x + " Y: " + gameFields.get(c).y);
-                            break;
-                        }
-                    }
-                    for (int u = i - 1; u >= 0; u--) {
-                        if (gameFields.get(u).y == y) {
-                            if (!finished && first != null) {
-                                if (gameFields.get(u).x == first.x && gameFields.get(u).y == first.y) {
-                                    int __x = gameFields.get(u).x;
-                                    int __y = gameFields.get(u).y;
-                                    int __index = gameFields.get(u).index;
-                                    hash.put(u, gff);
-                                    hashx.put(u, __x);
-                                    hashy.put(u, __y);
-                                    hashindex.put(u, __index);
-                                    sizerarray.add(u);
-                                    System.out.println("FIRST");
-                                    finished = true;
-                                }
-                            }
-                            int _x = gameFields.get(i).x;
-                            int _y = gameFields.get(i).y;
-                            int _index = gameFields.get(i).index;
-                            hash.put(i, gameFields.get(u));
-                            hashx.put(i, _x);
-                            hashy.put(i, _y);
-                            hashindex.put(i, _index);
-                            sizerarray.add(i);
-                            System.out.println("Replace Field at X: " + gameFields.get(i).x + " Y: " + gameFields.get(i).y + " with the Field at the Position X: " + gameFields.get(u).x + " Y: " + gameFields.get(u).y + " U:" + u + " I: " + i);
-                            break;
-                        }
-                    }
-
-                }
-            }
-        }
-        for (int i = 0; i < sizerarray.size; i++) {
-            GameField gamfield = hash.get(sizerarray.get(i));
-            int thisx = hashx.get(sizerarray.get(i));
-            int thisy = hashy.get(sizerarray.get(i));
-            int thisindex = hashindex.get(sizerarray.get(i));
-            gameFields.set(sizerarray.get(i), gamfield);
-            gameFields.get(sizerarray.get(i)).index = thisindex;
-            gameFields.get(sizerarray.get(i)).x = thisx;
-            gameFields.get(sizerarray.get(i)).y = thisy;
-        }
-        if (reverse) {
-            //gameFields.reverse();
-            Collections.reverse(Collections.singletonList(gameFields));
-            for (int i = 0; i < gameFields.size; i++){
-                System.out.print(gameFields.get(i).index + ",");
+    public static void ArrayToGamefield(GameField[][] board) {
+        gameFields.clear();
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                board[i][j].x = i + 1;
+                board[i][j].y = j + 1;
+                gameFields.add(board[i][j]);
             }
         }
     }
@@ -346,7 +225,7 @@ public class Functions {
 
     public static void scaleWindow() {
         float height = (float) Gdx.graphics.getHeight();
-        float aspect_ratio = (float) 9 / (float) 16;
+        float aspect_ratio = 9F / 16F;
         float width = height * aspect_ratio;
         Gdx.graphics.setWindowedMode((int) width, Gdx.graphics.getHeight());
     }

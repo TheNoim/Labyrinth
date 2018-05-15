@@ -29,31 +29,31 @@ public class Playground implements Screen, InputProcessor {
     }
 
     BitmapFont roboto;
-    Array<GameField> gameFields = new Array<GameField>();
-    SpriteBatch batch;
-    int screen_width;
-    int screen_hight;
-    double prozenthight = 0.1;
-    public static Music music;
+    private Array<GameField> gameFields = new Array<GameField>();
+    private SpriteBatch batch;
+    static int Width = 4;
+    static int Height = 5;
+    int screenWidth;
+    int screenHeight;
+    double percentHeight = 0.1;
+    static Music music;
     Sound move;
-    int startx;
+    int startX;
     int heightandwidthperfield;
     int halffinalprozent;
     ShapeRenderer shaper;
-    public static OrthographicCamera camera;
+    static OrthographicCamera camera;
     Texture background;
-    public static GameField newgf;
+    static GameField newgf;
     Matrix4 originalMatrix = new Matrix4();
-    boolean istmovingnewfield;
+    boolean isMovingNewField;
     Vector2 newfieldv = new Vector2();
     int newfieldw;
-    Vector3 newfieldvector = new Vector3();
     boolean notallowedtotouch;
-    int rendertimer = 0;
     Array<ImgButton> imgButtons = new Array<ImgButton>();
     boolean alreadypressed;
-    Texture pfeil = new Texture("pfeil.gif");
-    Texture rotatePfeil = new Texture("rotate.png");
+    Texture arrow = new Texture("pfeil.gif");
+    Texture rotateArrow = new Texture("rotate.png");
 
     public void create() {
         Gdx.input.setInputProcessor(this);
@@ -84,93 +84,79 @@ public class Playground implements Screen, InputProcessor {
         } else {
             newgf = new GameField(Functions.getTextureByType(Functions.randomWithRange(0, 3)), false, 0, 0, Functions.gameFields.size + 1, Functions.randomWithRange(0, 3), Functions.randomWithRange(0, 3));
         }
-        screen_width = Gdx.graphics.getHeight();
-        screen_hight = Gdx.graphics.getWidth();
+        screenWidth = Gdx.graphics.getHeight();
+        screenHeight = Gdx.graphics.getWidth();
         background = new Texture("background.png");
         batch = new SpriteBatch();
         shaper = new ShapeRenderer();
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, screen_hight, screen_width);
+        camera.setToOrtho(false, screenHeight, screenWidth);
         DasLabyrinth.pref.flush();
         DasLabyrinth.playSounds = DasLabyrinth.pref.getBoolean("Sounds", true);
         DasLabyrinth.vibration = DasLabyrinth.pref.getBoolean("Vibration", true);
         music = Gdx.audio.newMusic(Gdx.files.internal("Epic Suspense.mp3"));
-        move = Gdx.audio.newSound(Gdx.files.internal("move.mp3"));
+        move = Gdx.audio.newSound(Gdx.files.internal("Move.mp3"));
         music.setLooping(true);
         if (DasLabyrinth.pref.getBoolean("Music", true)) {
             music.play();
         }
         gameFields = Functions.gameFields;
-        int temp_a = 0;
-        for (int i = 0; i < gameFields.size; i++) {
-            if (gameFields.get(i).x == 1) {
+        screenWidth = Gdx.graphics.getHeight();
+        screenHeight = Gdx.graphics.getWidth();
+        int finalTenPercent = (int) Math.round(screenHeight * percentHeight);
+        halffinalprozent = finalTenPercent / 2;
+        heightandwidthperfield = (screenHeight - finalTenPercent) / 4;
+        startX = (int) Math.round((screenWidth - heightandwidthperfield * 5) / 1.1);
+        roboto = new BitmapFont(Gdx.files.internal("Roboto.fnt"));
+        isMovingNewField = false;
 
+        // up
+        for (int j = 0; j < Functions.gameFields.size; j++) {
+            if (Functions.gameFields.get(j).y == 5) {
+                Vector2 v = new Vector2();
+                ImgButton bt = new ImgButton(arrow, v, heightandwidthperfield / 4, heightandwidthperfield / 4, Direction.Up);
+                bt.gf = Functions.gameFields.get(j);
+                bt.shouldx = Functions.gameFields.get(j).x;
+                bt.shouldy = Functions.gameFields.get(j).y;
+                imgButtons.add(bt);
             }
         }
-        screen_width = Gdx.graphics.getHeight();
-        screen_hight = Gdx.graphics.getWidth();
-        double tenprozent = screen_hight * prozenthight;
-        float round = Math.round(tenprozent);
-        int finaltenprozent = ((Float) round).intValue();
-        int availablehight = screen_hight - finaltenprozent;
-        halffinalprozent = finaltenprozent / 2;
-        heightandwidthperfield = availablehight / 4;
-        int usedwidth = heightandwidthperfield * 5;
-        int q = screen_width - usedwidth;
-        startx = ((Long) Math.round(q / 1.1)).intValue();
-        roboto = new BitmapFont(Gdx.files.internal("Roboto.fnt"));
-        istmovingnewfield = false;
-        int k = 1;
-        for (int i = 0; i < 18; i++) {
-            if (i <= 5) {
-                for (int j = 0; j < Functions.gameFields.size; j++) {
-                    if (Functions.gameFields.get(j).y == 1 && Functions.gameFields.get(j).x == i) {
-                        Vector2 v = new Vector2();
-                        v.x = Functions.gameFields.get(j).posx + heightandwidthperfield / 2;
-                        v.y = Functions.gameFields.get(j).posy - 20;
-                        ImgButton bt = new ImgButton(pfeil, v, batch, heightandwidthperfield / 4, heightandwidthperfield / 4, Richtung.Unten);
-                        bt.gf = Functions.gameFields.get(j);
-                        bt.shouldx = Functions.gameFields.get(j).x;
-                        bt.shouldy = Functions.gameFields.get(j).y;
-                        imgButtons.add(bt);
-                    }
-                }
+
+        // down
+        for (int j = 0; j < Functions.gameFields.size; j++) {
+            if (Functions.gameFields.get(j).y == 1) {
+                Vector2 v = new Vector2();
+                v.x = Functions.gameFields.get(j).posx + heightandwidthperfield / 2;
+                v.y = Functions.gameFields.get(j).posy - 20;
+                ImgButton bt = new ImgButton(arrow, v, heightandwidthperfield / 4, heightandwidthperfield / 4, Direction.Down);
+                bt.gf = Functions.gameFields.get(j);
+                bt.shouldx = Functions.gameFields.get(j).x;
+                bt.shouldy = Functions.gameFields.get(j).y;
+                imgButtons.add(bt);
             }
-            if (i <= 10 && i >= 6) {
-                for (int j = 0; j < Functions.gameFields.size; j++) {
-                    if (Functions.gameFields.get(j).y == 5) {
-                        Vector2 v = new Vector2();
-                        ImgButton bt = new ImgButton(pfeil, v, batch, heightandwidthperfield / 4, heightandwidthperfield / 4, Richtung.Oben);
-                        bt.gf = Functions.gameFields.get(j);
-                        bt.shouldx = Functions.gameFields.get(j).x;
-                        bt.shouldy = Functions.gameFields.get(j).y;
-                        imgButtons.add(bt);
-                    }
-                }
+        }
+
+        // left
+        for (int j = 0; j < Functions.gameFields.size; j++) {
+            if (Functions.gameFields.get(j).x == 1) {
+                Vector2 v = new Vector2();
+                ImgButton bt = new ImgButton(arrow, v, heightandwidthperfield / 4, heightandwidthperfield / 4, Direction.Left);
+                bt.gf = Functions.gameFields.get(j);
+                bt.shouldx = Functions.gameFields.get(j).x;
+                bt.shouldy = Functions.gameFields.get(j).y;
+                imgButtons.add(bt);
             }
-            if (i <= 15 && i >= 10) {
-                for (int j = 0; j < Functions.gameFields.size; j++) {
-                    if (Functions.gameFields.get(j).x == 1) {
-                        Vector2 v = new Vector2();
-                        ImgButton bt = new ImgButton(pfeil, v, batch, heightandwidthperfield / 4, heightandwidthperfield / 4, Richtung.Links);
-                        bt.gf = Functions.gameFields.get(j);
-                        bt.shouldx = Functions.gameFields.get(j).x;
-                        bt.shouldy = Functions.gameFields.get(j).y;
-                        imgButtons.add(bt);
-                    }
-                }
-            }
-            if (i >= 15) {
-                for (int j = 0; j < Functions.gameFields.size; j++) {
-                    if (Functions.gameFields.get(j).x == 4) {
-                        Vector2 v = new Vector2();
-                        ImgButton bt = new ImgButton(pfeil, v, batch, heightandwidthperfield / 4, heightandwidthperfield / 4, Richtung.Rechts);
-                        bt.gf = Functions.gameFields.get(j);
-                        bt.shouldx = Functions.gameFields.get(j).x;
-                        bt.shouldy = Functions.gameFields.get(j).y;
-                        imgButtons.add(bt);
-                    }
-                }
+        }
+
+        // right
+        for (int j = 0; j < Functions.gameFields.size; j++) {
+            if (Functions.gameFields.get(j).x == 4) {
+                Vector2 v = new Vector2();
+                ImgButton bt = new ImgButton(arrow, v, heightandwidthperfield / 4, heightandwidthperfield / 4, Direction.Right);
+                bt.gf = Functions.gameFields.get(j);
+                bt.shouldx = Functions.gameFields.get(j).x;
+                bt.shouldy = Functions.gameFields.get(j).y;
+                imgButtons.add(bt);
             }
         }
     }
@@ -179,72 +165,53 @@ public class Playground implements Screen, InputProcessor {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        batch.draw(background, 0, 0, screen_hight, screen_width);
-        int x = 1;
-        int xx = startx;
-        int yy = halffinalprozent;
+        batch.draw(background, 0, 0, screenHeight, screenWidth);
 
         for (int i = 0; i < Functions.gameFields.size; i++) {
-            if (Functions.gameFields.get(i).x == x && Functions.gameFields.get(i).y <= 5) {
-                Matrix4 rotMatrix = new Matrix4();
-                rotMatrix.translate(yy, xx, 0);
-                rotMatrix.translate(heightandwidthperfield / 2, heightandwidthperfield / 2, 0);
-                rotMatrix.rotate(0, 0, 1, 90.0f * Functions.gameFields.get(i).facing);
-                rotMatrix.translate(-heightandwidthperfield / 2, -heightandwidthperfield / 2, 0);
-                batch.setTransformMatrix(rotMatrix);
-                batch.draw(Functions.gameFields.get(i).fieldTextureRegion, 0, 0, heightandwidthperfield, heightandwidthperfield);
-                batch.setTransformMatrix(originalMatrix);
-                Functions.gameFields.get(i).posx = yy;
-                Functions.gameFields.get(i).posy = xx;
+            Functions.gameFields.get(i).posx = (Functions.gameFields.get(i).x - 1) * heightandwidthperfield + halffinalprozent;
+            Functions.gameFields.get(i).posy = (Functions.gameFields.get(i).y - 1) * heightandwidthperfield + startX;
+            Matrix4 rotMatrix = new Matrix4();
+            rotMatrix.translate(Functions.gameFields.get(i).posx, Functions.gameFields.get(i).posy, 0);
+            rotMatrix.translate(heightandwidthperfield / 2, heightandwidthperfield / 2, 0);
+            rotMatrix.rotate(0, 0, 1, 90.0f * Functions.gameFields.get(i).facing);
+            rotMatrix.translate(-heightandwidthperfield / 2, -heightandwidthperfield / 2, 0);
+            batch.setTransformMatrix(rotMatrix);
+            batch.draw(Functions.gameFields.get(i).fieldTextureRegion, 0, 0, heightandwidthperfield, heightandwidthperfield);
+            batch.setTransformMatrix(originalMatrix);
 
-                if (Functions.gameFields.get(i).isTreasure) {
-                    int tr_texture_width = Functions.gameFields.get(i).treasure.textureRegion.getRegionWidth();
-                    int g = heightandwidthperfield - tr_texture_width;
-                    int h = g / 2;
-                    Functions.gameFields.get(i).treasure.position.x = yy + heightandwidthperfield / 4;
-                    Functions.gameFields.get(i).treasure.position.y = xx + heightandwidthperfield / 4;
-                    batch.draw(Functions.gameFields.get(i).treasure.textureRegion, Functions.gameFields.get(i).treasure.position.x, Functions.gameFields.get(i).treasure.position.y, heightandwidthperfield / 2, heightandwidthperfield / 2);
-                }
-                xx += heightandwidthperfield;
-                if (Functions.gameFields.get(i).y == 5) {
-                    x++;
-                    yy += heightandwidthperfield;
-                    xx = startx;
-                }
+            if (Functions.gameFields.get(i).isTreasure) {
+                Functions.gameFields.get(i).treasure.position.x = Functions.gameFields.get(i).posx + heightandwidthperfield / 4;
+                Functions.gameFields.get(i).treasure.position.y = Functions.gameFields.get(i).posy + heightandwidthperfield / 4;
+                batch.draw(Functions.gameFields.get(i).treasure.textureRegion, Functions.gameFields.get(i).treasure.position.x, Functions.gameFields.get(i).treasure.position.y, heightandwidthperfield / 2, heightandwidthperfield / 2);
             }
         }
-        xx = startx;
-        yy = halffinalprozent;
         if (newgf != null) {
-            int dd = (int) Math.round(heightandwidthperfield * 1.5);
+            int dd = Math.round(heightandwidthperfield * 1.5F);
             roboto.setColor(Color.BLACK);
-            roboto.getData().setScale((float) 1.5, (float) 1.5);
-            roboto.draw(batch, "Your next Card !", yy, xx - dd - dd / 16);
+            roboto.getData().setScale(1.5F, 1.5F);
+            roboto.draw(batch, "Your next Card !", halffinalprozent, startX - dd - dd / 16);
             Matrix4 rotMatrix = new Matrix4();
-            rotMatrix.translate(yy, xx - dd, 0);
+            rotMatrix.translate(halffinalprozent, startX - dd, 0);
             rotMatrix.translate(heightandwidthperfield / 2, heightandwidthperfield / 2, 0);
             rotMatrix.rotate(0, 0, 1, 90.0f * newgf.facing);
             rotMatrix.translate(-heightandwidthperfield / 2, -heightandwidthperfield / 2, 0);
             batch.setTransformMatrix(rotMatrix);
             batch.draw(newgf.fieldTextureRegion, 0, 0, heightandwidthperfield, heightandwidthperfield);
-            newfieldv.x = yy;
-            newfieldv.y = xx - dd;
+            newfieldv.x = halffinalprozent;
+            newfieldv.y = startX - dd;
             newfieldw = heightandwidthperfield;
             if (newgf.isTreasure) {
                 rotMatrix.setToRotation(0, 0, 1, 0.0F);
-                int tr_texture_width = newgf.treasure.textureRegion.getRegionWidth();
-                int g = heightandwidthperfield - tr_texture_width;
-                int h = g / 2;
-                newgf.treasure.position.x = yy + heightandwidthperfield / 4;
-                newgf.treasure.position.y = xx + heightandwidthperfield / 4;
+                newgf.treasure.position.x = halffinalprozent + heightandwidthperfield / 4;
+                newgf.treasure.position.y = startX + heightandwidthperfield / 4;
                 batch.draw(newgf.treasure.textureRegion, newgf.x + heightandwidthperfield / 4, newgf.y + heightandwidthperfield / 4, heightandwidthperfield / 2, heightandwidthperfield / 2);
             }
             batch.setTransformMatrix(originalMatrix);
         }
         for (int i = 0; i < imgButtons.size; i++) {
-            imgButtons.get(i).draw();
+            imgButtons.get(i).draw(this.batch);
         }
-        batch.draw(rotatePfeil, 2 * yy + heightandwidthperfield, xx - Math.round(heightandwidthperfield * 1.25), heightandwidthperfield / 2, heightandwidthperfield / 2);
+        batch.draw(rotateArrow, 2 * halffinalprozent + heightandwidthperfield, startX - Math.round(heightandwidthperfield * 1.25), heightandwidthperfield / 2, heightandwidthperfield / 2);
         batch.end();
     }
 
@@ -257,65 +224,49 @@ public class Playground implements Screen, InputProcessor {
                     }
                 }
             }
-            if (imgButtons.get(i).rich == Richtung.Unten) {
+            if (imgButtons.get(i).direction == Direction.Down) {
                 imgButtons.get(i).vec.x = imgButtons.get(i).gf.posx + heightandwidthperfield / 2;
                 imgButtons.get(i).vec.x = imgButtons.get(i).vec.x - imgButtons.get(i).width / 2;
                 imgButtons.get(i).vec.y = imgButtons.get(i).gf.posy - imgButtons.get(i).height;
             }
-            if (imgButtons.get(i).rich == Richtung.Oben) {
+            if (imgButtons.get(i).direction == Direction.Up) {
                 imgButtons.get(i).vec.x = imgButtons.get(i).gf.posx + heightandwidthperfield / 2;
                 imgButtons.get(i).vec.x = imgButtons.get(i).vec.x - imgButtons.get(i).width / 2;
                 imgButtons.get(i).vec.y = imgButtons.get(i).gf.posy + heightandwidthperfield;
             }
-            if (imgButtons.get(i).rich == Richtung.Links) {
+            if (imgButtons.get(i).direction == Direction.Left) {
                 imgButtons.get(i).vec.x = imgButtons.get(i).gf.posx - imgButtons.get(i).width;
                 imgButtons.get(i).vec.y = imgButtons.get(i).gf.posy + heightandwidthperfield / 2;
                 imgButtons.get(i).vec.y = imgButtons.get(i).vec.y - imgButtons.get(i).height;
                 imgButtons.get(i).vec.y = imgButtons.get(i).vec.y + imgButtons.get(i).height / 2;
             }
-            if (imgButtons.get(i).rich == Richtung.Rechts) {
+            if (imgButtons.get(i).direction == Direction.Right) {
                 imgButtons.get(i).vec.x = imgButtons.get(i).gf.posx + heightandwidthperfield;
                 imgButtons.get(i).vec.y = imgButtons.get(i).gf.posy;
                 imgButtons.get(i).vec.y = imgButtons.get(i).vec.y + heightandwidthperfield / 4;
                 imgButtons.get(i).vec.y = imgButtons.get(i).vec.y + imgButtons.get(i).height / 2;
             }
         }
-        if (Gdx.input.isTouched()) {
 
+        if (Gdx.input.justTouched()) {
             Vector3 touch = new Vector3();
             touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(touch);
-            if (touch.x >= newfieldv.x && touch.x <= newfieldv.x + newfieldw && touch.y >= newfieldv.y && touch.y <= newfieldv.y + newfieldw) {
-                if (!notallowedtotouch) {
-                    Functions.moveFields(0, 2, false, newgf, false);
-                    notallowedtotouch = true;
-                }
-            } else if (touch.x >= (2 * halffinalprozent + heightandwidthperfield) && touch.x <= (2 * halffinalprozent + heightandwidthperfield + heightandwidthperfield / 2) && touch.y >= (startx - (int) Math.round(heightandwidthperfield * 1.25)) && touch.y <= (startx - (int) Math.round(heightandwidthperfield * 1.25) + heightandwidthperfield / 2)) {
-                if (!notallowedtotouch) {
-                    newgf.facing += 1;
-                    notallowedtotouch = true;
-                }
+            if (touch.x >= (2 * halffinalprozent + heightandwidthperfield) && touch.x <= (2 * halffinalprozent + heightandwidthperfield + heightandwidthperfield / 2) && touch.y >= (startX - (int) Math.round(heightandwidthperfield * 1.25)) && touch.y <= (startX - (int) Math.round(heightandwidthperfield * 1.25) + heightandwidthperfield / 2)) {
+                newgf.facing += 1;
             }
-            if (!alreadypressed) {
-                for (int i = 0; i < imgButtons.size; i++) {
-                    if (imgButtons.get(i).isClicked()) {
-                        //Functions.moveFields(imgButtons.get(i).gf.x, imgButtons.get(i).gf.y, imgButtons.get(i).fromx, newgf, imgButtons.get(i).reverse);
-                        imgButtons.get(i).move();
-                        alreadypressed = true;
-                        if (DasLabyrinth.playSounds) {
-                            move.play();
-                        }
+            for (int i = 0; i < imgButtons.size; i++) {
+                if (imgButtons.get(i).isClicked()) {
+                    imgButtons.get(i).move();
+                    if (DasLabyrinth.playSounds) {
+                        move.play();
                     }
                 }
             }
-        } else {
-            notallowedtotouch = false;
-            alreadypressed = false;
         }
     }
 
     public void render(float delta) {
-
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -344,10 +295,6 @@ public class Playground implements Screen, InputProcessor {
 
     public void dispose() {
         batch.dispose();
-    }
-
-    public void t() {
-        System.out.println("Test");
     }
 
     @Override

@@ -35,7 +35,7 @@ public class DasLabyrinth extends Game {
         ranking = "RANKING";
         settings = "EINSTELLUNGEN";
 
-        ButtonWidth = (int) (Gdx.graphics.getWidth() * (float) 0.9);
+        ButtonWidth = Math.round(Gdx.graphics.getWidth() * 0.9F);
 
         pref = Gdx.app.getPreferences("labyrinth.dat");
         background = new Texture("background.png");

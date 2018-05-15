@@ -51,15 +51,15 @@ public class Animation implements Screen {
         if (animate) {
             yAnim += yDelta; // += 0.005;
             yDelta *= 0.9;
-            batch.draw(banner, 0, ((float) (yAnim - 0.1685) * Gdx.graphics.getHeight()), Gdx.graphics.getWidth(), (float) 0.2 * Gdx.graphics.getHeight());
+            batch.draw(banner, 0, ((float) (yAnim - 0.1685) * Gdx.graphics.getHeight()), Gdx.graphics.getWidth(), 0.2F * Gdx.graphics.getHeight());
 
             DasLabyrinth.font.draw(batch, heading, 0, (float) yAnim * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 1, false);
             if (yAnim >= 0.9185) {
                 main.setScreen(new StartMenu(main));
             }
         } else {
-            batch.draw(banner, 0, ((float) 0.3315 * Gdx.graphics.getHeight()), Gdx.graphics.getWidth(), (float) 0.2 * Gdx.graphics.getHeight());
-            DasLabyrinth.font.draw(batch, heading, 0, (float) 0.5 * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 1, false);
+            batch.draw(banner, 0, 0.3315F * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 0.2F * Gdx.graphics.getHeight());
+            DasLabyrinth.font.draw(batch, heading, 0, 0.5F * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 1, false);
         }
         batch.end();
     }
@@ -74,11 +74,6 @@ public class Animation implements Screen {
 
     public void resize(int width, int height) {
         Functions.scaleWindow();
-    }
-
-    //@Override
-    public void render() {
-
     }
 
     public void show() {

@@ -84,12 +84,12 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
 
         batch.draw(DasLabyrinth.background, 0, 0, (float) Gdx.graphics.getWidth(), (float) Gdx.graphics.getHeight());
 
-        batch.draw(banner, 0, ((float) 0.75 * Gdx.graphics.getHeight()), Gdx.graphics.getWidth(), (float) 0.2 * Gdx.graphics.getHeight());
+        batch.draw(banner, 0, (0.75F * Gdx.graphics.getHeight()), Gdx.graphics.getWidth(), 0.2F * Gdx.graphics.getHeight());
         batch.draw(button, X, Gdx.graphics.getHeight() / 2 + (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3), DasLabyrinth.ButtonWidth, Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3);
         batch.draw(button, X, Gdx.graphics.getHeight() / 2 - (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) / 2, DasLabyrinth.ButtonWidth, Functions.textHeight(DasLabyrinth.ranking, DasLabyrinth.font) * 3);
         batch.draw(button, X, Gdx.graphics.getHeight() / 2 - (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) * 2, DasLabyrinth.ButtonWidth, Functions.textHeight(DasLabyrinth.settings, DasLabyrinth.font) * 3);
 
-        DasLabyrinth.font.draw(batch, DasLabyrinth.heading, 0, (float) 0.9185 * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 1, false);
+        DasLabyrinth.font.draw(batch, DasLabyrinth.heading, 0, 0.9185F * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 1, false);
         DasLabyrinth.font.draw(batch, DasLabyrinth.play, X, Gdx.graphics.getHeight() / 2 + 2 * (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) - (((Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) - Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font)) / 2), DasLabyrinth.ButtonWidth, 1, false);
         DasLabyrinth.font.draw(batch, DasLabyrinth.ranking, X, Gdx.graphics.getHeight() / 2 + ((Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) / 2) - (((Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) - Functions.textHeight(DasLabyrinth.ranking, DasLabyrinth.font)) / 2), DasLabyrinth.ButtonWidth, 1, false);
         DasLabyrinth.font.draw(batch, DasLabyrinth.settings, X, Gdx.graphics.getHeight() / 2 - (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) - (((Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) - Functions.textHeight(DasLabyrinth.settings, DasLabyrinth.font)) / 2), DasLabyrinth.ButtonWidth, 1, false);

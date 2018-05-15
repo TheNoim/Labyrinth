@@ -4,7 +4,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.2'
-        classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.1.0'
+        classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.3'
     }
 }
 allprojects {
@@ -14,11 +14,11 @@ allprojects {
     version = '1.0'
     ext {
         appName = "DasLabyrinth"
-        gdxVersion = '1.9.3'
+        gdxVersion = '1.9.8'
         roboVMVersion = '2.1.0'
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.7.0'
-        aiVersion = '1.8.0'
+        aiVersion = '1.8.1'
         compileSdkVersion = 24
         buildToolsVersion = '24.0.0'
     }

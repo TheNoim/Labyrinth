@@ -3,7 +3,7 @@ package io.noim.daslabyrinth;
 /**
  * Created by nilsbergmann on 28.07.16.
  */
-public enum Richtung {
+public enum Direction {
 
-    Oben, Unten, Rechts, Links
+    Up, Down, Right, Left
 }
