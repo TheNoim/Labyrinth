@@ -15,7 +15,6 @@ public class Ranking implements Screen {
     SpriteBatch batch;
     public DasLabyrinth main;
     Texture background, back;
-    Color font_color;
     String heading;
     Vector3 touchPosition = new Vector3();
     OrthographicCamera camera;
@@ -51,7 +50,6 @@ public class Ranking implements Screen {
     }
 
     private void draw() {
-
         batch.begin();
 
         batch.draw(background, 0, 0, (float) Gdx.graphics.getWidth(), (float) Gdx.graphics.getHeight());
@@ -62,7 +60,7 @@ public class Ranking implements Screen {
     }
 
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         update();

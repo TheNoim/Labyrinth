@@ -1,32 +1,24 @@
 package io.noim.daslabyrinth;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
 public class Player {
 
 
-    protected GameField currentfield;
+    protected GameField currentField;
     protected Array<Treasure> treasures = new Array<Treasure>();
-    protected int treasurescount;
-    protected Vector3 playervector = new Vector3();
+    protected Vector2 position = new Vector2();
     protected int score;
-    protected int spawnx;
-    protected int spawny;
 
-    Array<Player> players = new Array<Player>();
-
-    public Player(GameField currentfield, int treasurescount) {
+    public Player(GameField currentField) {
         PlayerManager.players.add(this);
-        this.currentfield = currentfield;
-        this.treasurescount = treasurescount;
+        this.currentField = currentField;
         this.score = 0;
-        players.add(this);
     }
 
     public void movePlayer(GameField nextgamefield) {
-        this.currentfield = nextgamefield;
+        this.currentField = nextgamefield;
     }
 
     public void addScore(int s) {
@@ -37,5 +29,7 @@ public class Player {
 
     public void setScore(int s) {
         this.score = s;
+        DasLabyrinth.pref.putInteger("Score", s);
+        DasLabyrinth.pref.flush();
     }
 }

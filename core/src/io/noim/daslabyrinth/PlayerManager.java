@@ -13,7 +13,7 @@ public class PlayerManager {
     }
 
     public static boolean canMove(Player p, GameField nextgamefield) {
-        GameField current = p.currentfield;
+        GameField current = p.currentField;
         if (nextgamefield.x > current.x) {
             switch (nextgamefield.facing) {
 

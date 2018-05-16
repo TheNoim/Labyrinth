@@ -11,7 +11,7 @@ public class DesktopLauncher {
     public static void main(String[] arg) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.title = "Das Labyrinth";
-        config.height = (int) (0.9 * Toolkit.getDefaultToolkit().getScreenSize().height);
+        config.height = Math.round(0.9F * Toolkit.getDefaultToolkit().getScreenSize().height);
         config.resizable = false;
         config.addIcon("treasure.png", Files.FileType.Internal);
         new LwjglApplication(new DasLabyrinth(), config);

@@ -15,8 +15,8 @@ public class GameField {
     protected Treasure treasure;
     protected int type;
     protected int facing;
-    protected int posx;
-    protected int posy;
+    protected int posX;
+    protected int posY;
 
     public GameField(Texture fieldTexture, boolean isTreasure, int x, int y, int index, int type, int facing) {
         this.fieldTexture = fieldTexture;

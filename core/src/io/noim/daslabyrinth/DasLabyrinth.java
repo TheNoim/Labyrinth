@@ -5,15 +5,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 
 public class DasLabyrinth extends Game {
-    SpriteBatch batch;
-    OrthographicCamera camera;
     public static Texture background;
     public static BitmapFont font;
     public static Boolean playMusic, playSounds, vibration;
@@ -27,7 +23,6 @@ public class DasLabyrinth extends Game {
 
     @Override
     public void create() {
-        batch = new SpriteBatch();
         whichClass = 0;
 
         heading = "DAS LABYRINTH";
@@ -57,24 +52,7 @@ public class DasLabyrinth extends Game {
         } else {
             music.stop();
         }
-
-        batch = new SpriteBatch();
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
-        //Functions.generateRandomField();
-        //Functions.printField();
         setScreen(new Animation(this));
-    }
-
-    @Override
-    public void render() {
-        super.render();
-    }
-
-    @Override
-    public void dispose() {
-        batch.dispose();
     }
 
     public static void click() {

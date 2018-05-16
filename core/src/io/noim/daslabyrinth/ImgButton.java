@@ -14,18 +14,18 @@ import com.badlogic.gdx.math.Vector3;
 public class ImgButton {
 
     protected Texture tex;
-    protected TextureRegion texr;
+    protected TextureRegion texR;
     protected Vector2 vec;
     protected int height;
     protected int width;
     protected GameField gf;
-    protected int shouldx;
-    protected int shouldy;
+    protected int shouldX;
+    protected int shouldY;
     protected Direction direction;
 
     public ImgButton(Texture tex, Vector2 vec, int height, int width, Direction direction) {
         this.tex = tex;
-        this.texr = new TextureRegion(this.tex);
+        this.texR = new TextureRegion(this.tex);
         this.vec = vec;
         this.height = height;
         this.width = width;
@@ -33,16 +33,19 @@ public class ImgButton {
     }
 
     public void draw(SpriteBatch batch) {
-        float x = this.vec.x;
-        float y = this.vec.y;
-        if (this.direction == Direction.Down) {
-            batch.draw(this.texr, x, y, this.width / 2, this.height / 2, this.width, this.height, 1, 1, -90.0F);
-        } else if (this.direction == Direction.Up) {
-            batch.draw(this.texr, x, y, this.width / 2, this.height / 2, this.width, this.height, 1, 1, 90.0F);
-        } else if (this.direction == Direction.Left) {
-            batch.draw(this.texr, x, y, this.width / 2, this.height / 2, this.width, this.height, 1, 1, -180.0F);
-        } else if (this.direction == Direction.Right) {
-            batch.draw(this.texr, x, y, this.width / 2, this.height / 2, this.width, this.height, 1, 1, 0F);
+        switch (this.direction) {
+            case Down:
+                batch.draw(this.texR, this.vec.x, this.vec.y, this.width / 2, this.height / 2, this.width, this.height, 1, 1, -90.0F);
+                break;
+            case Up:
+                batch.draw(this.texR, this.vec.x, this.vec.y, this.width / 2, this.height / 2, this.width, this.height, 1, 1, 90.0F);
+                break;
+            case Left:
+                batch.draw(this.texR, this.vec.x, this.vec.y, this.width / 2, this.height / 2, this.width, this.height, 1, 1, -180.0F);
+                break;
+            case Right:
+                batch.draw(this.texR, this.vec.x, this.vec.y, this.width / 2, this.height / 2, this.width, this.height, 1, 1, 0F);
+                break;
         }
     }
 
@@ -53,57 +56,56 @@ public class ImgButton {
         return t.x >= this.vec.x - 10 && t.x <= this.vec.x + this.width + 10 && t.y >= this.vec.y - 10 && t.y <= this.vec.y + this.height + 10;
     }
 
-    public void move() {
-        GameField[][] board = Functions.GamefieldToArray();
+    public GameField[][] move(GameField[][] board) {
         GameField first;
         switch (this.direction) {
             case Down:
-                first = board[this.shouldx - 1][board[0].length - 1];
+                first = board[this.shouldX - 1][board[0].length - 1];
 
                 for (int i = board[0].length - 1; i > 0; i--) {
-                    board[this.shouldx - 1][i] = board[this.shouldx - 1][i - 1];
+                    board[this.shouldX - 1][i] = board[this.shouldX - 1][i - 1];
                 }
 
-                board[this.shouldx - 1][0] = Playground.newgf;
+                board[this.shouldX - 1][0] = Playground.newGF;
 
-                Playground.newgf = first;
+                Playground.newGF = first;
                 break;
             case Up:
-                first = board[this.shouldx - 1][0];
+                first = board[this.shouldX - 1][0];
 
                 for (int i = 0; i < board[0].length - 1; i++) {
-                    board[this.shouldx - 1][i] = board[this.shouldx - 1][i + 1];
+                    board[this.shouldX - 1][i] = board[this.shouldX - 1][i + 1];
                 }
 
-                board[this.shouldx - 1][board[0].length - 1] = Playground.newgf;
+                board[this.shouldX - 1][board[0].length - 1] = Playground.newGF;
 
-                Playground.newgf = first;
+                Playground.newGF = first;
                 break;
             case Left:
-                first = board[board.length - 1][this.shouldy - 1];
+                first = board[board.length - 1][this.shouldY - 1];
 
                 for (int i = board.length - 1; i > 0; i--) {
-                    board[i][this.shouldy - 1] = board[i - 1][this.shouldy - 1];
+                    board[i][this.shouldY - 1] = board[i - 1][this.shouldY - 1];
                 }
 
-                board[0][this.shouldy - 1] = Playground.newgf;
+                board[0][this.shouldY - 1] = Playground.newGF;
 
 
-                Playground.newgf = first;
+                Playground.newGF = first;
                 break;
             case Right:
-                first = board[0][this.shouldy - 1];
+                first = board[0][this.shouldY - 1];
 
                 for (int i = 0; i < board.length - 1; i++) {
-                    board[i][this.shouldy - 1] = board[i + 1][this.shouldy - 1];
+                    board[i][this.shouldY - 1] = board[i + 1][this.shouldY - 1];
                 }
 
-                board[board.length - 1][this.shouldy - 1] = Playground.newgf;
+                board[board.length - 1][this.shouldY - 1] = Playground.newGF;
 
 
-                Playground.newgf = first;
+                Playground.newGF = first;
                 break;
         }
-        Functions.ArrayToGamefield(board);
+        return board;
     }
 }

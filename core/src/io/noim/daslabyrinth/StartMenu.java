@@ -14,7 +14,7 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
 
     SpriteBatch batch;
     OrthographicCamera camera;
-    Texture button, button_pushed, banner;
+    Texture button, buttonPushed, banner;
     float X;
 
     public DasLabyrinth main;
@@ -35,7 +35,6 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
     }
 
     public void create() {
-
         DasLabyrinth.pref.flush();
         DasLabyrinth.playMusic = DasLabyrinth.pref.getBoolean("Music", true);
         DasLabyrinth.playSounds = DasLabyrinth.pref.getBoolean("Sounds", true);
@@ -55,7 +54,7 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
 
         banner = new Texture("banner.png");
         button = new Texture("button.png");
-        button_pushed = new Texture("button_pushed.png");
+        buttonPushed = new Texture("button_pushed.png");
         X = Gdx.graphics.getWidth() / 2 - DasLabyrinth.ButtonWidth / 2;
     }
 
@@ -98,7 +97,7 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
     }
 
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         update();
