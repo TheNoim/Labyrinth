@@ -14,9 +14,6 @@ android {
 
         instrumentTest.setRoot('tests')
     }
-    defaultConfig {
-        applicationId "io.noim.daslabyrinth"
-    }
 }
 // called every time gradle gets executed, takes the native dependencies of
 // the natives configuration, and extracts them to the proper libs/ folders
@@ -63,7 +60,7 @@ task run(type: Exec) {
     }
 
     def adb = path + "/platform-tools/adb"
-    commandLine "$adb", 'shell', 'am', 'start', '-n', 'io.noim.daslabyrinth/AndroidLauncher'
+    commandLine "$adb", 'shell', 'am', 'start', '-n', 'io.noim.daslabyrinth.android/io.noim.daslabyrinth.android.AndroidLauncher'
 }
 // sets up the Android Eclipse project, using the old Ant based build.
 eclipse {
