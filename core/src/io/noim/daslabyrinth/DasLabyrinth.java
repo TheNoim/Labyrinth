@@ -20,9 +20,12 @@ public class DasLabyrinth extends Game {
     public static Vector3 touchPosition = new Vector3();
     public static int ButtonWidth;
     public static String heading, play, ranking, settings;
+    Playground playground;
+    PlayerManager playerManager;
 
     @Override
     public void create() {
+        this.playground = new Playground(this);
         whichClass = 0;
 
         heading = "DAS LABYRINTH";
@@ -55,6 +58,9 @@ public class DasLabyrinth extends Game {
         setScreen(new Animation(this));
     }
 
+    /**
+     * Do the click sound and/or vibrate if enabled
+     */
     public static void click() {
         if (pref.getBoolean("Sounds", true)) {
             click.play();

@@ -15,7 +15,7 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
     SpriteBatch batch;
     OrthographicCamera camera;
     Texture button, buttonPushed, banner;
-    float X;
+    private float X;
 
     public DasLabyrinth main;
     public Settings Settings;
@@ -65,7 +65,7 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
             if (DasLabyrinth.touchPosition.x >= (Gdx.graphics.getWidth() / 2 - DasLabyrinth.ButtonWidth / 2) && DasLabyrinth.touchPosition.x <= (Gdx.graphics.getWidth() / 2 + DasLabyrinth.ButtonWidth / 2) && DasLabyrinth.touchPosition.y >= (Gdx.graphics.getHeight() / 2 + (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3)) && DasLabyrinth.touchPosition.y <= (Gdx.graphics.getHeight() / 2 + 2 * (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3))) {
                 DasLabyrinth.click();
                 DasLabyrinth.music.stop();
-                main.setScreen(new Playground(main));
+                main.setScreen(this.main.playground);
             }
             if (DasLabyrinth.touchPosition.x >= (Gdx.graphics.getWidth() / 2 - DasLabyrinth.ButtonWidth / 2) && DasLabyrinth.touchPosition.x <= (Gdx.graphics.getWidth() / 2 + DasLabyrinth.ButtonWidth / 2) && DasLabyrinth.touchPosition.y >= (Gdx.graphics.getHeight() / 2 - (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) / 2) && DasLabyrinth.touchPosition.y <= (Gdx.graphics.getHeight() / 2 + (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) / 2)) {
                 DasLabyrinth.click();

@@ -13,8 +13,13 @@ import com.badlogic.gdx.math.Vector3;
  */
 public class ImgButton {
 
+    public enum Direction {
+        Up, Down, Right, Left
+    }
+
     protected Texture tex;
     protected TextureRegion texR;
+    private Vector3 t = new Vector3();
     protected Vector2 vec;
     protected int height;
     protected int width;
@@ -49,13 +54,19 @@ public class ImgButton {
         }
     }
 
+    /**
+     * @return if the cursor is on the button
+     */
     public boolean isClicked() {
-        Vector3 t = new Vector3();
         t.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         Playground.camera.unproject(t);
         return t.x >= this.vec.x - 10 && t.x <= this.vec.x + this.width + 10 && t.y >= this.vec.y - 10 && t.y <= this.vec.y + this.height + 10;
     }
 
+    /**
+     * @param board The gamefields as two dimensional array
+     * @return The two dimensional array where the gamefields where move in the buttons direction
+     */
     public GameField[][] move(GameField[][] board) {
         GameField first;
         switch (this.direction) {
@@ -90,7 +101,6 @@ public class ImgButton {
 
                 board[0][this.shouldY - 1] = Playground.newGF;
 
-
                 Playground.newGF = first;
                 break;
             case Right:
@@ -102,10 +112,11 @@ public class ImgButton {
 
                 board[board.length - 1][this.shouldY - 1] = Playground.newGF;
 
-
                 Playground.newGF = first;
                 break;
         }
+        Playground.newGF.x = 1;
+        Playground.newGF.y = 0;
         return board;
     }
 }
