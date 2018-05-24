@@ -6,17 +6,22 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 
-import java.util.Arrays;
-
 public class GameField {
+
+    public static class Directions {
+        public static final int UP = 0;
+        public static final int LEFT = 1;
+        public static final int DOWN = 2;
+        public static final int RIGHT = 3;
+    }
 
     private static boolean[][] WAYS = new boolean[][]{
             { /* cross */
-                    true, true, true, true /* {can go up, can go right, can gp down, can go left} */
+                    true, true, true, true /* {can go up, can go left, can go down, can go right} */
             },
 
             { /* curve */
-                    false, true, true, false
+                    false, false, true, true
             },
 
             { /* straight */
@@ -24,7 +29,7 @@ public class GameField {
             },
 
             { /* tcross */
-                    true, true, true, false
+                    true, false, true, true
             },
     };
 
@@ -71,18 +76,11 @@ public class GameField {
     }
 
     /**
-     * @param direction 0 => up, 1 => right, 2 => down, 3 => left
+     * @param direction 0 => up, 1 => left, 2 => down, 3 => right
      * @return if in this direction is a way where the player can go
      */
     public boolean isWayInDirection(int direction) {
-        boolean[] rotatedWays = Arrays.copyOf(WAYS[this.type], WAYS[this.type].length); // get the right array for the card
-        // turn the array for each time the card is turned
-        for (int h = 0; h < this.facing; h++) {
-            boolean first = rotatedWays[0];
-            System.arraycopy(rotatedWays, 1, rotatedWays, 0, rotatedWays.length - 1);
-            rotatedWays[rotatedWays.length - 1] = first;
-        }
-        return rotatedWays[direction];
+        return WAYS[this.type][(direction - this.facing + WAYS[this.type].length) % WAYS[this.type].length];
     }
 
     @Override

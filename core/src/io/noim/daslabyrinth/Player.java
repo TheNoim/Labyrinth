@@ -52,37 +52,32 @@ public class Player {
                     return true;
                 }
                 for (GameField newPos : new Array.ArrayIterator<GameField>(playground.gameFields)) {
+                    boolean isNeighbourWithWay = false;
                     if (newPos.y == i.y) {
                         if (newPos.x == i.x - 1) {
-                            if (i.isWayInDirection(3) && newPos.isWayInDirection(1)) {
-                                if (!visited.contains(newPos, true)) {
-                                    newFrontier.add(newPos);
-                                    visited.add(newPos);
-                                }
+                            if (i.isWayInDirection(GameField.Directions.LEFT) && newPos.isWayInDirection(GameField.Directions.RIGHT)) {
+                                isNeighbourWithWay = true;
                             }
                         } else if (newPos.x == i.x + 1) {
-                            if (i.isWayInDirection(1) && newPos.isWayInDirection(3)) {
-                                if (!visited.contains(newPos, true)) {
-                                    newFrontier.add(newPos);
-                                    visited.add(newPos);
-                                }
+                            if (i.isWayInDirection(GameField.Directions.RIGHT) && newPos.isWayInDirection(GameField.Directions.LEFT)) {
+                                isNeighbourWithWay = true;
                             }
                         }
                     } else if (newPos.x == i.x) {
                         if (newPos.y == i.y - 1) {
-                            if (i.isWayInDirection(2) && newPos.isWayInDirection(0)) {
-                                if (!visited.contains(newPos, true)) {
-                                    newFrontier.add(newPos);
-                                    visited.add(newPos);
-                                }
+                            if (i.isWayInDirection(GameField.Directions.DOWN) && newPos.isWayInDirection(GameField.Directions.UP)) {
+                                isNeighbourWithWay = true;
                             }
                         } else if (newPos.y == i.y + 1) {
-                            if (i.isWayInDirection(0) && newPos.isWayInDirection(2)) {
-                                if (!visited.contains(newPos, true)) {
-                                    newFrontier.add(newPos);
-                                    visited.add(newPos);
-                                }
+                            if (i.isWayInDirection(GameField.Directions.UP) && newPos.isWayInDirection(GameField.Directions.DOWN)) {
+                                isNeighbourWithWay = true;
                             }
+                        }
+                    }
+                    if (isNeighbourWithWay) {
+                        if (!visited.contains(newPos, true)) {
+                            newFrontier.add(newPos);
+                            visited.add(newPos);
                         }
                     }
                 }
