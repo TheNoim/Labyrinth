@@ -46,7 +46,7 @@ public class GameField {
     protected int posY;
     private Vector3 clickVector3 = new Vector3();
 
-    public GameField(Texture fieldTexture, boolean hasTreasure, int x, int y, int index, int type, int facing) {
+    GameField(Texture fieldTexture, boolean hasTreasure, int x, int y, int index, int type, int facing) {
         this.fieldTexture = fieldTexture;
         this.fieldTextureRegion = new TextureRegion(this.fieldTexture);
         this.hasTreasure = hasTreasure;
@@ -57,7 +57,7 @@ public class GameField {
         this.facing = facing;
     }
 
-    public GameField(Texture fieldTexture, boolean hasTreasure, int x, int y, int index, int type, int facing, Treasure treasure) {
+    GameField(Texture fieldTexture, boolean hasTreasure, int x, int y, int index, int type, int facing, Treasure treasure) {
         this.fieldTexture = fieldTexture;
         this.fieldTextureRegion = new TextureRegion(this.fieldTexture);
         this.hasTreasure = hasTreasure;
@@ -69,7 +69,7 @@ public class GameField {
         this.treasure = treasure;
     }
 
-    public boolean isClicked(int size) {
+    boolean isClicked(int size) {
         clickVector3.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         Playground.camera.unproject(clickVector3);
         return clickVector3.x >= this.posX && clickVector3.x <= this.posX + size && clickVector3.y >= this.posY && clickVector3.y <= this.posY + size;
@@ -79,7 +79,7 @@ public class GameField {
      * @param direction 0 => up, 1 => left, 2 => down, 3 => right
      * @return if in this direction is a way where the player can go
      */
-    public boolean isWayInDirection(int direction) {
+    boolean isWayInDirection(int direction) {
         return WAYS[this.type][(direction - this.facing + WAYS[this.type].length) % WAYS[this.type].length];
     }
 

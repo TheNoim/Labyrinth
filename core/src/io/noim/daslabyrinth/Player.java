@@ -18,7 +18,7 @@ public class Player {
         this.score = DasLabyrinth.pref.getInteger("Score" + this.name);
     }
 
-    public void movePlayer(Playground playground, GameField nextGamefield) {
+    public boolean movePlayer(Playground playground, GameField nextGamefield) {
         if (this.canMove(playground, nextGamefield)) {
             this.currentField = nextGamefield;
             if (nextGamefield.hasTreasure) {
@@ -28,7 +28,9 @@ public class Player {
                 playground.makeMoreTreasures(1);
                 DasLabyrinth.click();
             }
+            return true;
         }
+        return false;
     }
 
     /**
@@ -39,54 +41,60 @@ public class Player {
      * @return If the player can go to the gamefield
      */
     private boolean canMove(Playground playground, GameField nextGamefield) {
-        Array<GameField> visited = new Array<GameField>();
+        if (this.currentField != playground.newGF) {
+            Array<GameField> visited = new Array<GameField>();
 
-        Array<GameField> frontier = new Array<GameField>();
-        frontier.add(this.currentField);
+            Array<GameField> frontier = new Array<GameField>();
+            frontier.add(this.currentField);
 
-        while (true) {
-            Array<GameField> newFrontier = new Array<GameField>();
+            while (true) {
+                Array<GameField> newFrontier = new Array<GameField>();
 
-            for (GameField i : frontier) {
-                if (i == nextGamefield) {
-                    return true;
-                }
-                for (GameField newPos : new Array.ArrayIterator<GameField>(playground.gameFields)) {
-                    boolean isNeighbourWithWay = false;
-                    if (newPos.y == i.y) {
-                        if (newPos.x == i.x - 1) {
-                            if (i.isWayInDirection(GameField.Directions.LEFT) && newPos.isWayInDirection(GameField.Directions.RIGHT)) {
-                                isNeighbourWithWay = true;
+                for (GameField i : frontier) {
+                    if (i == nextGamefield) {
+                        return true;
+                    }
+                    for (GameField newPos : new Array.ArrayIterator<GameField>(playground.gameFields)) {
+                        if (newPos != playground.newGF) {
+                            boolean isNeighbourWithWay = false;
+                            if (newPos.y == i.y) {
+                                if (newPos.x == i.x - 1) {
+                                    if (i.isWayInDirection(GameField.Directions.LEFT) && newPos.isWayInDirection(GameField.Directions.RIGHT)) {
+                                        isNeighbourWithWay = true;
+                                    }
+                                } else if (newPos.x == i.x + 1) {
+                                    if (i.isWayInDirection(GameField.Directions.RIGHT) && newPos.isWayInDirection(GameField.Directions.LEFT)) {
+                                        isNeighbourWithWay = true;
+                                    }
+                                }
+                            } else if (newPos.x == i.x) {
+                                if (newPos.y == i.y - 1) {
+                                    if (i.isWayInDirection(GameField.Directions.DOWN) && newPos.isWayInDirection(GameField.Directions.UP)) {
+                                        isNeighbourWithWay = true;
+                                    }
+                                } else if (newPos.y == i.y + 1) {
+                                    if (i.isWayInDirection(GameField.Directions.UP) && newPos.isWayInDirection(GameField.Directions.DOWN)) {
+                                        isNeighbourWithWay = true;
+                                    }
+                                }
                             }
-                        } else if (newPos.x == i.x + 1) {
-                            if (i.isWayInDirection(GameField.Directions.RIGHT) && newPos.isWayInDirection(GameField.Directions.LEFT)) {
-                                isNeighbourWithWay = true;
-                            }
-                        }
-                    } else if (newPos.x == i.x) {
-                        if (newPos.y == i.y - 1) {
-                            if (i.isWayInDirection(GameField.Directions.DOWN) && newPos.isWayInDirection(GameField.Directions.UP)) {
-                                isNeighbourWithWay = true;
-                            }
-                        } else if (newPos.y == i.y + 1) {
-                            if (i.isWayInDirection(GameField.Directions.UP) && newPos.isWayInDirection(GameField.Directions.DOWN)) {
-                                isNeighbourWithWay = true;
+                            if (isNeighbourWithWay) {
+                                if (!visited.contains(newPos, true)) {
+                                    newFrontier.add(newPos);
+                                    visited.add(newPos);
+                                }
                             }
                         }
                     }
-                    if (isNeighbourWithWay) {
-                        if (!visited.contains(newPos, true)) {
-                            newFrontier.add(newPos);
-                            visited.add(newPos);
-                        }
-                    }
                 }
-            }
-            if (newFrontier.size == 0) {
-                return false;
-            }
-            frontier = newFrontier;
+                if (newFrontier.size == 0) {
+                    return false;
+                }
+                frontier = newFrontier;
 
+            }
+        } else {
+            return false;
         }
     }
 

@@ -7,23 +7,23 @@ public class PlayerManager {
 
     Array<Player> players = new Array<Player>();
     private int activePlayer = 0;
+    private GameField startField;
 
-    public PlayerManager(GameField startField) {
-        Texture[] figures = new Texture[]{
-                new Texture("figure1.png"),
-                new Texture("figure2.png"),
-                new Texture("figure3.png"),
-                new Texture("figure4.png"),
-        };
-        this.players.add(new Player("Simon", figures[0], startField));
+    PlayerManager(GameField startField) {
+        this.startField = startField;
+    }
+
+    void addPlayer(String name, Texture figure) {
+        this.players.add(new Player(name, figure, this.startField));
     }
 
     void moveCurrentPlayer(Playground playground, GameField nextGamefield) {
-        this.players.get(this.activePlayer).movePlayer(playground, nextGamefield);
-        this.nextPlayer();
+        if (this.players.get(this.activePlayer).movePlayer(playground, nextGamefield)) {
+            this.nextPlayer();
+        }
     }
 
-    void nextPlayer() {
+    private void nextPlayer() {
         if (this.activePlayer == this.players.size - 1) {
             this.activePlayer = 0;
         } else {
