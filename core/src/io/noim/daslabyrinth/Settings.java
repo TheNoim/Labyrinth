@@ -38,7 +38,7 @@ public class Settings implements Screen, InputProcessor {
     float checkBoxPos3Y;
     float checkBoxSize;
 
-    public void create() {
+    private void create() {
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCatchBackKey(true);
 

@@ -61,7 +61,7 @@ public class DasLabyrinth extends Game {
     /**
      * Do the click sound and/or vibrate if enabled
      */
-    public static void click() {
+    static void click() {
         if (pref.getBoolean("Sounds", true)) {
             click.play();
         }

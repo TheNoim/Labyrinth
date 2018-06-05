@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Align;
 
 public class StartMenu implements Screen, ApplicationListener, InputProcessor {
 
@@ -22,8 +23,10 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
     public Ranking Ranking;
 
     public StartMenu(final DasLabyrinth main) {
-        create();
         this.main = main;
+        banner = new Texture("banner.png");
+        button = new Texture("button.png");
+        buttonPushed = new Texture("button_pushed.png");
     }
 
     public StartMenu(final Settings Settings) {
@@ -52,9 +55,6 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
             DasLabyrinth.music.stop();
         }
 
-        banner = new Texture("banner.png");
-        button = new Texture("button.png");
-        buttonPushed = new Texture("button_pushed.png");
         X = Gdx.graphics.getWidth() / 2 - DasLabyrinth.ButtonWidth / 2;
     }
 
@@ -88,10 +88,10 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
         batch.draw(button, X, Gdx.graphics.getHeight() / 2 - (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) / 2, DasLabyrinth.ButtonWidth, Functions.textHeight(DasLabyrinth.ranking, DasLabyrinth.font) * 3);
         batch.draw(button, X, Gdx.graphics.getHeight() / 2 - (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) * 2, DasLabyrinth.ButtonWidth, Functions.textHeight(DasLabyrinth.settings, DasLabyrinth.font) * 3);
 
-        DasLabyrinth.font.draw(batch, DasLabyrinth.heading, 0, 0.9185F * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 1, false);
-        DasLabyrinth.font.draw(batch, DasLabyrinth.play, X, Gdx.graphics.getHeight() / 2 + 2 * (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) - (((Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) - Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font)) / 2), DasLabyrinth.ButtonWidth, 1, false);
-        DasLabyrinth.font.draw(batch, DasLabyrinth.ranking, X, Gdx.graphics.getHeight() / 2 + ((Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) / 2) - (((Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) - Functions.textHeight(DasLabyrinth.ranking, DasLabyrinth.font)) / 2), DasLabyrinth.ButtonWidth, 1, false);
-        DasLabyrinth.font.draw(batch, DasLabyrinth.settings, X, Gdx.graphics.getHeight() / 2 - (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) - (((Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) - Functions.textHeight(DasLabyrinth.settings, DasLabyrinth.font)) / 2), DasLabyrinth.ButtonWidth, 1, false);
+        DasLabyrinth.font.draw(batch, DasLabyrinth.heading, 0, 0.9185F * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), Align.center, false);
+        DasLabyrinth.font.draw(batch, DasLabyrinth.play, 0, Gdx.graphics.getHeight() / 2 + 2 * (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) - (((Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) - Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font)) / 2), DasLabyrinth.ButtonWidth, Align.center, false);
+        DasLabyrinth.font.draw(batch, DasLabyrinth.ranking, 0, Gdx.graphics.getHeight() / 2 + ((Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) / 2) - (((Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) - Functions.textHeight(DasLabyrinth.ranking, DasLabyrinth.font)) / 2), DasLabyrinth.ButtonWidth, Align.center, false);
+        DasLabyrinth.font.draw(batch, DasLabyrinth.settings, 0, Gdx.graphics.getHeight() / 2 - (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) - (((Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) - Functions.textHeight(DasLabyrinth.settings, DasLabyrinth.font)) / 2), DasLabyrinth.ButtonWidth, Align.center, false);
 
         batch.end();
     }
@@ -114,6 +114,7 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
     }
 
     public void show() {
+        create();
     }
 
     public void hide() {

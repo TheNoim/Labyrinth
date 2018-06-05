@@ -7,11 +7,9 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
@@ -24,9 +22,13 @@ public class Playground implements Screen, InputProcessor {
 
     public Playground(final DasLabyrinth main) {
         this.main = main;
+        background = new Texture("background.png");
+        music = Gdx.audio.newMusic(Gdx.files.internal("Epic Suspense.mp3"));
+        moveSound = Gdx.audio.newSound(Gdx.files.internal("move.mp3"));
+        batch = new SpriteBatch();
+        camera = new OrthographicCamera();
     }
 
-    BitmapFont roboto;
     private SpriteBatch batch;
     final int playgroundWidth = 4;
     final int playgroundHeight = 5;
@@ -39,13 +41,11 @@ public class Playground implements Screen, InputProcessor {
     int heightAndWidthPerField;
     int halffinalprozent;
     static OrthographicCamera camera;
-    Texture background;
+    private Vector3 touch = new Vector3();
+    private Texture background;
     GameField newGF;
-    Matrix4 originalMatrix = new Matrix4();
-    boolean isMovingNewField;
-    Vector2 newfieldv = new Vector2();
-    int newfieldw;
-    Array<ImgButton> imgButtons = new Array<ImgButton>();
+    private Matrix4 originalMatrix = new Matrix4();
+    private Array<ImgButton> imgButtons = new Array<ImgButton>(2 * this.playgroundWidth + 2 * this.playgroundHeight);
     Texture arrow = new Texture("pfeil.gif");
     Texture rotateArrow = new Texture("rotate.png");
     final Texture[] cards = new Texture[]{
@@ -59,8 +59,8 @@ public class Playground implements Screen, InputProcessor {
     public final int minTreasureAmount = 3;
     public final int maxTreasureAmount = 5;
     Array<GameField> gameFields = new Array<GameField>(this.playgroundWidth * this.playgroundHeight);
-    int treasureCount = 0;
-    Texture[] figures = new Texture[]{
+    private int treasureCount = 0;
+    private Texture[] figures = new Texture[]{
             new Texture("figure1.png"),
             new Texture("figure2.png"),
             new Texture("figure3.png"),
@@ -72,98 +72,97 @@ public class Playground implements Screen, InputProcessor {
         Gdx.input.setCatchBackKey(true);
 
         DasLabyrinth.whichClass = 1;
-        generateRandomField();
-        this.main.playerManager.addPlayer("Simon", figures[0]);
-        this.main.playerManager.addPlayer("Jannis", figures[1]);
-        int typeNewGF = Functions.randomWithRange(0, 3);
-        if (this.treasureCount < maxTreasureAmount) {
-            int rnd3 = Functions.randomWithRange(0, 100);
-            if (rnd3 < 20) {
-                newGF = new GameField(cards[typeNewGF], true, 0, 0, gameFields.size + 1, typeNewGF, Functions.randomWithRange(0, 3));
-                int rnd2 = Functions.randomWithRange(0, 100);
-                if (rnd2 > 20) {
-                    newGF.treasure = new Treasure(treasure_min, 3);
-                } else {
-                    newGF.treasure = new Treasure(treasure_max, 5);
-                }
-            } else {
-                newGF = new GameField(cards[typeNewGF], false, 0, 0, gameFields.size + 1, typeNewGF, Functions.randomWithRange(0, 3));
-            }
-        } else {
-            newGF = new GameField(cards[typeNewGF], false, 0, 0, gameFields.size + 1, typeNewGF, Functions.randomWithRange(0, 3));
-        }
-
-        screenWidth = Gdx.graphics.getHeight();
-        screenHeight = Gdx.graphics.getWidth();
-        background = new Texture("background.png");
-        batch = new SpriteBatch();
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, screenHeight, screenWidth);
-        DasLabyrinth.pref.flush();
-        DasLabyrinth.playSounds = DasLabyrinth.pref.getBoolean("Sounds", true);
-        DasLabyrinth.vibration = DasLabyrinth.pref.getBoolean("Vibration", true);
-        music = Gdx.audio.newMusic(Gdx.files.internal("Epic Suspense.mp3"));
-        moveSound = Gdx.audio.newSound(Gdx.files.internal("move.mp3"));
-        music.setLooping(true);
-        if (DasLabyrinth.pref.getBoolean("Music", true)) {
-            music.play();
-        }
         screenWidth = Gdx.graphics.getHeight();
         screenHeight = Gdx.graphics.getWidth();
         halffinalprozent = (int) Math.round(screenHeight * percentHeight / 2F);
         heightAndWidthPerField = (int) Math.round((screenHeight - screenHeight * percentHeight) / 4F);
         startX = Math.round((screenWidth - heightAndWidthPerField * 5F) / 1.1F);
-        roboto = new BitmapFont(Gdx.files.internal("Roboto.fnt"));
-        isMovingNewField = false;
-
-        // up
-        for (int j = 0; j < gameFields.size; j++) {
-            if (gameFields.get(j).y == 5) {
-                Vector2 v = new Vector2();
-                ImgButton bt = new ImgButton(arrow, v, heightAndWidthPerField / 4, heightAndWidthPerField / 4, ImgButton.Direction.Up);
-                bt.gf = gameFields.get(j);
-                bt.shouldX = gameFields.get(j).x;
-                bt.shouldY = gameFields.get(j).y;
-                imgButtons.add(bt);
+        if (this.gameFields.size != this.playgroundWidth * this.playgroundHeight) {
+            generateRandomField();
+            int typeNewGF = Functions.randomWithRange(0, 3);
+            if (this.treasureCount < maxTreasureAmount) {
+                int rnd3 = Functions.randomWithRange(0, 100);
+                if (rnd3 < 20) {
+                    newGF = new GameField(cards[typeNewGF], true, 0, 0, gameFields.size + 1, typeNewGF, Functions.randomWithRange(0, 3));
+                    int rnd2 = Functions.randomWithRange(0, 100);
+                    if (rnd2 > 20) {
+                        newGF.treasure = new Treasure(treasure_min, 3);
+                    } else {
+                        newGF.treasure = new Treasure(treasure_max, 5);
+                    }
+                } else {
+                    newGF = new GameField(cards[typeNewGF], false, 0, 0, gameFields.size + 1, typeNewGF, Functions.randomWithRange(0, 3));
+                }
+            } else {
+                newGF = new GameField(cards[typeNewGF], false, 0, 0, gameFields.size + 1, typeNewGF, Functions.randomWithRange(0, 3));
             }
         }
 
-        // down
-        for (int j = 0; j < gameFields.size; j++) {
-            if (gameFields.get(j).y == 1) {
-                Vector2 v = new Vector2();
-                v.x = gameFields.get(j).posX + heightAndWidthPerField / 2;
-                v.y = gameFields.get(j).posY - 20;
-                ImgButton bt = new ImgButton(arrow, v, heightAndWidthPerField / 4, heightAndWidthPerField / 4, ImgButton.Direction.Down);
-                bt.gf = gameFields.get(j);
-                bt.shouldX = gameFields.get(j).x;
-                bt.shouldY = gameFields.get(j).y;
-                imgButtons.add(bt);
+        if (this.imgButtons.size != 2 * this.playgroundWidth + 2 * this.playgroundHeight) {
+            // up
+            for (int j = 0; j < gameFields.size; j++) {
+                if (gameFields.get(j).y == 5) {
+                    Vector2 v = new Vector2();
+                    ImgButton bt = new ImgButton(arrow, v, heightAndWidthPerField / 4, heightAndWidthPerField / 4, ImgButton.Direction.Up);
+                    bt.gf = gameFields.get(j);
+                    bt.shouldX = gameFields.get(j).x;
+                    bt.shouldY = gameFields.get(j).y;
+                    imgButtons.add(bt);
+                }
+            }
+
+            // down
+            for (int j = 0; j < gameFields.size; j++) {
+                if (gameFields.get(j).y == 1) {
+                    Vector2 v = new Vector2();
+                    v.x = gameFields.get(j).posX + heightAndWidthPerField / 2;
+                    v.y = gameFields.get(j).posY - 20;
+                    ImgButton bt = new ImgButton(arrow, v, heightAndWidthPerField / 4, heightAndWidthPerField / 4, ImgButton.Direction.Down);
+                    bt.gf = gameFields.get(j);
+                    bt.shouldX = gameFields.get(j).x;
+                    bt.shouldY = gameFields.get(j).y;
+                    imgButtons.add(bt);
+                }
+            }
+
+            // left
+            for (int j = 0; j < gameFields.size; j++) {
+                if (gameFields.get(j).x == 1) {
+                    Vector2 v = new Vector2();
+                    ImgButton bt = new ImgButton(arrow, v, heightAndWidthPerField / 4, heightAndWidthPerField / 4, ImgButton.Direction.Left);
+                    bt.gf = gameFields.get(j);
+                    bt.shouldX = gameFields.get(j).x;
+                    bt.shouldY = gameFields.get(j).y;
+                    imgButtons.add(bt);
+                }
+            }
+
+            // right
+            for (int j = 0; j < gameFields.size; j++) {
+                if (gameFields.get(j).x == 4) {
+                    Vector2 v = new Vector2();
+                    ImgButton bt = new ImgButton(arrow, v, heightAndWidthPerField / 4, heightAndWidthPerField / 4, ImgButton.Direction.Right);
+                    bt.gf = gameFields.get(j);
+                    bt.shouldX = gameFields.get(j).x;
+                    bt.shouldY = gameFields.get(j).y;
+                    imgButtons.add(bt);
+                }
             }
         }
-
-        // left
-        for (int j = 0; j < gameFields.size; j++) {
-            if (gameFields.get(j).x == 1) {
-                Vector2 v = new Vector2();
-                ImgButton bt = new ImgButton(arrow, v, heightAndWidthPerField / 4, heightAndWidthPerField / 4, ImgButton.Direction.Left);
-                bt.gf = gameFields.get(j);
-                bt.shouldX = gameFields.get(j).x;
-                bt.shouldY = gameFields.get(j).y;
-                imgButtons.add(bt);
-            }
+        if (this.main.playerManager.players.size < 2) {
+            this.main.playerManager.setPreviousScreen(this.main, this);
+            this.main.setScreen(this.main.playerManager);
         }
 
-        // right
-        for (int j = 0; j < gameFields.size; j++) {
-            if (gameFields.get(j).x == 4) {
-                Vector2 v = new Vector2();
-                ImgButton bt = new ImgButton(arrow, v, heightAndWidthPerField / 4, heightAndWidthPerField / 4, ImgButton.Direction.Right);
-                bt.gf = gameFields.get(j);
-                bt.shouldX = gameFields.get(j).x;
-                bt.shouldY = gameFields.get(j).y;
-                imgButtons.add(bt);
-            }
+        screenWidth = Gdx.graphics.getHeight();
+        screenHeight = Gdx.graphics.getWidth();
+        camera.setToOrtho(false, screenHeight, screenWidth);
+        DasLabyrinth.pref.flush();
+        DasLabyrinth.playSounds = DasLabyrinth.pref.getBoolean("Sounds", true);
+        DasLabyrinth.vibration = DasLabyrinth.pref.getBoolean("Vibration", true);
+        music.setLooping(true);
+        if (DasLabyrinth.pref.getBoolean("Music", true)) {
+            music.play();
         }
     }
 
@@ -193,8 +192,6 @@ public class Playground implements Screen, InputProcessor {
         }
         int dd = Math.round(heightAndWidthPerField * 1.5F);
         if (newGF != null) {
-            roboto.setColor(Color.BLACK);
-            roboto.getData().setScale(1.5F, 1.5F);
             Matrix4 rotMatrix = new Matrix4();
             rotMatrix.translate(halffinalprozent, startX - dd, 0);
             rotMatrix.translate(heightAndWidthPerField / 2, heightAndWidthPerField / 2, 0);
@@ -202,9 +199,6 @@ public class Playground implements Screen, InputProcessor {
             rotMatrix.translate(-heightAndWidthPerField / 2, -heightAndWidthPerField / 2, 0);
             batch.setTransformMatrix(rotMatrix);
             batch.draw(newGF.fieldTextureRegion, 0, 0, heightAndWidthPerField, heightAndWidthPerField);
-            newfieldv.x = halffinalprozent;
-            newfieldv.y = startX - dd;
-            newfieldw = heightAndWidthPerField;
             if (newGF.hasTreasure) {
                 rotMatrix.setToRotation(0, 0, 1, 0.0F);
                 rotMatrix.translate(halffinalprozent, startX - dd, 0);
@@ -271,7 +265,6 @@ public class Playground implements Screen, InputProcessor {
         }
 
         if (Gdx.input.justTouched()) {
-            Vector3 touch = new Vector3();
             touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(touch);
             if (touch.x >= (2 * halffinalprozent + heightAndWidthPerField) && touch.x <= (2 * halffinalprozent + heightAndWidthPerField + heightAndWidthPerField / 2) && touch.y >= (startX - (int) Math.round(heightAndWidthPerField * 1.25)) && touch.y <= (startX - (int) Math.round(heightAndWidthPerField * 1.25) + heightAndWidthPerField / 2)) {
@@ -397,6 +390,7 @@ public class Playground implements Screen, InputProcessor {
     }
 
     public void hide() {
+        music.pause();
     }
 
     public void pause() {
