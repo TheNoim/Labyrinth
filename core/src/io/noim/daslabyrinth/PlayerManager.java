@@ -1,6 +1,7 @@
 package io.noim.daslabyrinth;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -8,7 +9,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
@@ -26,7 +26,7 @@ public class PlayerManager implements Screen, InputProcessor {
     private Texture buttonPushed;
     private Texture backButton;
     private BitmapFont textFont;
-    private Vector3 touch = new Vector3();
+    private int i = 0;
 
     private DasLabyrinth dasLabyrinth;
     private Screen previousScreen;
@@ -84,22 +84,33 @@ public class PlayerManager implements Screen, InputProcessor {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        if (Gdx.input.justTouched()) {
+            DasLabyrinth.touchPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+            camera.unproject(DasLabyrinth.touchPosition);
+            if (DasLabyrinth.touchPosition.x > Gdx.graphics.getWidth() / 20 && DasLabyrinth.touchPosition.x < 3 * Gdx.graphics.getWidth() / 20 && DasLabyrinth.touchPosition.y > 29 * Gdx.graphics.getHeight() / 30 - backButton.getHeight() / 3 && DasLabyrinth.touchPosition.y < 29 * Gdx.graphics.getHeight() / 30 - backButton.getHeight() / 3 + Gdx.graphics.getWidth() / 10) {
+                DasLabyrinth.click();
+                this.dasLabyrinth.setScreen(this.previousScreen);
+            } else if (DasLabyrinth.touchPosition.x > Gdx.graphics.getWidth() / 2 - DasLabyrinth.ButtonWidth / 2 && DasLabyrinth.touchPosition.x < Gdx.graphics.getWidth() / 2 + DasLabyrinth.ButtonWidth / 2 && DasLabyrinth.touchPosition.y > Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10 * (i + 3) && DasLabyrinth.touchPosition.y < Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10 * (i + 3) + Functions.textHeight("Spieler hinzufügen", this.textFont) * 3) {
+                if (this.players.size < 4) {
+                    // TODO get a chosen player name and figure and create a new Player
+                }
+            }
+        }
+
         this.camera.update();
         this.batch.setProjectionMatrix(this.camera.combined);
         this.batch.begin();
         this.batch.draw(this.background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        this.batch.draw(this.backButton, Gdx.graphics.getWidth() / 20, (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30) - (backButton.getHeight() / 3), Gdx.graphics.getWidth() / 10, Gdx.graphics.getWidth() / 10);
+        this.batch.draw(this.backButton, Gdx.graphics.getWidth() / 20, 29 * Gdx.graphics.getHeight() / 30 - backButton.getHeight() / 3, Gdx.graphics.getWidth() / 10, Gdx.graphics.getWidth() / 10);
         DasLabyrinth.font.draw(batch, "Spieler", 0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10, Gdx.graphics.getWidth(), 1, false);
-        int i = 0;
         for (; i < this.players.size; i++) {
             this.textFont.draw(this.batch, this.players.get(i).name, Gdx.graphics.getWidth() / 10, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10 * (i + 2));
         }
-        this.batch.draw(this.button, Gdx.graphics.getWidth() / 2 - DasLabyrinth.ButtonWidth / 2, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10 * (i + 3), DasLabyrinth.ButtonWidth, Functions.textHeight(DasLabyrinth.settings, DasLabyrinth.font) * 3);
         if (this.players.size < 4) {
-            this.textFont.draw(batch, "Spieler hinzufügen", 0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10 * (i + 3) + Functions.textHeight(DasLabyrinth.settings, DasLabyrinth.font) * 2, DasLabyrinth.ButtonWidth, Align.center, false);
+            this.batch.draw(this.button, Gdx.graphics.getWidth() / 2 - DasLabyrinth.ButtonWidth / 2, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10 * (i + 3), DasLabyrinth.ButtonWidth, Functions.textHeight("Spieler hinzufügen", this.textFont) * 3);
+            this.textFont.draw(this.batch, "Spieler hinzufügen", 0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10 * (i + 3) + Functions.textHeight("Spieler hinzufügen", this.textFont) * 2, Gdx.graphics.getWidth(), Align.center, false);
         }
         this.batch.end();
-        //TODO Add button, back button
     }
 
     @Override
@@ -129,6 +140,11 @@ public class PlayerManager implements Screen, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
+        switch (keycode) {
+            case Input.Keys.BACK:
+                this.dasLabyrinth.setScreen(this.previousScreen);
+                break;
+        }
         return false;
     }
 

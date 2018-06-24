@@ -17,7 +17,7 @@ public class DasLabyrinth extends Game {
     public static Music music;
     public static Sound treasure, click;
     public static Preferences pref;
-    public static Vector3 touchPosition = new Vector3();
+    static Vector3 touchPosition = new Vector3();
     public static int ButtonWidth;
     public static String heading, play, ranking, settings;
     Playground playground;
