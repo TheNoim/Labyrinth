@@ -183,7 +183,7 @@ public class Settings implements Screen, InputProcessor {
     }
 
     public void resize(int width, int height) {
-        Functions.scaleWindow();
+
     }
 
     public void show() {

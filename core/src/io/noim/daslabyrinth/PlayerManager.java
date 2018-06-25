@@ -33,6 +33,16 @@ public class PlayerManager implements Screen, InputProcessor {
 
     PlayerManager(GameField startField) {
         this.startField = startField;
+
+        this.camera = new OrthographicCamera();
+        this.camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        this.batch = new SpriteBatch();
+        this.background = new Texture("background.png");
+        this.button = new Texture("button.png");
+        this.buttonPushed = new Texture("button_pushed.png");
+        this.backButton = new Texture("back.png");
+        this.textFont = new BitmapFont(Gdx.files.internal("Verdana.fnt"));
+        this.textFont.getData().setScale(Functions.scaleText("Vibration", this.textFont, Gdx.graphics.getWidth() / 3));
     }
 
     void addPlayer(String name, Texture figure) {
@@ -68,15 +78,6 @@ public class PlayerManager implements Screen, InputProcessor {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(this);
-        this.camera = new OrthographicCamera();
-        this.camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        this.batch = new SpriteBatch();
-        this.background = new Texture("background.png");
-        this.button = new Texture("button.png");
-        this.buttonPushed = new Texture("button_pushed.png");
-        this.backButton = new Texture("back.png");
-        this.textFont = new BitmapFont(Gdx.files.internal("Verdana.fnt"));
-        this.textFont.getData().setScale(Functions.scaleText("Vibration", this.textFont, Gdx.graphics.getWidth() / 3));
     }
 
     @Override
@@ -92,6 +93,7 @@ public class PlayerManager implements Screen, InputProcessor {
                 this.dasLabyrinth.setScreen(this.previousScreen);
             } else if (DasLabyrinth.touchPosition.x > Gdx.graphics.getWidth() / 2 - DasLabyrinth.ButtonWidth / 2 && DasLabyrinth.touchPosition.x < Gdx.graphics.getWidth() / 2 + DasLabyrinth.ButtonWidth / 2 && DasLabyrinth.touchPosition.y > Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10 * (i + 3) && DasLabyrinth.touchPosition.y < Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10 * (i + 3) + Functions.textHeight("Spieler hinzufügen", this.textFont) * 3) {
                 if (this.players.size < 4) {
+                    DasLabyrinth.click();
                     // TODO get a chosen player name and figure and create a new Player
                 }
             }

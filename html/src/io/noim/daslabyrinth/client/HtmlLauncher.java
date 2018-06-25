@@ -27,6 +27,12 @@ public class HtmlLauncher extends GwtApplication {
     public GwtApplicationConfiguration getConfig() {
         int w = Window.getClientWidth() - PADDING;
         int h = Window.getClientHeight() - PADDING;
+        int nW = Math.round((h * 9F) / 16F);
+        if (nW > w) {
+            h = Math.round(w * 16f / 9f);
+        } else {
+            w = nW;
+        }
         cfg = new GwtApplicationConfiguration(w, h);
         Window.enableScrolling(false);
         Window.setMargin("0");
@@ -41,6 +47,12 @@ public class HtmlLauncher extends GwtApplication {
         public void onResize(ResizeEvent event) {
             int width = event.getWidth() - PADDING;
             int height = event.getHeight() - PADDING;
+            int newWidth = Math.round((height * 9F) / 16F);
+            if (newWidth > width) {
+                height = Math.round(width * 16f / 9f);
+            } else {
+                width = newWidth;
+            }
             getRootPanel().setWidth("" + width + "px");
             getRootPanel().setHeight("" + height + "px");
             getApplicationListener().resize(width, height);

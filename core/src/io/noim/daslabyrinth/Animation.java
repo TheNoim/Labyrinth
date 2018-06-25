@@ -73,7 +73,6 @@ public class Animation implements Screen {
     }
 
     public void resize(int width, int height) {
-        Functions.scaleWindow();
     }
 
     public void show() {

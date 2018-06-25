@@ -105,7 +105,7 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
     }
 
     public void resize(int width, int height) {
-        Functions.scaleWindow();
+
     }
 
     @Override

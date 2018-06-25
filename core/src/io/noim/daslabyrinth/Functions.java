@@ -36,9 +36,4 @@ public class Functions {
         float textWidth = textWidth(text, font);
         return targetWidth / textWidth;
     }
-
-    public static void scaleWindow() {
-        Gdx.graphics.setWindowedMode(Math.round(Gdx.graphics.getHeight() * 9F / 16F), Gdx.graphics.getHeight());
-        DasLabyrinth.ButtonWidth = Math.round(Gdx.graphics.getWidth() * 0.9F);
-    }
 }
