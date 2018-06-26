@@ -50,7 +50,7 @@ public class Player {
             while (true) {
                 Array<GameField> newFrontier = new Array<GameField>();
 
-                for (GameField i : frontier) {
+                for (GameField i : new Array.ArrayIterator<GameField>(frontier)) {
                     if (i == nextGamefield) {
                         return true;
                     }
@@ -91,7 +91,6 @@ public class Player {
                     return false;
                 }
                 frontier = newFrontier;
-
             }
         } else {
             return false;

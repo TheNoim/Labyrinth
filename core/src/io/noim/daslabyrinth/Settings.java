@@ -16,27 +16,32 @@ public class Settings implements Screen, InputProcessor {
 
     public DasLabyrinth main;
 
-    public Settings(final DasLabyrinth main) {
-        this.main = main;
-    }
-
     SpriteBatch batch;
     OrthographicCamera camera;
-    Texture background;
-    BitmapFont font_text;
+    private Texture background;
+    private BitmapFont font_text;
     String heading = "SETTINGS";
     Vector3 touchPosition = new Vector3();
 
-    Texture checkBox1;
-    Texture checkBox2;
-    Texture checkBox3;
-    Texture back;
+    private Texture checkBox, checkBox_checked;
+    private Texture back;
     boolean checkBox1Checked, checkBox2Checked, checkBox3Checked;
     float checkBoxPosX;
     float checkBoxPos1Y;
     float checkBoxPos2Y;
     float checkBoxPos3Y;
     float checkBoxSize;
+
+    Settings(final DasLabyrinth main) {
+        this.main = main;
+        font_text = new BitmapFont(Gdx.files.internal("Verdana.fnt"));
+        batch = new SpriteBatch();
+        camera = new OrthographicCamera();
+        background = new Texture("background.png");
+        checkBox_checked = new Texture("checkbox_checked.png");
+        checkBox = new Texture("checkbox.png");
+    }
+
 
     private void create() {
         Gdx.input.setInputProcessor(this);
@@ -47,38 +52,16 @@ public class Settings implements Screen, InputProcessor {
         DasLabyrinth.playSounds = DasLabyrinth.pref.getBoolean("Sounds", true);
         DasLabyrinth.vibration = DasLabyrinth.pref.getBoolean("Vibration", true);
 
-        font_text = new BitmapFont(Gdx.files.internal("Verdana.fnt"));
         font_text.getData().setScale(Functions.scaleText("Vibration", font_text, Gdx.graphics.getWidth() / 3));
         checkBoxSize = Gdx.graphics.getWidth() / 10;
         checkBoxPosX = Gdx.graphics.getWidth() / 10;
         checkBoxPos1Y = Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10 * 3;
         checkBoxPos2Y = Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10 * 4;
         checkBoxPos3Y = Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10 * 5;
-        batch = new SpriteBatch();
-        camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        background = new Texture("background.png");
-        if (DasLabyrinth.playMusic) {
-            checkBox1 = new Texture("checkbox_checked.png");
-            checkBox1Checked = true;
-        } else {
-            checkBox1 = new Texture("checkbox.png");
-            checkBox1Checked = false;
-        }
-        if (DasLabyrinth.playSounds) {
-            checkBox2 = new Texture("checkbox_checked.png");
-            checkBox2Checked = true;
-        } else {
-            checkBox2 = new Texture("checkbox.png");
-            checkBox2Checked = false;
-        }
-        if (DasLabyrinth.vibration) {
-            checkBox3 = new Texture("checkbox_checked.png");
-            checkBox3Checked = true;
-        } else {
-            checkBox3 = new Texture("checkbox.png");
-            checkBox3Checked = false;
-        }
+        checkBox1Checked = DasLabyrinth.playMusic;
+        checkBox2Checked = DasLabyrinth.playSounds;
+        checkBox3Checked = DasLabyrinth.vibration;
         back = new Texture("back.png");
     }
 
@@ -96,7 +79,6 @@ public class Settings implements Screen, InputProcessor {
                     } else if (DasLabyrinth.whichClass == 1) {
                         Playground.music.play();
                     }
-                    checkBox1 = new Texture("checkbox_checked.png");
                     checkBox1Checked = true;
                     DasLabyrinth.pref.putBoolean("Music", true);
                     DasLabyrinth.pref.flush();
@@ -107,7 +89,6 @@ public class Settings implements Screen, InputProcessor {
                     } else if (DasLabyrinth.whichClass == 1) {
                         Playground.music.pause();
                     }
-                    checkBox1 = new Texture("checkbox.png");
                     checkBox1Checked = false;
                     DasLabyrinth.pref.putBoolean("Music", false);
                     DasLabyrinth.pref.flush();
@@ -119,13 +100,11 @@ public class Settings implements Screen, InputProcessor {
                     touchPosition.y >= checkBoxPos2Y - (checkBoxSize / 5) &&
                     touchPosition.y <= checkBoxPos2Y + (checkBoxSize / 5 * 6)) {
                 if (!checkBox2Checked) {
-                    checkBox2 = new Texture("checkbox_checked.png");
                     checkBox2Checked = true;
                     DasLabyrinth.pref.putBoolean("Sounds", true);
                     DasLabyrinth.pref.flush();
                     DasLabyrinth.click();
                 } else {
-                    checkBox2 = new Texture("checkbox.png");
                     checkBox2Checked = false;
                     DasLabyrinth.pref.putBoolean("Sounds", false);
                     DasLabyrinth.pref.flush();
@@ -137,13 +116,11 @@ public class Settings implements Screen, InputProcessor {
                     touchPosition.y >= checkBoxPos3Y - (checkBoxSize / 5) &&
                     touchPosition.y <= checkBoxPos3Y + (checkBoxSize / 5 * 6)) {
                 if (!checkBox3Checked) {
-                    checkBox3 = new Texture("checkbox_checked.png");
                     checkBox3Checked = true;
                     DasLabyrinth.pref.putBoolean("Vibration", true);
                     DasLabyrinth.pref.flush();
                     DasLabyrinth.click();
                 } else {
-                    checkBox3 = new Texture("checkbox.png");
                     checkBox3Checked = false;
                     DasLabyrinth.pref.putBoolean("Vibration", false);
                     DasLabyrinth.pref.flush();
@@ -163,9 +140,21 @@ public class Settings implements Screen, InputProcessor {
     private void draw() {
         batch.begin();
         batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.draw(checkBox1, checkBoxPosX, checkBoxPos1Y, checkBoxSize, checkBoxSize);
-        batch.draw(checkBox2, checkBoxPosX, checkBoxPos2Y, checkBoxSize, checkBoxSize);
-        batch.draw(checkBox3, checkBoxPosX, checkBoxPos3Y, checkBoxSize, checkBoxSize);
+        if (checkBox1Checked) {
+            batch.draw(checkBox_checked, checkBoxPosX, checkBoxPos1Y, checkBoxSize, checkBoxSize);
+        } else {
+            batch.draw(checkBox, checkBoxPosX, checkBoxPos1Y, checkBoxSize, checkBoxSize);
+        }
+        if (checkBox2Checked) {
+            batch.draw(checkBox_checked, checkBoxPosX, checkBoxPos2Y, checkBoxSize, checkBoxSize);
+        } else {
+            batch.draw(checkBox, checkBoxPosX, checkBoxPos2Y, checkBoxSize, checkBoxSize);
+        }
+        if (checkBox3Checked) {
+            batch.draw(checkBox_checked, checkBoxPosX, checkBoxPos3Y, checkBoxSize, checkBoxSize);
+        } else {
+            batch.draw(checkBox, checkBoxPosX, checkBoxPos3Y, checkBoxSize, checkBoxSize);
+        }
         batch.draw(back, Gdx.graphics.getWidth() / 20, (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30) - (back.getHeight() / 3), Gdx.graphics.getWidth() / 10, Gdx.graphics.getWidth() / 10);
         DasLabyrinth.font.draw(batch, heading, 0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10, Gdx.graphics.getWidth(), 1, false);
         font_text.draw(batch, "Musik", checkBoxPosX + (Gdx.graphics.getWidth() / 5), (checkBoxPos1Y + Gdx.graphics.getWidth() / 10) - Gdx.graphics.getWidth() / 40);

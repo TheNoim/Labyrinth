@@ -14,26 +14,23 @@ public class Save implements Screen {
 
     public DasLabyrinth main;
 
-    public Save(final DasLabyrinth main) {
-        this.main = main;
-    }
-
     SpriteBatch batch;
     OrthographicCamera camera;
-    Texture background;
-    BitmapFont font_heading;
+    private Texture background;
+    private BitmapFont font_heading;
 
 
-    public void create() {
+    public Save(final DasLabyrinth main) {
+        this.main = main;
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         background = new Texture("background.png");
         font_heading = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
-        exit();
     }
 
-    private void update() {
+    private void create() {
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        exit();
     }
 
     private void draw() {
@@ -75,9 +72,9 @@ public class Save implements Screen {
             @Override
             public void run() {
                 if (DasLabyrinth.whichClass == 0) {
-                    main.setScreen(new StartMenu(main));
+                    main.setScreen(main.startMenu);
                 } else if (DasLabyrinth.whichClass == 1) {
-                    main.setScreen(new Playground(main));
+                    main.setScreen(main.playground);
                 }
             }
         }, 0.25F);

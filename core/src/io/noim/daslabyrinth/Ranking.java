@@ -14,25 +14,23 @@ public class Ranking implements Screen {
 
     SpriteBatch batch;
     public DasLabyrinth main;
-    Texture background, back;
-    String heading;
+    private Texture background, back;
+    String heading = "RANKING";
     Vector3 touchPosition = new Vector3();
     OrthographicCamera camera;
     BitmapFont font;
 
     public Ranking(final DasLabyrinth main) {
-        create();
         this.main = main;
-    }
-
-    public void create() {
-        heading = "RANKING";
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         background = new Texture("background.png");
         back = new Texture("back.png");
         font = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
+    }
+
+    public void create() {
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
     private void update() {
@@ -72,6 +70,7 @@ public class Ranking implements Screen {
     }
 
     public void show() {
+        create();
     }
 
     public void hide() {

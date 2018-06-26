@@ -19,21 +19,21 @@ public class DasLabyrinth extends Game {
     public static Preferences pref;
     static Vector3 touchPosition = new Vector3();
     public static int ButtonWidth;
-    public static String heading, play, ranking, settings;
+    public static String heading, playText, rankingText, settingsText;
+    Animation animation;
+    StartMenu startMenu;
     Playground playground;
+    Ranking ranking;
+    Settings settings;
     PlayerManager playerManager;
 
     @Override
     public void create() {
+        this.animation = new Animation(this);
+        this.startMenu = new StartMenu(this);
         this.playground = new Playground(this);
-        whichClass = 0;
-
-        heading = "DAS LABYRINTH";
-        play = "SPIEL STARTEN";
-        ranking = "RANKING";
-        settings = "EINSTELLUNGEN";
-
-        ButtonWidth = Math.round(Gdx.graphics.getWidth() * 0.9F);
+        this.ranking = new Ranking(this);
+        this.settings = new Settings(this);
 
         pref = Gdx.app.getPreferences("labyrinth.dat");
         background = new Texture("background.png");
@@ -42,7 +42,16 @@ public class DasLabyrinth extends Game {
         click = Gdx.audio.newSound(Gdx.files.internal("blop.wav"));
         music = Gdx.audio.newMusic(Gdx.files.internal("Spooky Fun.mp3"));
 
-        font.getData().setScale(Functions.scaleText(settings, font, ButtonWidth - 40));
+        whichClass = 0;
+
+        heading = "DAS LABYRINTH";
+        playText = "SPIEL STARTEN";
+        rankingText = "RANKING";
+        settingsText = "EINSTELLUNGEN";
+
+        ButtonWidth = Math.round(Gdx.graphics.getWidth() * 0.9F);
+
+        font.getData().setScale(Functions.scaleText(settingsText, font, ButtonWidth - 40));
 
         playMusic = pref.getBoolean("Music", true);
         playSounds = pref.getBoolean("Sounds", true);
@@ -55,11 +64,11 @@ public class DasLabyrinth extends Game {
         } else {
             music.stop();
         }
-        setScreen(new Animation(this));
+        setScreen(this.animation);
     }
 
     /**
-     * Do the click sound and/or vibrate if enabled
+     * Play the click sound and/or vibrate (if enabled)
      */
     static void click() {
         if (pref.getBoolean("Sounds", true)) {
@@ -70,6 +79,9 @@ public class DasLabyrinth extends Game {
         }
     }
 
+    /**
+     * Play the sound for a collected treasure (if enabled)
+     */
     public static void treasure() {
         if (pref.getBoolean("Sounds", true)) {
             treasure.play();

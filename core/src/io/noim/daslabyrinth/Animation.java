@@ -9,16 +9,21 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Animation implements Screen {
     OrthographicCamera camera;
-    Texture banner = new Texture("banner.png");
+    private Texture banner;
     String heading = "DAS LABYRINTH";
     SpriteBatch batch;
     Boolean animate = false;
 
     public DasLabyrinth main;
 
-    public void create() {
+    Animation(final DasLabyrinth main) {
+        this.main = main;
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
+        this.banner = new Texture("banner.png");
+    }
+
+    private void create() {
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         if (!DasLabyrinth.music.isPlaying() && DasLabyrinth.playMusic) {
@@ -28,17 +33,8 @@ public class Animation implements Screen {
         }
     }
 
-    private void update() {
-
-    }
-
-    public Animation(final DasLabyrinth main) {
-        create();
-        this.main = main;
-    }
-
-    double yAnim = 0.5;
-    double yDelta = 0.05;
+    private double yAnim = 0.5;
+    private double yDelta = 0.05;
 
     private void draw() {
         batch.begin();
@@ -55,7 +51,7 @@ public class Animation implements Screen {
 
             DasLabyrinth.font.draw(batch, heading, 0, (float) yAnim * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 1, false);
             if (yAnim >= 0.9185) {
-                main.setScreen(new StartMenu(main));
+                main.setScreen(main.startMenu);
             }
         } else {
             batch.draw(banner, 0, 0.3315F * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 0.2F * Gdx.graphics.getHeight());
@@ -68,7 +64,6 @@ public class Animation implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        update();
         draw();
     }
 
@@ -76,6 +71,7 @@ public class Animation implements Screen {
     }
 
     public void show() {
+        create();
     }
 
     public void hide() {

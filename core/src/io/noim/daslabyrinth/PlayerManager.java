@@ -42,7 +42,6 @@ public class PlayerManager implements Screen, InputProcessor {
         this.buttonPushed = new Texture("button_pushed.png");
         this.backButton = new Texture("back.png");
         this.textFont = new BitmapFont(Gdx.files.internal("Verdana.fnt"));
-        this.textFont.getData().setScale(Functions.scaleText("Vibration", this.textFont, Gdx.graphics.getWidth() / 3));
     }
 
     void addPlayer(String name, Texture figure) {
@@ -78,6 +77,7 @@ public class PlayerManager implements Screen, InputProcessor {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(this);
+        this.textFont.getData().setScale(Functions.scaleText("Vibration", this.textFont, Gdx.graphics.getWidth() / 3));
     }
 
     @Override

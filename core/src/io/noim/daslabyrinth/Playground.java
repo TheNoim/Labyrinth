@@ -20,15 +20,6 @@ public class Playground implements Screen, InputProcessor {
 
     public DasLabyrinth main;
 
-    public Playground(final DasLabyrinth main) {
-        this.main = main;
-        background = new Texture("background.png");
-        music = Gdx.audio.newMusic(Gdx.files.internal("Epic Suspense.mp3"));
-        moveSound = Gdx.audio.newSound(Gdx.files.internal("move.mp3"));
-        batch = new SpriteBatch();
-        camera = new OrthographicCamera();
-    }
-
     private SpriteBatch batch;
     final int playgroundWidth = 4;
     final int playgroundHeight = 5;
@@ -66,6 +57,15 @@ public class Playground implements Screen, InputProcessor {
             new Texture("figure3.png"),
             new Texture("figure4.png"),
     };
+
+    public Playground(final DasLabyrinth main) {
+        this.main = main;
+        background = new Texture("background.png");
+        music = Gdx.audio.newMusic(Gdx.files.internal("Epic Suspense.mp3"));
+        moveSound = Gdx.audio.newSound(Gdx.files.internal("move.mp3"));
+        batch = new SpriteBatch();
+        camera = new OrthographicCamera();
+    }
 
     private void create() {
         Gdx.input.setInputProcessor(this);

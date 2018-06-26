@@ -15,26 +15,18 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
 
     SpriteBatch batch;
     OrthographicCamera camera;
-    Texture button, buttonPushed, banner;
+    private Texture button, buttonPushed, banner;
     private float X;
 
     public DasLabyrinth main;
-    public Settings Settings;
-    public Ranking Ranking;
 
-    public StartMenu(final DasLabyrinth main) {
+    StartMenu(final DasLabyrinth main) {
         this.main = main;
+        batch = new SpriteBatch();
+        camera = new OrthographicCamera();
         banner = new Texture("banner.png");
         button = new Texture("button.png");
         buttonPushed = new Texture("button_pushed.png");
-    }
-
-    public StartMenu(final Settings Settings) {
-        this.Settings = Settings;
-    }
-
-    public StartMenu(final Ranking Ranking) {
-        this.Ranking = Ranking;
     }
 
     public void create() {
@@ -45,8 +37,6 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
 
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCatchBackKey(true);
-        batch = new SpriteBatch();
-        camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         if (DasLabyrinth.playMusic) {
@@ -54,7 +44,6 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
         } else {
             DasLabyrinth.music.stop();
         }
-
         X = Gdx.graphics.getWidth() / 2 - DasLabyrinth.ButtonWidth / 2;
     }
 
@@ -62,18 +51,18 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
         if (Gdx.input.justTouched()) {
             DasLabyrinth.touchPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(DasLabyrinth.touchPosition);
-            if (DasLabyrinth.touchPosition.x >= (Gdx.graphics.getWidth() / 2 - DasLabyrinth.ButtonWidth / 2) && DasLabyrinth.touchPosition.x <= (Gdx.graphics.getWidth() / 2 + DasLabyrinth.ButtonWidth / 2) && DasLabyrinth.touchPosition.y >= (Gdx.graphics.getHeight() / 2 + (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3)) && DasLabyrinth.touchPosition.y <= (Gdx.graphics.getHeight() / 2 + 2 * (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3))) {
+            if (DasLabyrinth.touchPosition.x >= (Gdx.graphics.getWidth() / 2 - DasLabyrinth.ButtonWidth / 2) && DasLabyrinth.touchPosition.x <= (Gdx.graphics.getWidth() / 2 + DasLabyrinth.ButtonWidth / 2) && DasLabyrinth.touchPosition.y >= (Gdx.graphics.getHeight() / 2 + (Functions.textHeight(DasLabyrinth.playText, DasLabyrinth.font) * 3)) && DasLabyrinth.touchPosition.y <= (Gdx.graphics.getHeight() / 2 + 2 * (Functions.textHeight(DasLabyrinth.playText, DasLabyrinth.font) * 3))) {
                 DasLabyrinth.click();
                 DasLabyrinth.music.stop();
                 main.setScreen(this.main.playground);
             }
-            if (DasLabyrinth.touchPosition.x >= (Gdx.graphics.getWidth() / 2 - DasLabyrinth.ButtonWidth / 2) && DasLabyrinth.touchPosition.x <= (Gdx.graphics.getWidth() / 2 + DasLabyrinth.ButtonWidth / 2) && DasLabyrinth.touchPosition.y >= (Gdx.graphics.getHeight() / 2 - (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) / 2) && DasLabyrinth.touchPosition.y <= (Gdx.graphics.getHeight() / 2 + (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) / 2)) {
+            if (DasLabyrinth.touchPosition.x >= (Gdx.graphics.getWidth() / 2 - DasLabyrinth.ButtonWidth / 2) && DasLabyrinth.touchPosition.x <= (Gdx.graphics.getWidth() / 2 + DasLabyrinth.ButtonWidth / 2) && DasLabyrinth.touchPosition.y >= (Gdx.graphics.getHeight() / 2 - (Functions.textHeight(DasLabyrinth.playText, DasLabyrinth.font) * 3) / 2) && DasLabyrinth.touchPosition.y <= (Gdx.graphics.getHeight() / 2 + (Functions.textHeight(DasLabyrinth.playText, DasLabyrinth.font) * 3) / 2)) {
                 DasLabyrinth.click();
-                //main.setScreen(new Ranking(main));
+                //main.setScreen(this.main.ranking);
             }
-            if (DasLabyrinth.touchPosition.x >= (Gdx.graphics.getWidth() / 2 - DasLabyrinth.ButtonWidth / 2) && DasLabyrinth.touchPosition.x <= (Gdx.graphics.getWidth() / 2 + DasLabyrinth.ButtonWidth / 2) && DasLabyrinth.touchPosition.y >= (Gdx.graphics.getHeight() / 2 - (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) * 2) && DasLabyrinth.touchPosition.y <= (Gdx.graphics.getHeight() / 2 - (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3))) {
+            if (DasLabyrinth.touchPosition.x >= (Gdx.graphics.getWidth() / 2 - DasLabyrinth.ButtonWidth / 2) && DasLabyrinth.touchPosition.x <= (Gdx.graphics.getWidth() / 2 + DasLabyrinth.ButtonWidth / 2) && DasLabyrinth.touchPosition.y >= (Gdx.graphics.getHeight() / 2 - (Functions.textHeight(DasLabyrinth.playText, DasLabyrinth.font) * 3) * 2) && DasLabyrinth.touchPosition.y <= (Gdx.graphics.getHeight() / 2 - (Functions.textHeight(DasLabyrinth.playText, DasLabyrinth.font) * 3))) {
                 DasLabyrinth.click();
-                main.setScreen(new Settings(main));
+                main.setScreen(this.main.settings);
             }
         }
     }
@@ -81,17 +70,17 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
     private void draw() {
         batch.begin();
 
-        batch.draw(DasLabyrinth.background, 0, 0, (float) Gdx.graphics.getWidth(), (float) Gdx.graphics.getHeight());
+        batch.draw(DasLabyrinth.background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         batch.draw(banner, 0, (0.75F * Gdx.graphics.getHeight()), Gdx.graphics.getWidth(), 0.2F * Gdx.graphics.getHeight());
-        batch.draw(button, X, Gdx.graphics.getHeight() / 2 + (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3), DasLabyrinth.ButtonWidth, Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3);
-        batch.draw(button, X, Gdx.graphics.getHeight() / 2 - (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) / 2, DasLabyrinth.ButtonWidth, Functions.textHeight(DasLabyrinth.ranking, DasLabyrinth.font) * 3);
-        batch.draw(button, X, Gdx.graphics.getHeight() / 2 - (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) * 2, DasLabyrinth.ButtonWidth, Functions.textHeight(DasLabyrinth.settings, DasLabyrinth.font) * 3);
+        batch.draw(button, X, Gdx.graphics.getHeight() / 2 + (Functions.textHeight(DasLabyrinth.playText, DasLabyrinth.font) * 3), DasLabyrinth.ButtonWidth, Functions.textHeight(DasLabyrinth.playText, DasLabyrinth.font) * 3);
+        batch.draw(button, X, Gdx.graphics.getHeight() / 2 - (Functions.textHeight(DasLabyrinth.playText, DasLabyrinth.font) * 3) / 2, DasLabyrinth.ButtonWidth, Functions.textHeight(DasLabyrinth.rankingText, DasLabyrinth.font) * 3);
+        batch.draw(button, X, Gdx.graphics.getHeight() / 2 - (Functions.textHeight(DasLabyrinth.playText, DasLabyrinth.font) * 3) * 2, DasLabyrinth.ButtonWidth, Functions.textHeight(DasLabyrinth.settingsText, DasLabyrinth.font) * 3);
 
         DasLabyrinth.font.draw(batch, DasLabyrinth.heading, 0, 0.9185F * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), Align.center, false);
-        DasLabyrinth.font.draw(batch, DasLabyrinth.play, 0, Gdx.graphics.getHeight() / 2 + 2 * (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) - (((Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) - Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font)) / 2), Gdx.graphics.getWidth(), Align.center, false);
-        DasLabyrinth.font.draw(batch, DasLabyrinth.ranking, 0, Gdx.graphics.getHeight() / 2 + ((Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) / 2) - (((Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) - Functions.textHeight(DasLabyrinth.ranking, DasLabyrinth.font)) / 2), Gdx.graphics.getWidth(), Align.center, false);
-        DasLabyrinth.font.draw(batch, DasLabyrinth.settings, 0, Gdx.graphics.getHeight() / 2 - (Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) - (((Functions.textHeight(DasLabyrinth.play, DasLabyrinth.font) * 3) - Functions.textHeight(DasLabyrinth.settings, DasLabyrinth.font)) / 2), Gdx.graphics.getWidth(), Align.center, false);
+        DasLabyrinth.font.draw(batch, DasLabyrinth.playText, 0, Gdx.graphics.getHeight() / 2 + 2 * (Functions.textHeight(DasLabyrinth.playText, DasLabyrinth.font) * 3) - (((Functions.textHeight(DasLabyrinth.playText, DasLabyrinth.font) * 3) - Functions.textHeight(DasLabyrinth.playText, DasLabyrinth.font)) / 2), Gdx.graphics.getWidth(), Align.center, false);
+        DasLabyrinth.font.draw(batch, DasLabyrinth.rankingText, 0, Gdx.graphics.getHeight() / 2 + ((Functions.textHeight(DasLabyrinth.playText, DasLabyrinth.font) * 3) / 2) - (((Functions.textHeight(DasLabyrinth.playText, DasLabyrinth.font) * 3) - Functions.textHeight(DasLabyrinth.rankingText, DasLabyrinth.font)) / 2), Gdx.graphics.getWidth(), Align.center, false);
+        DasLabyrinth.font.draw(batch, DasLabyrinth.settingsText, 0, Gdx.graphics.getHeight() / 2 - (Functions.textHeight(DasLabyrinth.playText, DasLabyrinth.font) * 3) - (((Functions.textHeight(DasLabyrinth.playText, DasLabyrinth.font) * 3) - Functions.textHeight(DasLabyrinth.settingsText, DasLabyrinth.font)) / 2), Gdx.graphics.getWidth(), Align.center, false);
 
         batch.end();
     }
@@ -134,7 +123,7 @@ public class StartMenu implements Screen, ApplicationListener, InputProcessor {
     public boolean keyDown(int keycode) {
         DasLabyrinth.click();
         if (keycode == Input.Keys.BACK) {
-            //Back button
+            Gdx.app.exit();
         }
         return false;
     }
