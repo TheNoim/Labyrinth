@@ -4,10 +4,8 @@ package io.noim.daslabyrinth;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -16,18 +14,18 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
-public class Playground implements Screen, InputProcessor {
+public class Playground extends Page implements InputProcessor {
 
     public DasLabyrinth main;
 
     private SpriteBatch batch;
     final int playgroundWidth = 4;
     final int playgroundHeight = 5;
-    int screenWidth;
     int screenHeight;
+    int screenWidth;
     double percentHeight = 0.1;
-    static Music music;
-    Sound moveSound;
+    private Music music;
+    private Sound moveSound;
     int startX;
     int heightAndWidthPerField;
     int halffinalprozent;
@@ -67,16 +65,16 @@ public class Playground implements Screen, InputProcessor {
         camera = new OrthographicCamera();
     }
 
-    private void create() {
+    void create() {
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCatchBackKey(true);
 
         DasLabyrinth.whichClass = 1;
-        screenWidth = Gdx.graphics.getHeight();
-        screenHeight = Gdx.graphics.getWidth();
-        halffinalprozent = (int) Math.round(screenHeight * percentHeight / 2F);
-        heightAndWidthPerField = (int) Math.round((screenHeight - screenHeight * percentHeight) / 4F);
-        startX = Math.round((screenWidth - heightAndWidthPerField * 5F) / 1.1F);
+        screenHeight = Gdx.graphics.getHeight();
+        screenWidth = Gdx.graphics.getWidth();
+        halffinalprozent = (int) Math.round(screenWidth * percentHeight / 2F);
+        heightAndWidthPerField = (int) Math.round((screenWidth - screenWidth * percentHeight) / 4F);
+        startX = Math.round((screenHeight - heightAndWidthPerField * 5F) / 1.1F);
         if (this.gameFields.size != this.playgroundWidth * this.playgroundHeight) {
             generateRandomField();
             int typeNewGF = Functions.randomWithRange(0, 3);
@@ -115,7 +113,7 @@ public class Playground implements Screen, InputProcessor {
             for (int j = 0; j < gameFields.size; j++) {
                 if (gameFields.get(j).y == 1) {
                     Vector2 v = new Vector2();
-                    v.x = gameFields.get(j).posX + heightAndWidthPerField / 2;
+                    v.x = gameFields.get(j).posX + heightAndWidthPerField / 2f;
                     v.y = gameFields.get(j).posY - 20;
                     ImgButton bt = new ImgButton(arrow, v, heightAndWidthPerField / 4, heightAndWidthPerField / 4, ImgButton.Direction.Down);
                     bt.gf = gameFields.get(j);
@@ -154,9 +152,9 @@ public class Playground implements Screen, InputProcessor {
             this.main.setScreen(this.main.playerManager);
         }
 
-        screenWidth = Gdx.graphics.getHeight();
-        screenHeight = Gdx.graphics.getWidth();
-        camera.setToOrtho(false, screenHeight, screenWidth);
+        screenHeight = Gdx.graphics.getHeight();
+        screenWidth = Gdx.graphics.getWidth();
+        camera.setToOrtho(false, screenWidth, screenHeight);
         DasLabyrinth.pref.flush();
         DasLabyrinth.playSounds = DasLabyrinth.pref.getBoolean("Sounds", true);
         DasLabyrinth.vibration = DasLabyrinth.pref.getBoolean("Vibration", true);
@@ -166,64 +164,64 @@ public class Playground implements Screen, InputProcessor {
         }
     }
 
-    private void draw() {
+    void draw() {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        batch.draw(background, 0, 0, screenHeight, screenWidth);
+        batch.draw(background, 0, 0, screenWidth, screenHeight);
 
         for (int i = 0; i < gameFields.size; i++) {
             gameFields.get(i).posX = (gameFields.get(i).x - 1) * heightAndWidthPerField + halffinalprozent;
             gameFields.get(i).posY = (gameFields.get(i).y - 1) * heightAndWidthPerField + startX;
             Matrix4 rotMatrix = new Matrix4();
             rotMatrix.translate(gameFields.get(i).posX, gameFields.get(i).posY, 0);
-            rotMatrix.translate(heightAndWidthPerField / 2, heightAndWidthPerField / 2, 0);
+            rotMatrix.translate(heightAndWidthPerField / 2f, heightAndWidthPerField / 2f, 0);
             rotMatrix.rotate(0, 0, 1, 90.0f * gameFields.get(i).facing);
-            rotMatrix.translate(-heightAndWidthPerField / 2, -heightAndWidthPerField / 2, 0);
+            rotMatrix.translate(-heightAndWidthPerField / 2f, -heightAndWidthPerField / 2f, 0);
             batch.setTransformMatrix(rotMatrix);
             batch.draw(gameFields.get(i).fieldTextureRegion, 0, 0, heightAndWidthPerField, heightAndWidthPerField);
             batch.setTransformMatrix(originalMatrix);
 
             if (gameFields.get(i).hasTreasure) {
-                gameFields.get(i).treasure.position.x = gameFields.get(i).posX + heightAndWidthPerField / 4;
-                gameFields.get(i).treasure.position.y = gameFields.get(i).posY + heightAndWidthPerField / 4;
-                batch.draw(gameFields.get(i).treasure.textureRegion, gameFields.get(i).treasure.position.x, gameFields.get(i).treasure.position.y, heightAndWidthPerField / 2, heightAndWidthPerField / 2);
+                gameFields.get(i).treasure.position.x = gameFields.get(i).posX + heightAndWidthPerField / 4f;
+                gameFields.get(i).treasure.position.y = gameFields.get(i).posY + heightAndWidthPerField / 4f;
+                batch.draw(gameFields.get(i).treasure.textureRegion, gameFields.get(i).treasure.position.x, gameFields.get(i).treasure.position.y, heightAndWidthPerField / 2f, heightAndWidthPerField / 2f);
             }
         }
         int dd = Math.round(heightAndWidthPerField * 1.5F);
         if (newGF != null) {
             Matrix4 rotMatrix = new Matrix4();
             rotMatrix.translate(halffinalprozent, startX - dd, 0);
-            rotMatrix.translate(heightAndWidthPerField / 2, heightAndWidthPerField / 2, 0);
+            rotMatrix.translate(heightAndWidthPerField / 2f, heightAndWidthPerField / 2f, 0);
             rotMatrix.rotate(0, 0, 1, 90.0f * newGF.facing);
-            rotMatrix.translate(-heightAndWidthPerField / 2, -heightAndWidthPerField / 2, 0);
+            rotMatrix.translate(-heightAndWidthPerField / 2f, -heightAndWidthPerField / 2f, 0);
             batch.setTransformMatrix(rotMatrix);
             batch.draw(newGF.fieldTextureRegion, 0, 0, heightAndWidthPerField, heightAndWidthPerField);
             if (newGF.hasTreasure) {
                 rotMatrix.setToRotation(0, 0, 1, 0.0F);
                 rotMatrix.translate(halffinalprozent, startX - dd, 0);
                 batch.setTransformMatrix(rotMatrix);
-                newGF.treasure.position.x = halffinalprozent + heightAndWidthPerField / 4;
-                newGF.treasure.position.y = startX + heightAndWidthPerField / 4;
-                batch.draw(newGF.treasure.textureRegion, newGF.x + heightAndWidthPerField / 4, newGF.y + heightAndWidthPerField / 4, heightAndWidthPerField / 2, heightAndWidthPerField / 2);
+                newGF.treasure.position.x = halffinalprozent + heightAndWidthPerField / 4f;
+                newGF.treasure.position.y = startX + heightAndWidthPerField / 4f;
+                batch.draw(newGF.treasure.textureRegion, newGF.x + heightAndWidthPerField / 4f, newGF.y + heightAndWidthPerField / 4f, heightAndWidthPerField / 2f, heightAndWidthPerField / 2f);
             }
             batch.setTransformMatrix(originalMatrix);
         }
         for (Player player : this.main.playerManager.players) {
             if (player.currentField == this.newGF) {
-                batch.draw(player.figure, halffinalprozent + heightAndWidthPerField / 4, heightAndWidthPerField * 1.5F, heightAndWidthPerField / 2, heightAndWidthPerField / 2);
+                batch.draw(player.getFigure(), halffinalprozent + heightAndWidthPerField / 4f, heightAndWidthPerField * 1.5F, heightAndWidthPerField / 2f, heightAndWidthPerField / 2f);
             } else {
-                batch.draw(player.figure, (player.currentField.x - 1) * heightAndWidthPerField + halffinalprozent + heightAndWidthPerField / 4, (player.currentField.y - 1) * heightAndWidthPerField + startX + heightAndWidthPerField / 4, heightAndWidthPerField / 2, heightAndWidthPerField / 2);
+                batch.draw(player.getFigure(), (player.currentField.x - 1) * heightAndWidthPerField + halffinalprozent + heightAndWidthPerField / 4, (player.currentField.y - 1) * heightAndWidthPerField + startX + heightAndWidthPerField / 4, heightAndWidthPerField / 2f, heightAndWidthPerField / 2f);
             }
         }
         for (int i = 0; i < imgButtons.size; i++) {
             imgButtons.get(i).draw(this.batch);
         }
-        batch.draw(rotateArrow, 2 * halffinalprozent + heightAndWidthPerField, startX - Math.round(heightAndWidthPerField * 1.25), heightAndWidthPerField / 2, heightAndWidthPerField / 2);
+        batch.draw(rotateArrow, 2 * halffinalprozent + heightAndWidthPerField, startX - Math.round(heightAndWidthPerField * 1.25), heightAndWidthPerField / 2f, heightAndWidthPerField / 2f);
         batch.end();
     }
 
-    private void update() {
+    void update() {
         for (int i = 0; i < imgButtons.size; i++) {
             if (imgButtons.get(i).gf.x != imgButtons.get(i).shouldX || imgButtons.get(i).gf.y != imgButtons.get(i).shouldY) {
                 for (int j = 0; j < gameFields.size; j++) {
@@ -234,26 +232,26 @@ public class Playground implements Screen, InputProcessor {
             }
             switch (imgButtons.get(i).direction) {
                 case Down:
-                    imgButtons.get(i).position.x = imgButtons.get(i).gf.posX + heightAndWidthPerField / 2;
-                    imgButtons.get(i).position.x = imgButtons.get(i).position.x - imgButtons.get(i).width / 2;
+                    imgButtons.get(i).position.x = imgButtons.get(i).gf.posX + heightAndWidthPerField / 2f;
+                    imgButtons.get(i).position.x = imgButtons.get(i).position.x - imgButtons.get(i).width / 2f;
                     imgButtons.get(i).position.y = imgButtons.get(i).gf.posY - imgButtons.get(i).height;
                     break;
                 case Up:
-                    imgButtons.get(i).position.x = imgButtons.get(i).gf.posX + heightAndWidthPerField / 2;
-                    imgButtons.get(i).position.x = imgButtons.get(i).position.x - imgButtons.get(i).width / 2;
+                    imgButtons.get(i).position.x = imgButtons.get(i).gf.posX + heightAndWidthPerField / 2f;
+                    imgButtons.get(i).position.x = imgButtons.get(i).position.x - imgButtons.get(i).width / 2f;
                     imgButtons.get(i).position.y = imgButtons.get(i).gf.posY + heightAndWidthPerField;
                     break;
                 case Left:
                     imgButtons.get(i).position.x = imgButtons.get(i).gf.posX - imgButtons.get(i).width;
-                    imgButtons.get(i).position.y = imgButtons.get(i).gf.posY + heightAndWidthPerField / 2;
+                    imgButtons.get(i).position.y = imgButtons.get(i).gf.posY + heightAndWidthPerField / 2f;
                     imgButtons.get(i).position.y = imgButtons.get(i).position.y - imgButtons.get(i).height;
-                    imgButtons.get(i).position.y = imgButtons.get(i).position.y + imgButtons.get(i).height / 2;
+                    imgButtons.get(i).position.y = imgButtons.get(i).position.y + imgButtons.get(i).height / 2f;
                     break;
                 case Right:
                     imgButtons.get(i).position.x = imgButtons.get(i).gf.posX + heightAndWidthPerField;
                     imgButtons.get(i).position.y = imgButtons.get(i).gf.posY;
-                    imgButtons.get(i).position.y = imgButtons.get(i).position.y + heightAndWidthPerField / 4;
-                    imgButtons.get(i).position.y = imgButtons.get(i).position.y + imgButtons.get(i).height / 2;
+                    imgButtons.get(i).position.y = imgButtons.get(i).position.y + heightAndWidthPerField / 4f;
+                    imgButtons.get(i).position.y = imgButtons.get(i).position.y + imgButtons.get(i).height / 2f;
                     break;
             }
         }
@@ -373,20 +371,8 @@ public class Playground implements Screen, InputProcessor {
         }
     }
 
-    public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 0);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        update();
-        draw();
-    }
-
     public void resize(int width, int height) {
 
-    }
-
-    public void show() {
-        create();
     }
 
     public void hide() {
@@ -405,7 +391,7 @@ public class Playground implements Screen, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        DasLabyrinth.click();
+        this.main.click();
         if (keycode == Input.Keys.BACK) {
             main.setScreen(new StartMenu(main));
         }

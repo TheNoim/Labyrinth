@@ -1,8 +1,6 @@
 package io.noim.daslabyrinth;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -10,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Timer;
 
 
-public class Save implements Screen {
+public class Save extends Page {
 
     public DasLabyrinth main;
 
@@ -28,29 +26,24 @@ public class Save implements Screen {
         font_heading = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
     }
 
-    private void create() {
+    void create() {
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         exit();
     }
 
-    private void draw() {
+    void draw() {
         batch.begin();
         font_heading.draw(batch, "SAVING...", 0, Gdx.graphics.getHeight() / 2, Gdx.graphics.getWidth(), 1, false);
         batch.end();
     }
 
-    public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 0);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        draw();
+    @Override
+    void update() {
+
     }
 
     public void resize(int width, int height) {
 
-    }
-
-    public void show() {
-        create();
     }
 
     public void hide() {

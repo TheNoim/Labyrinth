@@ -1,16 +1,13 @@
 package io.noim.daslabyrinth;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 
-public class Ranking implements Screen {
+public class Ranking extends Page {
 
     SpriteBatch batch;
     public DasLabyrinth main;
@@ -29,11 +26,11 @@ public class Ranking implements Screen {
         font = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
     }
 
-    public void create() {
+    void create() {
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
-    private void update() {
+    void update() {
         if (Gdx.input.justTouched()) {
             touchPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(touchPosition);
@@ -41,13 +38,13 @@ public class Ranking implements Screen {
                     touchPosition.x <= Gdx.graphics.getWidth() / 20 + (Gdx.graphics.getWidth() / 10 / 5 * 6) &&
                     touchPosition.y >= (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30) - (back.getHeight() / 3) - (Gdx.graphics.getWidth() / 10 / 5) &&
                     touchPosition.y <= (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30) - (back.getHeight() / 3) + (Gdx.graphics.getWidth() / 10 / 5 * 6)) {
-                DasLabyrinth.click();
+                this.main.click();
                 callClass();
             }
         }
     }
 
-    private void draw() {
+    void draw() {
         batch.begin();
 
         batch.draw(background, 0, 0, (float) Gdx.graphics.getWidth(), (float) Gdx.graphics.getHeight());
@@ -57,20 +54,8 @@ public class Ranking implements Screen {
         batch.end();
     }
 
-    public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 0);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        update();
-        draw();
-    }
-
     public void resize(int width, int height) {
 
-    }
-
-    public void show() {
-        create();
     }
 
     public void hide() {
@@ -88,10 +73,10 @@ public class Ranking implements Screen {
 
     public void callClass() {
         if (DasLabyrinth.whichClass == 0) {
-            DasLabyrinth.music.stop();
+            this.main.getMusic().stop();
             main.setScreen(new StartMenu(main));
         } else if (DasLabyrinth.whichClass == 1) {
-            DasLabyrinth.music.stop();
+            this.main.getMusic().stop();
             main.setScreen(new Playground(main));
         }
     }

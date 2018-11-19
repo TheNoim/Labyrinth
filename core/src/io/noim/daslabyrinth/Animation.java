@@ -1,18 +1,16 @@
 package io.noim.daslabyrinth;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Animation implements Screen {
-    OrthographicCamera camera;
+public class Animation extends Page {
+    private OrthographicCamera camera;
     private Texture banner;
-    String heading = "DAS LABYRINTH";
-    SpriteBatch batch;
-    Boolean animate = false;
+    private String heading = "DAS LABYRINTH";
+    private SpriteBatch batch;
+    private boolean animate = false;
 
     public DasLabyrinth main;
 
@@ -23,23 +21,23 @@ public class Animation implements Screen {
         this.banner = new Texture("banner.png");
     }
 
-    private void create() {
+    void create() {
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        if (!DasLabyrinth.music.isPlaying() && DasLabyrinth.playMusic) {
-            DasLabyrinth.music.play();
+        if (!this.main.getMusic().isPlaying() && DasLabyrinth.playMusic) {
+            this.main.getMusic().play();
         } else {
-            DasLabyrinth.music.stop();
+            this.main.getMusic().stop();
         }
     }
 
     private double yAnim = 0.5;
     private double yDelta = 0.05;
 
-    private void draw() {
+    void draw() {
         batch.begin();
 
-        batch.draw(DasLabyrinth.background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(this.main.getBackground(), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         if (Gdx.input.justTouched()) {
             animate = true;
@@ -49,29 +47,22 @@ public class Animation implements Screen {
             yDelta *= 0.9;
             batch.draw(banner, 0, ((float) (yAnim - 0.1685) * Gdx.graphics.getHeight()), Gdx.graphics.getWidth(), 0.2F * Gdx.graphics.getHeight());
 
-            DasLabyrinth.font.draw(batch, heading, 0, (float) yAnim * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 1, false);
+            this.main.getFont().draw(batch, heading, 0, (float) yAnim * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 1, false);
             if (yAnim >= 0.9185) {
                 main.setScreen(main.startMenu);
             }
         } else {
             batch.draw(banner, 0, 0.3315F * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 0.2F * Gdx.graphics.getHeight());
-            DasLabyrinth.font.draw(batch, heading, 0, 0.5F * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 1, false);
+            this.main.getFont().draw(batch, heading, 0, 0.5F * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 1, false);
         }
         batch.end();
     }
 
-    public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        draw();
+    @Override
+    void update() {
     }
 
     public void resize(int width, int height) {
-    }
-
-    public void show() {
-        create();
     }
 
     public void hide() {

@@ -3,8 +3,6 @@ package io.noim.daslabyrinth;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -12,12 +10,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 
 
-public class Settings implements Screen, InputProcessor {
+public class Settings extends Page implements InputProcessor {
 
     public DasLabyrinth main;
 
-    SpriteBatch batch;
-    OrthographicCamera camera;
+    private SpriteBatch batch;
+    private OrthographicCamera camera;
     private Texture background;
     private BitmapFont font_text;
     String heading = "SETTINGS";
@@ -43,7 +41,7 @@ public class Settings implements Screen, InputProcessor {
     }
 
 
-    private void create() {
+    void create() {
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCatchBackKey(true);
 
@@ -65,7 +63,7 @@ public class Settings implements Screen, InputProcessor {
         back = new Texture("back.png");
     }
 
-    private void update() {
+    void update() {
         if (Gdx.input.justTouched()) {
             touchPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(touchPosition);
@@ -75,24 +73,24 @@ public class Settings implements Screen, InputProcessor {
                     touchPosition.y <= checkBoxPos1Y + (checkBoxSize / 5 * 6)) {
                 if (!checkBox1Checked) {
                     if (DasLabyrinth.whichClass == 0) {
-                        DasLabyrinth.music.play();
+                        this.main.getMusic().play();
                     } else if (DasLabyrinth.whichClass == 1) {
-                        Playground.music.play();
+                        this.main.getMusic().play();
                     }
                     checkBox1Checked = true;
                     DasLabyrinth.pref.putBoolean("Music", true);
                     DasLabyrinth.pref.flush();
-                    DasLabyrinth.click();
+                    this.main.click();
                 } else {
                     if (DasLabyrinth.whichClass == 0) {
-                        DasLabyrinth.music.pause();
+                        this.main.getMusic().pause();
                     } else if (DasLabyrinth.whichClass == 1) {
-                        Playground.music.pause();
+                        this.main.getMusic().pause();
                     }
                     checkBox1Checked = false;
                     DasLabyrinth.pref.putBoolean("Music", false);
                     DasLabyrinth.pref.flush();
-                    DasLabyrinth.click();
+                    this.main.click();
                 }
             }
             if (touchPosition.x >= checkBoxPosX - (checkBoxSize / 5) &&
@@ -103,12 +101,12 @@ public class Settings implements Screen, InputProcessor {
                     checkBox2Checked = true;
                     DasLabyrinth.pref.putBoolean("Sounds", true);
                     DasLabyrinth.pref.flush();
-                    DasLabyrinth.click();
+                    this.main.click();
                 } else {
                     checkBox2Checked = false;
                     DasLabyrinth.pref.putBoolean("Sounds", false);
                     DasLabyrinth.pref.flush();
-                    DasLabyrinth.click();
+                    this.main.click();
                 }
             }
             if (touchPosition.x >= checkBoxPosX - (checkBoxSize / 5) &&
@@ -119,25 +117,25 @@ public class Settings implements Screen, InputProcessor {
                     checkBox3Checked = true;
                     DasLabyrinth.pref.putBoolean("Vibration", true);
                     DasLabyrinth.pref.flush();
-                    DasLabyrinth.click();
+                    this.main.click();
                 } else {
                     checkBox3Checked = false;
                     DasLabyrinth.pref.putBoolean("Vibration", false);
                     DasLabyrinth.pref.flush();
-                    DasLabyrinth.click();
+                    this.main.click();
                 }
             }
             if (touchPosition.x >= Gdx.graphics.getWidth() / 20 - (checkBoxSize / 5) &&
                     touchPosition.x <= Gdx.graphics.getWidth() / 20 + (checkBoxSize / 5 * 6) &&
-                    touchPosition.y >= (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30) - (back.getHeight() / 3) - (checkBoxSize / 5) &&
+                    touchPosition.y >= (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30f) - (back.getHeight() / 3f) - (checkBoxSize / 5) &&
                     touchPosition.y <= (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30) - (back.getHeight() / 3) + (checkBoxSize / 5 * 6)) {
-                DasLabyrinth.click();
+                this.main.click();
                 callClass();
             }
         }
     }
 
-    private void draw() {
+    void draw() {
         batch.begin();
         batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         if (checkBox1Checked) {
@@ -155,28 +153,16 @@ public class Settings implements Screen, InputProcessor {
         } else {
             batch.draw(checkBox, checkBoxPosX, checkBoxPos3Y, checkBoxSize, checkBoxSize);
         }
-        batch.draw(back, Gdx.graphics.getWidth() / 20, (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30) - (back.getHeight() / 3), Gdx.graphics.getWidth() / 10, Gdx.graphics.getWidth() / 10);
-        DasLabyrinth.font.draw(batch, heading, 0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10, Gdx.graphics.getWidth(), 1, false);
-        font_text.draw(batch, "Musik", checkBoxPosX + (Gdx.graphics.getWidth() / 5), (checkBoxPos1Y + Gdx.graphics.getWidth() / 10) - Gdx.graphics.getWidth() / 40);
-        font_text.draw(batch, "Sounds", checkBoxPosX + (Gdx.graphics.getWidth() / 5), (checkBoxPos2Y + Gdx.graphics.getWidth() / 10) - Gdx.graphics.getWidth() / 40);
-        font_text.draw(batch, "Vibration", checkBoxPosX + (Gdx.graphics.getWidth() / 5), (checkBoxPos3Y + Gdx.graphics.getWidth() / 10) - Gdx.graphics.getWidth() / 40);
+        batch.draw(back, Gdx.graphics.getWidth() / 20f, (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30f) - (back.getHeight() / 3f), Gdx.graphics.getWidth() / 10f, Gdx.graphics.getWidth() / 10f);
+        this.main.getFont().draw(batch, heading, 0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10f, Gdx.graphics.getWidth(), 1, false);
+        font_text.draw(batch, "Musik", checkBoxPosX + (Gdx.graphics.getWidth() / 5f), (checkBoxPos1Y + Gdx.graphics.getWidth() / 10f) - Gdx.graphics.getWidth() / 40f);
+        font_text.draw(batch, "Sounds", checkBoxPosX + (Gdx.graphics.getWidth() / 5f), (checkBoxPos2Y + Gdx.graphics.getWidth() / 10f) - Gdx.graphics.getWidth() / 40f);
+        font_text.draw(batch, "Vibration", checkBoxPosX + (Gdx.graphics.getWidth() / 5f), (checkBoxPos3Y + Gdx.graphics.getWidth() / 10f) - Gdx.graphics.getWidth() / 40f);
         batch.end();
-    }
-
-    public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 0);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        update();
-        draw();
     }
 
     public void resize(int width, int height) {
 
-    }
-
-    public void show() {
-        create();
     }
 
     public void hide() {
@@ -193,13 +179,13 @@ public class Settings implements Screen, InputProcessor {
     }
 
     private void callClass() {
-        DasLabyrinth.music.stop();
+        this.main.getMusic().stop();
         main.setScreen(new Save(main));
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        DasLabyrinth.click();
+        this.main.click();
         if (keycode == Input.Keys.BACK) {
             callClass();
         }

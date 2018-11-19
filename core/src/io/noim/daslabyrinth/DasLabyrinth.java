@@ -10,12 +10,12 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector3;
 
 public class DasLabyrinth extends Game {
-    static Texture background;
-    static BitmapFont font;
+    private Texture background;
+    private BitmapFont font;
     static Boolean playMusic, playSounds, vibration;
     static int whichClass;
-    static Music music;
-    static Sound treasure, click;
+    private Music music;
+    private Sound treasure, click;
     static Preferences pref;
     static Vector3 touchPosition = new Vector3();
     static int ButtonWidth;
@@ -68,9 +68,30 @@ public class DasLabyrinth extends Game {
     }
 
     /**
+     * @return background texture
+     */
+    public Texture getBackground() {
+        return background;
+    }
+
+    /**
+     * @return main font
+     */
+    public BitmapFont getFont() {
+        return font;
+    }
+
+    /**
+     * @return music
+     */
+    public Music getMusic() {
+        return music;
+    }
+
+    /**
      * Play the click sound and/or vibrate (if enabled)
      */
-    static void click() {
+    void click() {
         if (pref.getBoolean("Sounds", true)) {
             click.play();
         }
@@ -82,7 +103,7 @@ public class DasLabyrinth extends Game {
     /**
      * Play the sound for a collected treasure (if enabled)
      */
-    public static void treasure() {
+    public void treasure() {
         if (pref.getBoolean("Sounds", true)) {
             treasure.play();
         }

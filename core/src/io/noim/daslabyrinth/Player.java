@@ -5,8 +5,8 @@ import com.badlogic.gdx.utils.Array;
 
 public class Player {
 
-    Texture figure;
-    String name;
+    private Texture figure;
+    private String name;
     protected GameField currentField;
     protected Array<Treasure> treasures = new Array<Treasure>();
     protected int score;
@@ -18,6 +18,26 @@ public class Player {
         this.score = DasLabyrinth.pref.getInteger("Score" + this.name);
     }
 
+    public Texture getFigure() {
+        return figure;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    void addScore(int s) {
+        this.score += s;
+        DasLabyrinth.pref.putInteger("Score" + this.name, +1);
+        DasLabyrinth.pref.flush();
+    }
+
+    void setScore(int s) {
+        this.score = s;
+        DasLabyrinth.pref.putInteger("Score" + this.name, s);
+        DasLabyrinth.pref.flush();
+    }
+
     public boolean movePlayer(Playground playground, GameField nextGamefield) {
         if (this.canMove(playground, nextGamefield)) {
             this.currentField = nextGamefield;
@@ -26,7 +46,7 @@ public class Player {
                 nextGamefield.hasTreasure = false;
                 nextGamefield.treasure = null;
                 playground.makeMoreTreasures(1);
-                DasLabyrinth.click();
+                //this.main.click(); TODO click sound
             }
             return true;
         }
@@ -95,17 +115,5 @@ public class Player {
         } else {
             return false;
         }
-    }
-
-    void addScore(int s) {
-        this.score += s;
-        DasLabyrinth.pref.putInteger("Score" + this.name, +1);
-        DasLabyrinth.pref.flush();
-    }
-
-    void setScore(int s) {
-        this.score = s;
-        DasLabyrinth.pref.putInteger("Score" + this.name, s);
-        DasLabyrinth.pref.flush();
     }
 }
