@@ -10,16 +10,16 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector3;
 
 public class DasLabyrinth extends Game {
-    public static Texture background;
-    public static BitmapFont font;
-    public static Boolean playMusic, playSounds, vibration;
-    public static int whichClass;
-    public static Music music;
-    public static Sound treasure, click;
-    public static Preferences pref;
+    static Texture background;
+    static BitmapFont font;
+    static Boolean playMusic, playSounds, vibration;
+    static int whichClass;
+    static Music music;
+    static Sound treasure, click;
+    static Preferences pref;
     static Vector3 touchPosition = new Vector3();
-    public static int ButtonWidth;
-    public static String heading, playText, rankingText, settingsText;
+    static int ButtonWidth;
+    static String heading, playText, rankingText, settingsText;
     Animation animation;
     StartMenu startMenu;
     Playground playground;

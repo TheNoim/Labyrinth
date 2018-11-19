@@ -15,7 +15,7 @@ public class GameField {
         public static final int RIGHT = 3;
     }
 
-    private static boolean[][] WAYS = new boolean[][]{
+    private final static boolean[][] WAYS = new boolean[][]{
             { /* cross */
                     true, true, true, true /* {can go up, can go left, can go down, can go right} */
             },
