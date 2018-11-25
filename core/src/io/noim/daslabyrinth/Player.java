@@ -2,8 +2,9 @@ package io.noim.daslabyrinth;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Disposable;
 
-public class Player {
+public class Player implements Disposable {
 
     private Texture figure;
     private String name;
@@ -41,10 +42,9 @@ public class Player {
     public boolean movePlayer(Playground playground, GameField nextGamefield) {
         if (this.canMove(playground, nextGamefield)) {
             this.currentField = nextGamefield;
-            if (nextGamefield.hasTreasure) {
-                this.treasures.add(nextGamefield.treasure);
-                nextGamefield.hasTreasure = false;
-                nextGamefield.treasure = null;
+            if (nextGamefield.hasTreasure()) {
+                this.treasures.add(nextGamefield.getTreasure());
+                nextGamefield.removeTreasure();
                 playground.makeMoreTreasures(1);
                 //this.main.click(); TODO click sound
             }
@@ -115,5 +115,10 @@ public class Player {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public void dispose() {
+        this.figure.dispose();
     }
 }

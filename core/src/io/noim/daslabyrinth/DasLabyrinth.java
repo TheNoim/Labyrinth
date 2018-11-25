@@ -7,17 +7,17 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class DasLabyrinth extends Game {
     private Texture background;
     private BitmapFont font;
+    private Skin skin;
     static Boolean playMusic, playSounds, vibration;
     static int whichClass;
     private Music music;
     private Sound treasure, click;
     static Preferences pref;
-    static Vector3 touchPosition = new Vector3();
     static int ButtonWidth;
     static String heading, playText, rankingText, settingsText;
     Animation animation;
@@ -38,6 +38,7 @@ public class DasLabyrinth extends Game {
         pref = Gdx.app.getPreferences("labyrinth.dat");
         background = new Texture("background.png");
         font = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
+        skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         treasure = Gdx.audio.newSound(Gdx.files.internal("treasure.wav"));
         click = Gdx.audio.newSound(Gdx.files.internal("blop.wav"));
         music = Gdx.audio.newMusic(Gdx.files.internal("Spooky Fun.mp3"));
@@ -65,6 +66,21 @@ public class DasLabyrinth extends Game {
             music.stop();
         }
         setScreen(this.animation);
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        this.background.dispose();
+        this.font.dispose();
+        this.skin.dispose();
+        this.music.dispose();
+        this.treasure.dispose();
+        this.click.dispose();
+    }
+
+    public Skin getSkin() {
+        return skin;
     }
 
     /**

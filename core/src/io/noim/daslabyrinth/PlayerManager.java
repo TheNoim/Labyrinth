@@ -2,49 +2,72 @@ package io.noim.daslabyrinth;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
-public class PlayerManager extends Page implements InputProcessor {
+public class PlayerManager extends Page {
 
     Array<Player> players = new Array<Player>();
     private int activePlayer = 0;
     private GameField startField;
 
     //For the screen
-    private OrthographicCamera camera;
-    private SpriteBatch batch;
     private Texture background;
     private Texture button;
     private Texture buttonPushed;
     private Texture backButton;
+    private Texture[] figures = new Texture[]{
+            new Texture("figure1.png"),
+            new Texture("figure2.png"),
+            new Texture("figure3.png"),
+            new Texture("figure4.png"),
+    };
     private BitmapFont textFont;
+    private TextField textField;
     private int i = 0;
 
     private DasLabyrinth main;
     private Screen previousScreen;
 
-    PlayerManager(GameField startField) {
+    PlayerManager(DasLabyrinth main, GameField startField) {
+        this.main = main;
         this.startField = startField;
 
-        this.camera = new OrthographicCamera();
-        this.camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        this.batch = new SpriteBatch();
         this.background = new Texture("background.png");
         this.button = new Texture("button.png");
         this.buttonPushed = new Texture("button_pushed.png");
         this.backButton = new Texture("back.png");
         this.textFont = new BitmapFont(Gdx.files.internal("Verdana.fnt"));
+        this.textField = new TextField("Name", this.main.getSkin());
+        this.stage.addActor(this.textField);
+        this.textField.addListener(new InputListener() {
+            @Override
+            public boolean keyUp(InputEvent event, int keycode) {
+                switch (keycode) {
+                    case Input.Keys.ENTER:
+                        addPlayer(textField.getText(), figures[players.size]);
+                        return true;
+                }
+                return super.keyUp(event, keycode);
+            }
+        });
     }
 
     void addPlayer(String name, Texture figure) {
-        this.players.add(new Player(name, figure, this.startField));
+        if (!name.isEmpty()) {
+            this.players.add(new Player(name, figure, this.startField));
+            this.textField.setText("");
+            this.textField.setBounds(Gdx.graphics.getWidth() / 2f - DasLabyrinth.ButtonWidth / 2f, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10f * (this.players.size + 2), DasLabyrinth.ButtonWidth, Functions.textHeight("Spieler hinzufügen", this.textFont));
+            if (this.players.size > 3) {
+                this.textField.remove();
+            }
+        }
     }
 
     void moveCurrentPlayer(Playground playground, GameField nextGamefield) {
@@ -68,75 +91,60 @@ public class PlayerManager extends Page implements InputProcessor {
         }
     }
 
-    void setPreviousScreen(DasLabyrinth dasLabyrinth, Screen screen) {
-        this.main = dasLabyrinth;
+    void setPreviousScreen(Screen screen) {
         this.previousScreen = screen;
     }
 
     @Override
     void create() {
-        Gdx.input.setInputProcessor(this);
         this.textFont.getData().setScale(Functions.scaleText("Vibration", this.textFont, Gdx.graphics.getWidth() / 3));
+        this.textField.setBounds(Gdx.graphics.getWidth() / 2f - DasLabyrinth.ButtonWidth / 2f, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10f * (this.players.size + 2), DasLabyrinth.ButtonWidth, Functions.textHeight("Spieler hinzufügen", this.textFont));
     }
 
     @Override
     void draw() {
-        this.camera.update();
-        this.batch.setProjectionMatrix(this.camera.combined);
-        this.batch.begin();
         this.batch.draw(this.background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        this.batch.draw(this.backButton, Gdx.graphics.getWidth() / 20f, 29 * Gdx.graphics.getHeight() / 30f - backButton.getHeight() / 3f, Gdx.graphics.getWidth() / 10f, Gdx.graphics.getWidth() / 10f);
+        if (this.players.size > 3) {
+            this.batch.draw(this.backButton, Gdx.graphics.getWidth() / 20f, 29 * Gdx.graphics.getHeight() / 30f - backButton.getHeight() / 3f, Gdx.graphics.getWidth() / 10f, Gdx.graphics.getWidth() / 10f);
+        }
         this.main.getFont().draw(batch, "Spieler", 0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10f, Gdx.graphics.getWidth(), 1, false);
-        for (; i < this.players.size; i++) {
+        for (i = 0; i < this.players.size; i++) {
             this.textFont.draw(this.batch, this.players.get(i).getName(), Gdx.graphics.getWidth() / 10f, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10f * (i + 2));
         }
         if (this.players.size < 4) {
             this.batch.draw(this.button, Gdx.graphics.getWidth() / 2f - DasLabyrinth.ButtonWidth / 2f, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10f * (i + 3), DasLabyrinth.ButtonWidth, Functions.textHeight("Spieler hinzufügen", this.textFont) * 3);
             this.textFont.draw(this.batch, "Spieler hinzufügen", 0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10f * (i + 3) + Functions.textHeight("Spieler hinzufügen", this.textFont) * 2, Gdx.graphics.getWidth(), Align.center, false);
         }
-        this.batch.end();
     }
 
     @Override
     void update() {
-        if (Gdx.input.justTouched()) {
-            DasLabyrinth.touchPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-            camera.unproject(DasLabyrinth.touchPosition);
-            if (DasLabyrinth.touchPosition.x > Gdx.graphics.getWidth() / 20 && DasLabyrinth.touchPosition.x < 3 * Gdx.graphics.getWidth() / 20 && DasLabyrinth.touchPosition.y > 29 * Gdx.graphics.getHeight() / 30 - backButton.getHeight() / 3 && DasLabyrinth.touchPosition.y < 29 * Gdx.graphics.getHeight() / 30 - backButton.getHeight() / 3 + Gdx.graphics.getWidth() / 10) {
+    }
+
+    @Override
+    void touch() {
+        if (this.players.size > 3 && touchPosition.x > Gdx.graphics.getWidth() / 20 && touchPosition.x < 3 * Gdx.graphics.getWidth() / 20 && touchPosition.y > 29 * Gdx.graphics.getHeight() / 30 - backButton.getHeight() / 3 && touchPosition.y < 29 * Gdx.graphics.getHeight() / 30 - backButton.getHeight() / 3 + Gdx.graphics.getWidth() / 10) {
+            this.main.click();
+            this.main.setScreen(this.previousScreen);
+        } else if (touchPosition.x > Gdx.graphics.getWidth() / 2 - DasLabyrinth.ButtonWidth / 2 && touchPosition.x < Gdx.graphics.getWidth() / 2 + DasLabyrinth.ButtonWidth / 2 && touchPosition.y > Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10 * (i + 3) && touchPosition.y < Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10 * (i + 3) + Functions.textHeight("Spieler hinzufügen", this.textFont) * 3) {
+            if (this.players.size < 4) {
                 this.main.click();
-                this.main.setScreen(this.previousScreen);
-            } else if (DasLabyrinth.touchPosition.x > Gdx.graphics.getWidth() / 2 - DasLabyrinth.ButtonWidth / 2 && DasLabyrinth.touchPosition.x < Gdx.graphics.getWidth() / 2 + DasLabyrinth.ButtonWidth / 2 && DasLabyrinth.touchPosition.y > Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10 * (i + 3) && DasLabyrinth.touchPosition.y < Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10 * (i + 3) + Functions.textHeight("Spieler hinzufügen", this.textFont) * 3) {
-                if (this.players.size < 4) {
-                    this.main.click();
-                    // TODO get a chosen player name and figure and create a new Player
-                }
+                this.addPlayer(this.textField.getText(), this.figures[this.players.size]);
             }
         }
     }
 
     @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
     public void dispose() {
-
+        super.dispose();
+        this.background.dispose();
+        this.button.dispose();
+        this.buttonPushed.dispose();
+        this.backButton.dispose();
+        for (Texture figure : this.figures) {
+            figure.dispose();
+        }
+        this.textFont.dispose();
     }
 
     @Override
@@ -146,41 +154,6 @@ public class PlayerManager extends Page implements InputProcessor {
                 this.main.setScreen(this.previousScreen);
                 break;
         }
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(int amount) {
         return false;
     }
 }

@@ -1,12 +1,12 @@
 package io.noim.daslabyrinth;
 
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Disposable;
 
-public class GameField {
+public class GameField implements Disposable {
 
     public static class Directions {
         public static final int UP = 0;
@@ -38,18 +38,15 @@ public class GameField {
     protected int index;
     protected Texture fieldTexture;
     protected TextureRegion fieldTextureRegion;
-    protected boolean hasTreasure;
-    protected Treasure treasure;
+    private Treasure treasure;
     protected int type;
     protected int facing;
     protected int posX;
     protected int posY;
-    private Vector3 clickVector3 = new Vector3();
 
-    GameField(Texture fieldTexture, boolean hasTreasure, int x, int y, int index, int type, int facing) {
+    GameField(Texture fieldTexture, int x, int y, int index, int type, int facing) {
         this.fieldTexture = fieldTexture;
         this.fieldTextureRegion = new TextureRegion(this.fieldTexture);
-        this.hasTreasure = hasTreasure;
         this.x = x;
         this.y = y;
         this.index = index;
@@ -60,7 +57,6 @@ public class GameField {
     GameField(Texture fieldTexture, boolean hasTreasure, int x, int y, int index, int type, int facing, Treasure treasure) {
         this.fieldTexture = fieldTexture;
         this.fieldTextureRegion = new TextureRegion(this.fieldTexture);
-        this.hasTreasure = hasTreasure;
         this.x = x;
         this.y = y;
         this.index = index;
@@ -69,9 +65,23 @@ public class GameField {
         this.treasure = treasure;
     }
 
-    boolean isClicked(int size) {
-        clickVector3.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-        Playground.camera.unproject(clickVector3);
+    void addTreasure(Treasure treasure) {
+        this.treasure = treasure;
+    }
+
+    public Treasure getTreasure() {
+        return treasure;
+    }
+
+    public boolean hasTreasure() {
+        return this.treasure != null;
+    }
+
+    void removeTreasure() {
+        this.treasure = null;
+    }
+
+    boolean isClicked(Vector3 clickVector3, int size) {
         return clickVector3.x >= this.posX && clickVector3.x <= this.posX + size && clickVector3.y >= this.posY && clickVector3.y <= this.posY + size;
     }
 
@@ -81,6 +91,13 @@ public class GameField {
      */
     boolean isWayInDirection(int direction) {
         return WAYS[this.type][(direction - this.facing + WAYS[this.type].length) % WAYS[this.type].length];
+    }
+
+    @Override
+    public void dispose() {
+        this.fieldTexture.dispose();
+        if (this.treasure != null)
+            this.treasure.dispose();
     }
 
     @Override

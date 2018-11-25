@@ -3,22 +3,18 @@ package io.noim.daslabyrinth;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
-public class Playground extends Page implements InputProcessor {
+public class Playground extends Page {
 
     public DasLabyrinth main;
 
-    private SpriteBatch batch;
     final int playgroundWidth = 4;
     final int playgroundHeight = 5;
     int screenHeight;
@@ -29,15 +25,13 @@ public class Playground extends Page implements InputProcessor {
     int startX;
     int heightAndWidthPerField;
     int halffinalprozent;
-    static OrthographicCamera camera;
-    private Vector3 touch = new Vector3();
     private Texture background;
     GameField newGF;
     private Matrix4 originalMatrix = new Matrix4();
     private Array<ImgButton> imgButtons = new Array<ImgButton>(2 * this.playgroundWidth + 2 * this.playgroundHeight);
-    Texture arrow = new Texture("pfeil.gif");
-    Texture rotateArrow = new Texture("rotate.png");
-    final Texture[] cards = new Texture[]{
+    private Texture arrow = new Texture("pfeil.gif");
+    private Texture rotateArrow = new Texture("rotate.png");
+    private final Texture[] cards = new Texture[]{
             new Texture("labyrinth_cross.png"), //0
             new Texture("labyrinth_curve.png"), //1
             new Texture("labyrinth_straight.png"), //2
@@ -49,26 +43,16 @@ public class Playground extends Page implements InputProcessor {
     public final int maxTreasureAmount = 5;
     Array<GameField> gameFields = new Array<GameField>(this.playgroundWidth * this.playgroundHeight);
     private int treasureCount = 0;
-    private Texture[] figures = new Texture[]{
-            new Texture("figure1.png"),
-            new Texture("figure2.png"),
-            new Texture("figure3.png"),
-            new Texture("figure4.png"),
-    };
 
-    public Playground(final DasLabyrinth main) {
+    Playground(final DasLabyrinth main) {
         this.main = main;
         background = new Texture("background.png");
         music = Gdx.audio.newMusic(Gdx.files.internal("Epic Suspense.mp3"));
         moveSound = Gdx.audio.newSound(Gdx.files.internal("move.mp3"));
         batch = new SpriteBatch();
-        camera = new OrthographicCamera();
     }
 
     void create() {
-        Gdx.input.setInputProcessor(this);
-        Gdx.input.setCatchBackKey(true);
-
         DasLabyrinth.whichClass = 1;
         screenHeight = Gdx.graphics.getHeight();
         screenWidth = Gdx.graphics.getWidth();
@@ -81,18 +65,18 @@ public class Playground extends Page implements InputProcessor {
             if (this.treasureCount < maxTreasureAmount) {
                 int rnd3 = Functions.randomWithRange(0, 100);
                 if (rnd3 < 20) {
-                    newGF = new GameField(cards[typeNewGF], true, 0, 0, gameFields.size + 1, typeNewGF, Functions.randomWithRange(0, 3));
+                    newGF = new GameField(cards[typeNewGF], 0, 0, gameFields.size + 1, typeNewGF, Functions.randomWithRange(0, 3));
                     int rnd2 = Functions.randomWithRange(0, 100);
                     if (rnd2 > 20) {
-                        newGF.treasure = new Treasure(treasure_min, 3);
+                        newGF.addTreasure(new Treasure(treasure_min, 3));
                     } else {
-                        newGF.treasure = new Treasure(treasure_max, 5);
+                        newGF.addTreasure(new Treasure(treasure_max, 5));
                     }
                 } else {
-                    newGF = new GameField(cards[typeNewGF], false, 0, 0, gameFields.size + 1, typeNewGF, Functions.randomWithRange(0, 3));
+                    newGF = new GameField(cards[typeNewGF], 0, 0, gameFields.size + 1, typeNewGF, Functions.randomWithRange(0, 3));
                 }
             } else {
-                newGF = new GameField(cards[typeNewGF], false, 0, 0, gameFields.size + 1, typeNewGF, Functions.randomWithRange(0, 3));
+                newGF = new GameField(cards[typeNewGF], 0, 0, gameFields.size + 1, typeNewGF, Functions.randomWithRange(0, 3));
             }
         }
 
@@ -148,13 +132,12 @@ public class Playground extends Page implements InputProcessor {
             }
         }
         if (this.main.playerManager.players.size < 2) {
-            this.main.playerManager.setPreviousScreen(this.main, this);
+            this.main.playerManager.setPreviousScreen(this);
             this.main.setScreen(this.main.playerManager);
         }
 
         screenHeight = Gdx.graphics.getHeight();
         screenWidth = Gdx.graphics.getWidth();
-        camera.setToOrtho(false, screenWidth, screenHeight);
         DasLabyrinth.pref.flush();
         DasLabyrinth.playSounds = DasLabyrinth.pref.getBoolean("Sounds", true);
         DasLabyrinth.vibration = DasLabyrinth.pref.getBoolean("Vibration", true);
@@ -164,10 +147,8 @@ public class Playground extends Page implements InputProcessor {
         }
     }
 
+    @Override
     void draw() {
-        camera.update();
-        batch.setProjectionMatrix(camera.combined);
-        batch.begin();
         batch.draw(background, 0, 0, screenWidth, screenHeight);
 
         for (int i = 0; i < gameFields.size; i++) {
@@ -182,10 +163,10 @@ public class Playground extends Page implements InputProcessor {
             batch.draw(gameFields.get(i).fieldTextureRegion, 0, 0, heightAndWidthPerField, heightAndWidthPerField);
             batch.setTransformMatrix(originalMatrix);
 
-            if (gameFields.get(i).hasTreasure) {
-                gameFields.get(i).treasure.position.x = gameFields.get(i).posX + heightAndWidthPerField / 4f;
-                gameFields.get(i).treasure.position.y = gameFields.get(i).posY + heightAndWidthPerField / 4f;
-                batch.draw(gameFields.get(i).treasure.textureRegion, gameFields.get(i).treasure.position.x, gameFields.get(i).treasure.position.y, heightAndWidthPerField / 2f, heightAndWidthPerField / 2f);
+            if (gameFields.get(i).hasTreasure()) {
+                gameFields.get(i).getTreasure().position.x = gameFields.get(i).posX + heightAndWidthPerField / 4f;
+                gameFields.get(i).getTreasure().position.y = gameFields.get(i).posY + heightAndWidthPerField / 4f;
+                batch.draw(gameFields.get(i).getTreasure().textureRegion, gameFields.get(i).getTreasure().position.x, gameFields.get(i).getTreasure().position.y, heightAndWidthPerField / 2f, heightAndWidthPerField / 2f);
             }
         }
         int dd = Math.round(heightAndWidthPerField * 1.5F);
@@ -197,13 +178,13 @@ public class Playground extends Page implements InputProcessor {
             rotMatrix.translate(-heightAndWidthPerField / 2f, -heightAndWidthPerField / 2f, 0);
             batch.setTransformMatrix(rotMatrix);
             batch.draw(newGF.fieldTextureRegion, 0, 0, heightAndWidthPerField, heightAndWidthPerField);
-            if (newGF.hasTreasure) {
+            if (newGF.hasTreasure()) {
                 rotMatrix.setToRotation(0, 0, 1, 0.0F);
                 rotMatrix.translate(halffinalprozent, startX - dd, 0);
                 batch.setTransformMatrix(rotMatrix);
-                newGF.treasure.position.x = halffinalprozent + heightAndWidthPerField / 4f;
-                newGF.treasure.position.y = startX + heightAndWidthPerField / 4f;
-                batch.draw(newGF.treasure.textureRegion, newGF.x + heightAndWidthPerField / 4f, newGF.y + heightAndWidthPerField / 4f, heightAndWidthPerField / 2f, heightAndWidthPerField / 2f);
+                newGF.getTreasure().position.x = halffinalprozent + heightAndWidthPerField / 4f;
+                newGF.getTreasure().position.y = startX + heightAndWidthPerField / 4f;
+                batch.draw(newGF.getTreasure().textureRegion, newGF.x + heightAndWidthPerField / 4f, newGF.y + heightAndWidthPerField / 4f, heightAndWidthPerField / 2f, heightAndWidthPerField / 2f);
             }
             batch.setTransformMatrix(originalMatrix);
         }
@@ -218,9 +199,9 @@ public class Playground extends Page implements InputProcessor {
             imgButtons.get(i).draw(this.batch);
         }
         batch.draw(rotateArrow, 2 * halffinalprozent + heightAndWidthPerField, startX - Math.round(heightAndWidthPerField * 1.25), heightAndWidthPerField / 2f, heightAndWidthPerField / 2f);
-        batch.end();
     }
 
+    @Override
     void update() {
         for (int i = 0; i < imgButtons.size; i++) {
             if (imgButtons.get(i).gf.x != imgButtons.get(i).shouldX || imgButtons.get(i).gf.y != imgButtons.get(i).shouldY) {
@@ -257,19 +238,17 @@ public class Playground extends Page implements InputProcessor {
         }
 
         for (GameField gameField : this.gameFields) {
-            if (Gdx.input.justTouched() && gameField.isClicked(this.heightAndWidthPerField)) {
+            if (Gdx.input.justTouched() && gameField.isClicked(this.touchPosition, this.heightAndWidthPerField)) {
                 this.main.playerManager.moveCurrentPlayer(this, gameField);
             }
         }
 
         if (Gdx.input.justTouched()) {
-            touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-            camera.unproject(touch);
-            if (touch.x >= (2 * halffinalprozent + heightAndWidthPerField) && touch.x <= (2 * halffinalprozent + heightAndWidthPerField + heightAndWidthPerField / 2) && touch.y >= (startX - (int) Math.round(heightAndWidthPerField * 1.25)) && touch.y <= (startX - (int) Math.round(heightAndWidthPerField * 1.25) + heightAndWidthPerField / 2)) {
+            if (touchPosition.x >= (2 * halffinalprozent + heightAndWidthPerField) && touchPosition.x <= (2 * halffinalprozent + heightAndWidthPerField + heightAndWidthPerField / 2) && touchPosition.y >= (startX - (int) Math.round(heightAndWidthPerField * 1.25)) && touchPosition.y <= (startX - (int) Math.round(heightAndWidthPerField * 1.25) + heightAndWidthPerField / 2)) {
                 newGF.facing++;
             } else {
                 for (int i = 0; i < imgButtons.size; i++) {
-                    if (imgButtons.get(i).isClicked()) {
+                    if (imgButtons.get(i).isClicked(this.touchPosition)) {
                         imgButtons.get(i).move(this);
                         if (DasLabyrinth.playSounds) {
                             moveSound.play();
@@ -280,24 +259,28 @@ public class Playground extends Page implements InputProcessor {
         }
     }
 
+    @Override
+    void touch() {
+    }
+
     private void generateRandomField() {
         gameFields.clear();
         int x = 1;
         int y = 1;
         for (int i = 0; i < this.playgroundHeight * this.playgroundWidth; i++) {
             int type = Functions.randomWithRange(0, 3);
-            GameField gf = new GameField(cards[type], Functions.randomBooleanT(), x, y, i, type, Functions.randomWithRange(0, 3));
-            if (gf.hasTreasure) {
+            GameField gf = new GameField(cards[type], x, y, i, type, Functions.randomWithRange(0, 3));
+            if (Functions.randomBooleanT()) {
                 this.treasureCount++;
                 int rnd = Functions.randomWithRange(0, 100);
                 if (rnd > 20) {
-                    gf.treasure = new Treasure(treasure_min, 3);
+                    gf.addTreasure(new Treasure(treasure_min, 3));
                 } else {
-                    gf.treasure = new Treasure(treasure_max, 5);
+                    gf.addTreasure(new Treasure(treasure_max, 5));
                 }
             }
             if (x == 1 && y == 1) {
-                this.main.playerManager = new PlayerManager(gf);
+                this.main.playerManager = new PlayerManager(this.main, gf);
             }
             gameFields.add(gf);
             if (y == this.playgroundHeight) {
@@ -310,7 +293,7 @@ public class Playground extends Page implements InputProcessor {
         int acounter = 0;
         Array<GameField> atreasures = new Array<GameField>();
         for (int i = 0; i < gameFields.size; i++) {
-            if (gameFields.get(i).hasTreasure) {
+            if (gameFields.get(i).hasTreasure()) {
                 acounter++;
                 atreasures.add(gameFields.get(i));
             }
@@ -324,7 +307,7 @@ public class Playground extends Page implements InputProcessor {
             for (int i = 0; i < gameFields.size; i++) {
                 for (int ii = 0; ii < btreasure.size; ii++) {
                     if (gameFields.get(i).index == btreasure.get(ii).index) {
-                        gameFields.get(i).hasTreasure = false;
+                        gameFields.get(i).removeTreasure();
                     }
                 }
             }
@@ -338,22 +321,20 @@ public class Playground extends Page implements InputProcessor {
     void makeMoreTreasures(int b) {
         for (int i = 0; i < b; i++) {
             int rnd = Functions.randomWithRange(0, gameFields.size - 1);
-            if (gameFields.get(rnd).hasTreasure) {
+            if (gameFields.get(rnd).hasTreasure()) {
                 makeMoreTreasures(b - i);
-            } else {
-                gameFields.get(rnd).hasTreasure = true;
             }
             int rnd2 = Functions.randomWithRange(0, 100);
             if (rnd2 > 20) {
-                gameFields.get(rnd).treasure = new Treasure(treasure_min, 3);
+                gameFields.get(rnd).addTreasure(new Treasure(treasure_min, 3));
             } else {
-                gameFields.get(rnd).treasure = new Treasure(treasure_max, 5);
+                gameFields.get(rnd).addTreasure(new Treasure(treasure_max, 5));
             }
         }
     }
 
     GameField[][] GamefieldToArray() {
-        GameField board[][] = new GameField[this.playgroundWidth][this.playgroundHeight];
+        GameField[][] board = new GameField[this.playgroundWidth][this.playgroundHeight];
         for (GameField field : this.gameFields) {
             board[field.x - 1][field.y - 1] = field;
         }
@@ -371,22 +352,25 @@ public class Playground extends Page implements InputProcessor {
         }
     }
 
-    public void resize(int width, int height) {
-
-    }
-
+    @Override
     public void hide() {
+        super.hide();
         music.pause();
     }
 
-    public void pause() {
-    }
-
-    public void resume() {
-    }
-
+    @Override
     public void dispose() {
-        batch.dispose();
+        super.dispose();
+        this.music.dispose();
+        this.moveSound.dispose();
+        this.background.dispose();
+        this.arrow.dispose();
+        this.rotateArrow.dispose();
+        for (Texture card : this.cards) {
+            card.dispose();
+        }
+        this.treasure_min.dispose();
+        this.treasure_max.dispose();
     }
 
     @Override
@@ -395,41 +379,6 @@ public class Playground extends Page implements InputProcessor {
         if (keycode == Input.Keys.BACK) {
             main.setScreen(new StartMenu(main));
         }
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(int amount) {
         return false;
     }
 }

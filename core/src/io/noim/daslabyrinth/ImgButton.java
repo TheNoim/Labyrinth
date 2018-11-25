@@ -1,17 +1,17 @@
 package io.noim.daslabyrinth;
 
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Disposable;
 
 /**
  * Created by nilsbergmann on 28.07.16.
  */
-public class ImgButton {
+public class ImgButton implements Disposable {
 
     public enum Direction {
         Up, Down, Right, Left
@@ -19,7 +19,6 @@ public class ImgButton {
 
     protected Texture tex;
     protected TextureRegion texR;
-    private Vector3 t = new Vector3();
     protected Vector2 position;
     protected int height;
     protected int width;
@@ -40,16 +39,16 @@ public class ImgButton {
     public void draw(SpriteBatch batch) {
         switch (this.direction) {
             case Down:
-                batch.draw(this.texR, this.position.x, this.position.y, this.width / 2, this.height / 2, this.width, this.height, 1, 1, -90.0F);
+                batch.draw(this.texR, this.position.x, this.position.y, this.width / 2f, this.height / 2f, this.width, this.height, 1, 1, -90.0F);
                 break;
             case Up:
-                batch.draw(this.texR, this.position.x, this.position.y, this.width / 2, this.height / 2, this.width, this.height, 1, 1, 90.0F);
+                batch.draw(this.texR, this.position.x, this.position.y, this.width / 2f, this.height / 2f, this.width, this.height, 1, 1, 90.0F);
                 break;
             case Left:
-                batch.draw(this.texR, this.position.x, this.position.y, this.width / 2, this.height / 2, this.width, this.height, 1, 1, -180.0F);
+                batch.draw(this.texR, this.position.x, this.position.y, this.width / 2f, this.height / 2f, this.width, this.height, 1, 1, -180.0F);
                 break;
             case Right:
-                batch.draw(this.texR, this.position.x, this.position.y, this.width / 2, this.height / 2, this.width, this.height, 1, 1, 0F);
+                batch.draw(this.texR, this.position.x, this.position.y, this.width / 2f, this.height / 2f, this.width, this.height, 1, 1, 0F);
                 break;
         }
     }
@@ -57,9 +56,7 @@ public class ImgButton {
     /**
      * @return if the cursor is on the button
      */
-    public boolean isClicked() {
-        t.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-        Playground.camera.unproject(t);
+    public boolean isClicked(Vector3 t) {
         return t.x >= this.position.x - 10 && t.x <= this.position.x + this.width + 10 && t.y >= this.position.y - 10 && t.y <= this.position.y + this.height + 10;
     }
 
@@ -112,5 +109,10 @@ public class ImgButton {
                 break;
         }
         playground.ArrayToGamefield(board);
+    }
+
+    @Override
+    public void dispose() {
+        this.tex.dispose();
     }
 }
