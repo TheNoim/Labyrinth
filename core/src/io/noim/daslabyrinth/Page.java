@@ -13,9 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 public abstract class Page implements Screen, InputProcessor {
     private InputMultiplexer multiplexer = new InputMultiplexer();
     private OrthographicCamera camera;
-    SpriteBatch batch;
+    private SpriteBatch batch;
     Stage stage;
-    Vector3 touchPosition = new Vector3();
+    private Vector3 touchPosition = new Vector3();
 
     Page() {
         this.batch = new SpriteBatch();
@@ -25,11 +25,22 @@ public abstract class Page implements Screen, InputProcessor {
 
     abstract void create();
 
-    abstract void draw();
+    /**
+     * @param batch batch for drawing
+     */
+    abstract void draw(SpriteBatch batch);
 
+    /**
+     * to update objects
+     * called before #draw
+     */
     abstract void update();
 
-    abstract void touch();
+
+    /**
+     * @param touchPosition vector of touch positions
+     */
+    abstract void touch(Vector3 touchPosition);
 
     @Override
     public void render(float delta) {
@@ -39,13 +50,13 @@ public abstract class Page implements Screen, InputProcessor {
         if (Gdx.input.justTouched()) {
             this.touchPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             this.camera.unproject(this.touchPosition);
-            this.touch();
+            this.touch(this.touchPosition);
         }
         this.update();
         this.batch.begin();
         this.camera.update();
         this.batch.setProjectionMatrix(this.camera.combined);
-        this.draw();
+        this.draw(this.batch);
         this.batch.end();
         this.stage.act();
         this.stage.draw();

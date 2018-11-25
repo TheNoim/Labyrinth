@@ -5,6 +5,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
@@ -102,18 +104,18 @@ public class PlayerManager extends Page {
     }
 
     @Override
-    void draw() {
-        this.batch.draw(this.background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    void draw(SpriteBatch batch) {
+        batch.draw(this.background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         if (this.players.size > 3) {
-            this.batch.draw(this.backButton, Gdx.graphics.getWidth() / 20f, 29 * Gdx.graphics.getHeight() / 30f - backButton.getHeight() / 3f, Gdx.graphics.getWidth() / 10f, Gdx.graphics.getWidth() / 10f);
+            batch.draw(this.backButton, Gdx.graphics.getWidth() / 20f, 29 * Gdx.graphics.getHeight() / 30f - backButton.getHeight() / 3f, Gdx.graphics.getWidth() / 10f, Gdx.graphics.getWidth() / 10f);
         }
         this.main.getFont().draw(batch, "Spieler", 0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10f, Gdx.graphics.getWidth(), 1, false);
         for (i = 0; i < this.players.size; i++) {
-            this.textFont.draw(this.batch, this.players.get(i).getName(), Gdx.graphics.getWidth() / 10f, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10f * (i + 2));
+            this.textFont.draw(batch, this.players.get(i).getName(), Gdx.graphics.getWidth() / 10f, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10f * (i + 2));
         }
         if (this.players.size < 4) {
-            this.batch.draw(this.button, Gdx.graphics.getWidth() / 2f - DasLabyrinth.ButtonWidth / 2f, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10f * (i + 3), DasLabyrinth.ButtonWidth, Functions.textHeight("Spieler hinzufügen", this.textFont) * 3);
-            this.textFont.draw(this.batch, "Spieler hinzufügen", 0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10f * (i + 3) + Functions.textHeight("Spieler hinzufügen", this.textFont) * 2, Gdx.graphics.getWidth(), Align.center, false);
+            batch.draw(this.button, Gdx.graphics.getWidth() / 2f - DasLabyrinth.ButtonWidth / 2f, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10f * (i + 3), DasLabyrinth.ButtonWidth, Functions.textHeight("Spieler hinzufügen", this.textFont) * 3);
+            this.textFont.draw(batch, "Spieler hinzufügen", 0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10f * (i + 3) + Functions.textHeight("Spieler hinzufügen", this.textFont) * 2, Gdx.graphics.getWidth(), Align.center, false);
         }
     }
 
@@ -122,7 +124,7 @@ public class PlayerManager extends Page {
     }
 
     @Override
-    void touch() {
+    void touch(Vector3 touchPosition) {
         if (this.players.size > 3 && touchPosition.x > Gdx.graphics.getWidth() / 20 && touchPosition.x < 3 * Gdx.graphics.getWidth() / 20 && touchPosition.y > 29 * Gdx.graphics.getHeight() / 30 - backButton.getHeight() / 3 && touchPosition.y < 29 * Gdx.graphics.getHeight() / 30 - backButton.getHeight() / 3 + Gdx.graphics.getWidth() / 10) {
             this.main.click();
             this.main.setScreen(this.previousScreen);

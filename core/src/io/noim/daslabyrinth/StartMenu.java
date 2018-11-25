@@ -3,6 +3,8 @@ package io.noim.daslabyrinth;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Align;
 
 public class StartMenu extends Page {
@@ -39,7 +41,7 @@ public class StartMenu extends Page {
     }
 
     @Override
-    void touch() {
+    void touch(Vector3 touchPosition) {
         if (touchPosition.x >= (Gdx.graphics.getWidth() / 2 - DasLabyrinth.ButtonWidth / 2) && touchPosition.x <= (Gdx.graphics.getWidth() / 2 + DasLabyrinth.ButtonWidth / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 + (Functions.textHeight(DasLabyrinth.playText, this.main.getFont()) * 3)) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 + 2 * (Functions.textHeight(DasLabyrinth.playText, this.main.getFont()) * 3))) {
             this.main.click();
             this.main.getMusic().stop();
@@ -56,7 +58,7 @@ public class StartMenu extends Page {
     }
 
     @Override
-    void draw() {
+    void draw(SpriteBatch batch) {
         batch.draw(this.main.getBackground(), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         batch.draw(banner, 0, (0.75F * Gdx.graphics.getHeight()), Gdx.graphics.getWidth(), 0.2F * Gdx.graphics.getHeight());

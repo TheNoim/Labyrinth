@@ -2,6 +2,8 @@ package io.noim.daslabyrinth;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 
 public class Animation extends Page {
     private Texture banner;
@@ -28,7 +30,7 @@ public class Animation extends Page {
     }
 
     @Override
-    void draw() {
+    void draw(SpriteBatch batch) {
         batch.draw(this.main.getBackground(), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         if (animate) {
@@ -38,10 +40,10 @@ public class Animation extends Page {
             if (yAnim >= 0.9185) {
                 main.setScreen(main.startMenu);
             }
-            this.batch.draw(banner, 0, ((float) (yAnim - 0.1685) * Gdx.graphics.getHeight()), Gdx.graphics.getWidth(), 0.2F * Gdx.graphics.getHeight());
+            batch.draw(banner, 0, ((float) (yAnim - 0.1685) * Gdx.graphics.getHeight()), Gdx.graphics.getWidth(), 0.2F * Gdx.graphics.getHeight());
             this.main.getFont().draw(batch, heading, 0, (float) yAnim * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 1, false);
         } else {
-            this.batch.draw(banner, 0, 0.3315F * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 0.2F * Gdx.graphics.getHeight());
+            batch.draw(banner, 0, 0.3315F * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 0.2F * Gdx.graphics.getHeight());
             this.main.getFont().draw(batch, heading, 0, 0.5F * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 1, false);
         }
     }
@@ -51,7 +53,7 @@ public class Animation extends Page {
     }
 
     @Override
-    void touch() {
+    void touch(Vector3 touchPosition) {
         animate = true;
     }
 

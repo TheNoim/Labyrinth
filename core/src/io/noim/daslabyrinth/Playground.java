@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
 public class Playground extends Page {
@@ -49,7 +50,6 @@ public class Playground extends Page {
         background = new Texture("background.png");
         music = Gdx.audio.newMusic(Gdx.files.internal("Epic Suspense.mp3"));
         moveSound = Gdx.audio.newSound(Gdx.files.internal("move.mp3"));
-        batch = new SpriteBatch();
     }
 
     void create() {
@@ -148,7 +148,7 @@ public class Playground extends Page {
     }
 
     @Override
-    void draw() {
+    void draw(SpriteBatch batch) {
         batch.draw(background, 0, 0, screenWidth, screenHeight);
 
         for (int i = 0; i < gameFields.size; i++) {
@@ -196,7 +196,7 @@ public class Playground extends Page {
             }
         }
         for (int i = 0; i < imgButtons.size; i++) {
-            imgButtons.get(i).draw(this.batch);
+            imgButtons.get(i).draw(batch);
         }
         batch.draw(rotateArrow, 2 * halffinalprozent + heightAndWidthPerField, startX - Math.round(heightAndWidthPerField * 1.25), heightAndWidthPerField / 2f, heightAndWidthPerField / 2f);
     }
@@ -236,9 +236,12 @@ public class Playground extends Page {
                     break;
             }
         }
+    }
 
+    @Override
+    void touch(Vector3 touchPosition) {
         for (GameField gameField : this.gameFields) {
-            if (Gdx.input.justTouched() && gameField.isClicked(this.touchPosition, this.heightAndWidthPerField)) {
+            if (Gdx.input.justTouched() && gameField.isClicked(touchPosition, this.heightAndWidthPerField)) {
                 this.main.playerManager.moveCurrentPlayer(this, gameField);
             }
         }
@@ -248,7 +251,7 @@ public class Playground extends Page {
                 newGF.facing++;
             } else {
                 for (int i = 0; i < imgButtons.size; i++) {
-                    if (imgButtons.get(i).isClicked(this.touchPosition)) {
+                    if (imgButtons.get(i).isClicked(touchPosition)) {
                         imgButtons.get(i).move(this);
                         if (DasLabyrinth.playSounds) {
                             moveSound.play();
@@ -257,10 +260,6 @@ public class Playground extends Page {
                 }
             }
         }
-    }
-
-    @Override
-    void touch() {
     }
 
     private void generateRandomField() {

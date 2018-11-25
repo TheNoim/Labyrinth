@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 
 
 public class Settings extends Page {
@@ -56,7 +58,7 @@ public class Settings extends Page {
     }
 
     @Override
-    void touch() {
+    void touch(Vector3 touchPosition) {
         if (touchPosition.x > checkBoxPosX &&
                 touchPosition.x < checkBoxPosX + checkBoxSize) {
             if (touchPosition.y > checkBoxPos1Y &&
@@ -96,7 +98,7 @@ public class Settings extends Page {
     }
 
     @Override
-    void draw() {
+    void draw(SpriteBatch batch) {
         batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         if (checkBox1Checked) {
             batch.draw(checkBox_checked, checkBoxPosX, checkBoxPos1Y, checkBoxSize, checkBoxSize);
