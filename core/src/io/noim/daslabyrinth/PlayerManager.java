@@ -78,16 +78,26 @@ public class PlayerManager extends Page {
         }
     }
 
+    /**
+     * @return the active player
+     */
+    Player getActivePlayer() {
+        return this.players.get(activePlayer);
+    }
+
+    /**
+     * sets the next player as active
+     */
     private void nextPlayer() {
         if (this.activePlayer == this.players.size - 1) {
             this.activePlayer = 0;
         } else {
-            this.activePlayer++;
+            ++this.activePlayer;
         }
     }
 
     public void resetAllScores() {
-        for (int i = 0; i < players.size; i++) {
+        for (int i = 0; i < players.size; ++i) {
             players.get(i).treasures.clear();
             players.get(i).setScore(0);
         }
@@ -110,7 +120,7 @@ public class PlayerManager extends Page {
             batch.draw(this.backButton, Gdx.graphics.getWidth() / 20f, 29 * Gdx.graphics.getHeight() / 30f - backButton.getHeight() / 3f, Gdx.graphics.getWidth() / 10f, Gdx.graphics.getWidth() / 10f);
         }
         this.main.getFont().draw(batch, "Spieler", 0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10f, Gdx.graphics.getWidth(), 1, false);
-        for (i = 0; i < this.players.size; i++) {
+        for (i = 0; i < this.players.size; ++i) {
             this.textFont.draw(batch, this.players.get(i).getName(), Gdx.graphics.getWidth() / 10f, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10f * (i + 2));
         }
         if (this.players.size < 4) {
@@ -154,7 +164,7 @@ public class PlayerManager extends Page {
         switch (keycode) {
             case Input.Keys.BACK:
                 this.main.setScreen(this.previousScreen);
-                break;
+                return true;
         }
         return false;
     }

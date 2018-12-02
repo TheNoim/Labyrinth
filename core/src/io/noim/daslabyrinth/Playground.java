@@ -65,7 +65,7 @@ public class Playground extends Page {
             if (this.treasureCount < maxTreasureAmount) {
                 int rnd3 = Functions.randomWithRange(0, 100);
                 if (rnd3 < 20) {
-                    newGF = new GameField(cards[typeNewGF], 0, 0, gameFields.size + 1, typeNewGF, Functions.randomWithRange(0, 3));
+                    newGF = new GameField(cards[typeNewGF], 0, 0, typeNewGF, Functions.randomWithRange(0, 3));
                     int rnd2 = Functions.randomWithRange(0, 100);
                     if (rnd2 > 20) {
                         newGF.addTreasure(new Treasure(treasure_min, 3));
@@ -73,16 +73,16 @@ public class Playground extends Page {
                         newGF.addTreasure(new Treasure(treasure_max, 5));
                     }
                 } else {
-                    newGF = new GameField(cards[typeNewGF], 0, 0, gameFields.size + 1, typeNewGF, Functions.randomWithRange(0, 3));
+                    newGF = new GameField(cards[typeNewGF], 0, 0, typeNewGF, Functions.randomWithRange(0, 3));
                 }
             } else {
-                newGF = new GameField(cards[typeNewGF], 0, 0, gameFields.size + 1, typeNewGF, Functions.randomWithRange(0, 3));
+                newGF = new GameField(cards[typeNewGF], 0, 0, typeNewGF, Functions.randomWithRange(0, 3));
             }
         }
 
         if (this.imgButtons.size != 2 * this.playgroundWidth + 2 * this.playgroundHeight) {
             // up
-            for (int j = 0; j < gameFields.size; j++) {
+            for (int j = 0; j < gameFields.size; ++j) {
                 if (gameFields.get(j).y == 5) {
                     Vector2 v = new Vector2();
                     ImgButton bt = new ImgButton(arrow, v, heightAndWidthPerField / 4, heightAndWidthPerField / 4, ImgButton.Direction.Up);
@@ -94,7 +94,7 @@ public class Playground extends Page {
             }
 
             // down
-            for (int j = 0; j < gameFields.size; j++) {
+            for (int j = 0; j < gameFields.size; ++j) {
                 if (gameFields.get(j).y == 1) {
                     Vector2 v = new Vector2();
                     v.x = gameFields.get(j).posX + heightAndWidthPerField / 2f;
@@ -108,7 +108,7 @@ public class Playground extends Page {
             }
 
             // left
-            for (int j = 0; j < gameFields.size; j++) {
+            for (int j = 0; j < gameFields.size; ++j) {
                 if (gameFields.get(j).x == 1) {
                     Vector2 v = new Vector2();
                     ImgButton bt = new ImgButton(arrow, v, heightAndWidthPerField / 4, heightAndWidthPerField / 4, ImgButton.Direction.Left);
@@ -120,7 +120,7 @@ public class Playground extends Page {
             }
 
             // right
-            for (int j = 0; j < gameFields.size; j++) {
+            for (int j = 0; j < gameFields.size; ++j) {
                 if (gameFields.get(j).x == 4) {
                     Vector2 v = new Vector2();
                     ImgButton bt = new ImgButton(arrow, v, heightAndWidthPerField / 4, heightAndWidthPerField / 4, ImgButton.Direction.Right);
@@ -151,7 +151,7 @@ public class Playground extends Page {
     void draw(SpriteBatch batch) {
         batch.draw(background, 0, 0, screenWidth, screenHeight);
 
-        for (int i = 0; i < gameFields.size; i++) {
+        for (int i = 0; i < gameFields.size; ++i) {
             gameFields.get(i).posX = (gameFields.get(i).x - 1) * heightAndWidthPerField + halffinalprozent;
             gameFields.get(i).posY = (gameFields.get(i).y - 1) * heightAndWidthPerField + startX;
             Matrix4 rotMatrix = new Matrix4();
@@ -195,7 +195,7 @@ public class Playground extends Page {
                 batch.draw(player.getFigure(), (player.currentField.x - 1) * heightAndWidthPerField + halffinalprozent + heightAndWidthPerField / 4, (player.currentField.y - 1) * heightAndWidthPerField + startX + heightAndWidthPerField / 4, heightAndWidthPerField / 2f, heightAndWidthPerField / 2f);
             }
         }
-        for (int i = 0; i < imgButtons.size; i++) {
+        for (int i = 0; i < imgButtons.size; ++i) {
             imgButtons.get(i).draw(batch);
         }
         batch.draw(rotateArrow, 2 * halffinalprozent + heightAndWidthPerField, startX - Math.round(heightAndWidthPerField * 1.25), heightAndWidthPerField / 2f, heightAndWidthPerField / 2f);
@@ -203,9 +203,9 @@ public class Playground extends Page {
 
     @Override
     void update() {
-        for (int i = 0; i < imgButtons.size; i++) {
+        for (int i = 0; i < imgButtons.size; ++i) {
             if (imgButtons.get(i).gf.x != imgButtons.get(i).shouldX || imgButtons.get(i).gf.y != imgButtons.get(i).shouldY) {
-                for (int j = 0; j < gameFields.size; j++) {
+                for (int j = 0; j < gameFields.size; ++j) {
                     if (gameFields.get(j).x == imgButtons.get(i).shouldX && gameFields.get(j).y == imgButtons.get(i).shouldY) {
                         imgButtons.get(i).gf = gameFields.get(j);
                     }
@@ -248,9 +248,9 @@ public class Playground extends Page {
 
         if (Gdx.input.justTouched()) {
             if (touchPosition.x >= (2 * halffinalprozent + heightAndWidthPerField) && touchPosition.x <= (2 * halffinalprozent + heightAndWidthPerField + heightAndWidthPerField / 2) && touchPosition.y >= (startX - (int) Math.round(heightAndWidthPerField * 1.25)) && touchPosition.y <= (startX - (int) Math.round(heightAndWidthPerField * 1.25) + heightAndWidthPerField / 2)) {
-                newGF.facing++;
+                ++newGF.facing;
             } else {
-                for (int i = 0; i < imgButtons.size; i++) {
+                for (int i = 0; i < imgButtons.size; ++i) {
                     if (imgButtons.get(i).isClicked(touchPosition)) {
                         imgButtons.get(i).move(this);
                         if (DasLabyrinth.playSounds) {
@@ -266,11 +266,11 @@ public class Playground extends Page {
         gameFields.clear();
         int x = 1;
         int y = 1;
-        for (int i = 0; i < this.playgroundHeight * this.playgroundWidth; i++) {
+        for (int i = 0; i < this.playgroundHeight * this.playgroundWidth; ++i) {
             int type = Functions.randomWithRange(0, 3);
-            GameField gf = new GameField(cards[type], x, y, i, type, Functions.randomWithRange(0, 3));
+            GameField gf = new GameField(cards[type], x, y, type, Functions.randomWithRange(0, 3));
             if (Functions.randomBooleanT()) {
-                this.treasureCount++;
+                ++this.treasureCount;
                 int rnd = Functions.randomWithRange(0, 100);
                 if (rnd > 20) {
                     gf.addTreasure(new Treasure(treasure_min, 3));
@@ -284,28 +284,28 @@ public class Playground extends Page {
             gameFields.add(gf);
             if (y == this.playgroundHeight) {
                 y = 1;
-                x++;
+                ++x;
             } else {
-                y++;
+                ++y;
             }
         }
         int acounter = 0;
         Array<GameField> atreasures = new Array<GameField>();
-        for (int i = 0; i < gameFields.size; i++) {
+        for (int i = 0; i < gameFields.size; ++i) {
             if (gameFields.get(i).hasTreasure()) {
-                acounter++;
+                ++acounter;
                 atreasures.add(gameFields.get(i));
             }
         }
         if (acounter > maxTreasureAmount) {
             int b = acounter - maxTreasureAmount;
             Array<GameField> btreasure = new Array<GameField>();
-            for (int i = 0; i < b; i++) {
+            for (int i = 0; i < b; ++i) {
                 btreasure.add(atreasures.get(i));
             }
-            for (int i = 0; i < gameFields.size; i++) {
-                for (int ii = 0; ii < btreasure.size; ii++) {
-                    if (gameFields.get(i).index == btreasure.get(ii).index) {
+            for (int i = 0; i < gameFields.size; ++i) {
+                for (int ii = 0; ii < btreasure.size; ++ii) {
+                    if (gameFields.get(i).equals(btreasure.get(ii))) {
                         gameFields.get(i).removeTreasure();
                     }
                 }
@@ -318,7 +318,7 @@ public class Playground extends Page {
     }
 
     void makeMoreTreasures(int b) {
-        for (int i = 0; i < b; i++) {
+        for (int i = 0; i < b; ++i) {
             int rnd = Functions.randomWithRange(0, gameFields.size - 1);
             if (gameFields.get(rnd).hasTreasure()) {
                 makeMoreTreasures(b - i);
@@ -342,8 +342,8 @@ public class Playground extends Page {
 
     void ArrayToGamefield(GameField[][] board) {
         gameFields.clear();
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[0].length; j++) {
+        for (int i = 0; i < board.length; ++i) {
+            for (int j = 0; j < board[0].length; ++j) {
                 board[i][j].x = i + 1;
                 board[i][j].y = j + 1;
                 gameFields.add(board[i][j]);

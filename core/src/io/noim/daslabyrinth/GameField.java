@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
 
+import java.util.Arrays;
+
 public class GameField implements Disposable {
 
     public static class Directions {
@@ -35,7 +37,6 @@ public class GameField implements Disposable {
 
     protected int x;
     protected int y;
-    protected int index;
     protected Texture fieldTexture;
     protected TextureRegion fieldTextureRegion;
     private Treasure treasure;
@@ -44,22 +45,20 @@ public class GameField implements Disposable {
     protected int posX;
     protected int posY;
 
-    GameField(Texture fieldTexture, int x, int y, int index, int type, int facing) {
+    GameField(Texture fieldTexture, int x, int y, int type, int facing) {
         this.fieldTexture = fieldTexture;
         this.fieldTextureRegion = new TextureRegion(this.fieldTexture);
         this.x = x;
         this.y = y;
-        this.index = index;
         this.type = type;
         this.facing = facing;
     }
 
-    GameField(Texture fieldTexture, boolean hasTreasure, int x, int y, int index, int type, int facing, Treasure treasure) {
+    GameField(Texture fieldTexture, boolean hasTreasure, int x, int y, int type, int facing, Treasure treasure) {
         this.fieldTexture = fieldTexture;
         this.fieldTextureRegion = new TextureRegion(this.fieldTexture);
         this.x = x;
         this.y = y;
-        this.index = index;
         this.type = type;
         this.facing = facing;
         this.treasure = treasure;
@@ -98,6 +97,25 @@ public class GameField implements Disposable {
         this.fieldTexture.dispose();
         if (this.treasure != null)
             this.treasure.dispose();
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(new Object[]{this.x, this.y, this.type, this.facing});
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!obj.getClass().toString().equals(this.getClass().toString())) {
+            return false;
+        }
+        GameField that = (GameField) obj;
+        return this.x == that.x &&
+                this.y == that.y &&
+                this.type == that.type &&
+                this.facing == that.facing;
     }
 
     @Override

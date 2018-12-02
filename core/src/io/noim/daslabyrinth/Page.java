@@ -21,6 +21,8 @@ public abstract class Page implements Screen, InputProcessor {
         this.batch = new SpriteBatch();
         this.camera = new OrthographicCamera();
         this.stage = new Stage();
+        this.multiplexer.addProcessor(this);
+        this.multiplexer.addProcessor(this.stage);
     }
 
     abstract void create();
@@ -64,8 +66,6 @@ public abstract class Page implements Screen, InputProcessor {
 
     @Override
     public void show() {
-        this.multiplexer.addProcessor(this);
-        this.multiplexer.addProcessor(this.stage);
         Gdx.input.setInputProcessor(this.multiplexer);
         Gdx.input.setCatchBackKey(true);
         this.camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

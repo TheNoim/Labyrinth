@@ -99,7 +99,7 @@ public class ImgButton implements Disposable {
             case Right:
                 first = board[0][this.shouldY - 1];
 
-                for (int i = 0; i < board.length - 1; i++) {
+                for (int i = 0; i < board.length - 1; ++i) {
                     board[i][this.shouldY - 1] = board[i + 1][this.shouldY - 1];
                 }
 

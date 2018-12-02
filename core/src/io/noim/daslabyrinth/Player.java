@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 
+import java.util.Arrays;
+
 public class Player implements Disposable {
 
     private Texture figure;
@@ -120,5 +122,26 @@ public class Player implements Disposable {
     @Override
     public void dispose() {
         this.figure.dispose();
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(new Object[] {this.name, this.currentField});
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!obj.getClass().toString().equals(this.getClass().toString())) {
+            return false;
+        }
+        Player that = (Player) obj;
+        return this.name.equals(that.name) && this.currentField.equals(that.currentField);
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }
