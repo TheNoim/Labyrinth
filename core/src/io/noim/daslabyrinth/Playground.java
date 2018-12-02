@@ -189,7 +189,7 @@ public class Playground extends Page {
             batch.setTransformMatrix(originalMatrix);
         }
         for (Player player : this.main.playerManager.players) {
-            if (player.currentField == this.newGF) {
+            if (player.currentField.equals(this.newGF)) {
                 batch.draw(player.getFigure(), halffinalprozent + heightAndWidthPerField / 4f, heightAndWidthPerField * 1.5F, heightAndWidthPerField / 2f, heightAndWidthPerField / 2f);
             } else {
                 batch.draw(player.getFigure(), (player.currentField.x - 1) * heightAndWidthPerField + halffinalprozent + heightAndWidthPerField / 4, (player.currentField.y - 1) * heightAndWidthPerField + startX + heightAndWidthPerField / 4, heightAndWidthPerField / 2f, heightAndWidthPerField / 2f);
@@ -241,21 +241,19 @@ public class Playground extends Page {
     @Override
     void touch(Vector3 touchPosition) {
         for (GameField gameField : this.gameFields) {
-            if (Gdx.input.justTouched() && gameField.isClicked(touchPosition, this.heightAndWidthPerField)) {
+            if (gameField.isClicked(touchPosition, this.heightAndWidthPerField)) {
                 this.main.playerManager.moveCurrentPlayer(this, gameField);
             }
         }
 
-        if (Gdx.input.justTouched()) {
-            if (touchPosition.x >= (2 * halffinalprozent + heightAndWidthPerField) && touchPosition.x <= (2 * halffinalprozent + heightAndWidthPerField + heightAndWidthPerField / 2) && touchPosition.y >= (startX - (int) Math.round(heightAndWidthPerField * 1.25)) && touchPosition.y <= (startX - (int) Math.round(heightAndWidthPerField * 1.25) + heightAndWidthPerField / 2)) {
-                ++newGF.facing;
-            } else {
-                for (int i = 0; i < imgButtons.size; ++i) {
-                    if (imgButtons.get(i).isClicked(touchPosition)) {
-                        imgButtons.get(i).move(this);
-                        if (DasLabyrinth.playSounds) {
-                            moveSound.play();
-                        }
+        if (touchPosition.x >= (2 * halffinalprozent + heightAndWidthPerField) && touchPosition.x <= (2 * halffinalprozent + heightAndWidthPerField + heightAndWidthPerField / 2) && touchPosition.y >= (startX - (int) Math.round(heightAndWidthPerField * 1.25)) && touchPosition.y <= (startX - (int) Math.round(heightAndWidthPerField * 1.25) + heightAndWidthPerField / 2)) {
+            ++newGF.facing;
+        } else {
+            for (int i = 0; i < imgButtons.size; ++i) {
+                if (imgButtons.get(i).isClicked(touchPosition)) {
+                    imgButtons.get(i).move(this);
+                    if (DasLabyrinth.playSounds) {
+                        moveSound.play();
                     }
                 }
             }
@@ -376,7 +374,7 @@ public class Playground extends Page {
     public boolean keyDown(int keycode) {
         this.main.click();
         if (keycode == Input.Keys.BACK) {
-            main.setScreen(new StartMenu(main));
+            main.setScreen(this.main.startMenu);
         }
         return false;
     }
