@@ -48,7 +48,7 @@ public class Player implements Disposable {
                 this.treasures.add(nextGamefield.getTreasure());
                 nextGamefield.removeTreasure();
                 playground.makeMoreTreasures(1);
-                //this.main.click(); TODO click sound
+                playground.main.treasure();
             }
             return true;
         }

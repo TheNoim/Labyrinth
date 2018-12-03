@@ -53,10 +53,9 @@ public class PlayerManager extends Page {
         this.textField.addListener(new InputListener() {
             @Override
             public boolean keyUp(InputEvent event, int keycode) {
-                switch (keycode) {
-                    case Input.Keys.ENTER:
-                        addPlayer(textField.getText(), figures[players.size]);
-                        return true;
+                if (keycode == Input.Keys.ENTER) {
+                    addPlayer(textField.getText(), figures[players.size]);
+                    return true;
                 }
                 return super.keyUp(event, keycode);
             }
@@ -89,6 +88,19 @@ public class PlayerManager extends Page {
      */
     Player getActivePlayer() {
         return this.players.get(activePlayer);
+    }
+
+    /**
+     * @param gameField
+     * @return
+     */
+    boolean isPlayerOnGamefield(GameField gameField) {
+        for (Player player : new Array.ArrayIterator<Player>(this.players)) {
+            if (player.currentField.equals(gameField)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -167,10 +179,9 @@ public class PlayerManager extends Page {
 
     @Override
     public boolean keyDown(int keycode) {
-        switch (keycode) {
-            case Input.Keys.BACK:
-                this.main.setScreen(this.previousScreen);
-                return true;
+        if (keycode == Input.Keys.BACK) {
+            this.main.setScreen(this.previousScreen);
+            return true;
         }
         return false;
     }

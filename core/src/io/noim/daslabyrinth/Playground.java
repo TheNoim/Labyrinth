@@ -318,11 +318,10 @@ public class Playground extends Page {
     void makeMoreTreasures(int b) {
         for (int i = 0; i < b; ++i) {
             int rnd = MathUtils.random(0, gameFields.size - 1);
-            if (gameFields.get(rnd).hasTreasure()) {
+            if (gameFields.get(rnd).hasTreasure() && !this.main.playerManager.isPlayerOnGamefield(gameFields.get(rnd))) {
                 makeMoreTreasures(b - i);
             }
-            int rnd2 = MathUtils.random(0, 100);
-            if (rnd2 > 20) {
+            if (MathUtils.randomBoolean(0.8F)) {
                 gameFields.get(rnd).addTreasure(new Treasure(treasure_min, 3));
             } else {
                 gameFields.get(rnd).addTreasure(new Treasure(treasure_max, 5));
