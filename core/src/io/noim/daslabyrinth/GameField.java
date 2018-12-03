@@ -54,7 +54,7 @@ public class GameField implements Disposable {
         this.facing = facing;
     }
 
-    GameField(Texture fieldTexture, boolean hasTreasure, int x, int y, int type, int facing, Treasure treasure) {
+    GameField(Texture fieldTexture, int x, int y, int type, int facing, Treasure treasure) {
         this.fieldTexture = fieldTexture;
         this.fieldTextureRegion = new TextureRegion(this.fieldTexture);
         this.x = x;

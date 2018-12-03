@@ -7,6 +7,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -14,35 +15,34 @@ import com.badlogic.gdx.utils.Array;
 
 public class Playground extends Page {
 
-    public DasLabyrinth main;
-
+    public final int minTreasureAmount = 3;
+    public final int maxTreasureAmount = 5;
     final int playgroundWidth = 4;
     final int playgroundHeight = 5;
-    int screenHeight;
-    int screenWidth;
-    double percentHeight = 0.1;
-    private Music music;
-    private Sound moveSound;
-    int startX;
-    int heightAndWidthPerField;
-    int halffinalprozent;
-    private Texture background;
-    GameField newGF;
-    private Matrix4 originalMatrix = new Matrix4();
-    private Array<ImgButton> imgButtons = new Array<ImgButton>(2 * this.playgroundWidth + 2 * this.playgroundHeight);
-    private Texture arrow = new Texture("pfeil.gif");
-    private Texture rotateArrow = new Texture("rotate.png");
     private final Texture[] cards = new Texture[]{
             new Texture("labyrinth_cross.png"), //0
             new Texture("labyrinth_curve.png"), //1
             new Texture("labyrinth_straight.png"), //2
             new Texture("labyrinth_tcross.png") //3
     };
+    public DasLabyrinth main;
+    int screenHeight;
+    int screenWidth;
+    double percentHeight = 0.1;
+    int startX;
+    int heightAndWidthPerField;
+    int halffinalprozent;
+    GameField newGF;
+    Array<GameField> gameFields = new Array<GameField>(this.playgroundWidth * this.playgroundHeight);
+    private Music music;
+    private Sound moveSound;
+    private Texture background;
+    private Matrix4 originalMatrix = new Matrix4();
+    private Array<ImgButton> imgButtons = new Array<ImgButton>(2 * this.playgroundWidth + 2 * this.playgroundHeight);
+    private Texture arrow = new Texture("pfeil.gif");
+    private Texture rotateArrow = new Texture("rotate.png");
     private Texture treasure_min = new Texture("treasure.png");
     private Texture treasure_max = new Texture("treasure2.png");
-    public final int minTreasureAmount = 3;
-    public final int maxTreasureAmount = 5;
-    Array<GameField> gameFields = new Array<GameField>(this.playgroundWidth * this.playgroundHeight);
     private int treasureCount = 0;
 
     Playground(final DasLabyrinth main) {
@@ -61,22 +61,22 @@ public class Playground extends Page {
         startX = Math.round((screenHeight - heightAndWidthPerField * 5F) / 1.1F);
         if (this.gameFields.size != this.playgroundWidth * this.playgroundHeight) {
             generateRandomField();
-            int typeNewGF = Functions.randomWithRange(0, 3);
+            int typeNewGF = MathUtils.random(0, 3);
             if (this.treasureCount < maxTreasureAmount) {
-                int rnd3 = Functions.randomWithRange(0, 100);
+                int rnd3 = MathUtils.random(0, 100);
                 if (rnd3 < 20) {
-                    newGF = new GameField(cards[typeNewGF], 0, 0, typeNewGF, Functions.randomWithRange(0, 3));
-                    int rnd2 = Functions.randomWithRange(0, 100);
+                    newGF = new GameField(cards[typeNewGF], 0, 0, typeNewGF, MathUtils.random(0, 3));
+                    int rnd2 = MathUtils.random(0, 100);
                     if (rnd2 > 20) {
                         newGF.addTreasure(new Treasure(treasure_min, 3));
                     } else {
                         newGF.addTreasure(new Treasure(treasure_max, 5));
                     }
                 } else {
-                    newGF = new GameField(cards[typeNewGF], 0, 0, typeNewGF, Functions.randomWithRange(0, 3));
+                    newGF = new GameField(cards[typeNewGF], 0, 0, typeNewGF, MathUtils.random(0, 3));
                 }
             } else {
-                newGF = new GameField(cards[typeNewGF], 0, 0, typeNewGF, Functions.randomWithRange(0, 3));
+                newGF = new GameField(cards[typeNewGF], 0, 0, typeNewGF, MathUtils.random(0, 3));
             }
         }
 
@@ -265,11 +265,11 @@ public class Playground extends Page {
         int x = 1;
         int y = 1;
         for (int i = 0; i < this.playgroundHeight * this.playgroundWidth; ++i) {
-            int type = Functions.randomWithRange(0, 3);
-            GameField gf = new GameField(cards[type], x, y, type, Functions.randomWithRange(0, 3));
-            if (Functions.randomBooleanT()) {
+            int type = MathUtils.random(0, 3);
+            GameField gf = new GameField(cards[type], x, y, type, MathUtils.random(0, 3));
+            if (MathUtils.randomBoolean(0.15F)) {
                 ++this.treasureCount;
-                int rnd = Functions.randomWithRange(0, 100);
+                int rnd = MathUtils.random(0, 100);
                 if (rnd > 20) {
                     gf.addTreasure(new Treasure(treasure_min, 3));
                 } else {
@@ -317,11 +317,11 @@ public class Playground extends Page {
 
     void makeMoreTreasures(int b) {
         for (int i = 0; i < b; ++i) {
-            int rnd = Functions.randomWithRange(0, gameFields.size - 1);
+            int rnd = MathUtils.random(0, gameFields.size - 1);
             if (gameFields.get(rnd).hasTreasure()) {
                 makeMoreTreasures(b - i);
             }
-            int rnd2 = Functions.randomWithRange(0, 100);
+            int rnd2 = MathUtils.random(0, 100);
             if (rnd2 > 20) {
                 gameFields.get(rnd).addTreasure(new Treasure(treasure_min, 3));
             } else {

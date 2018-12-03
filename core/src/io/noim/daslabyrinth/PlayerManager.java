@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectSet;
 
 public class PlayerManager extends Page {
 
@@ -36,6 +37,7 @@ public class PlayerManager extends Page {
 
     private DasLabyrinth main;
     private Screen previousScreen;
+    private ObjectSet<String> playerNames = new ObjectSet<String>();
 
     PlayerManager(DasLabyrinth main, GameField startField) {
         this.main = main;
@@ -62,14 +64,18 @@ public class PlayerManager extends Page {
     }
 
     void addPlayer(String name, Texture figure) {
-        if (!name.isEmpty()) {
-            this.players.add(new Player(name, figure, this.startField));
-            this.textField.setText("");
-            this.textField.setBounds(Gdx.graphics.getWidth() / 2f - DasLabyrinth.ButtonWidth / 2f, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10f * (this.players.size + 2), DasLabyrinth.ButtonWidth, Functions.textHeight("Spieler hinzufügen", this.textFont));
-            if (this.players.size > 3) {
-                this.textField.remove();
-            }
+        if (name.isEmpty() || playerNames.contains(name.toUpperCase()))
+            return;
+
+        playerNames.add(name.toUpperCase());
+
+        this.players.add(new Player(name, figure, this.startField));
+        this.textField.setText("");
+        this.textField.setBounds(Gdx.graphics.getWidth() / 2f - DasLabyrinth.ButtonWidth / 2f, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10f * (this.players.size + 2), DasLabyrinth.ButtonWidth, Functions.textHeight("Spieler hinzufügen", this.textFont));
+        if (this.players.size > 3) {
+            this.textField.remove();
         }
+
     }
 
     void moveCurrentPlayer(Playground playground, GameField nextGamefield) {
