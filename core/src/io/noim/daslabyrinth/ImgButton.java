@@ -13,10 +13,6 @@ import com.badlogic.gdx.utils.Disposable;
  */
 public class ImgButton implements Disposable {
 
-    public enum Direction {
-        Up, Down, Right, Left
-    }
-
     protected Texture tex;
     protected TextureRegion texR;
     protected Vector2 position;
@@ -108,11 +104,17 @@ public class ImgButton implements Disposable {
                 playground.newGF = first;
                 break;
         }
+        playground.newGF.setX(1);
+        playground.newGF.setY(-1);
         playground.ArrayToGamefield(board);
     }
 
     @Override
     public void dispose() {
         this.tex.dispose();
+    }
+
+    public enum Direction {
+        Up, Down, Right, Left
     }
 }

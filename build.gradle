@@ -81,6 +81,16 @@ project(":ios") {
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-ios"
         compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-ios"
     }
+
+    robovm {
+        iosSignIdentity = "[Signing identity name]"
+
+        iosProvisioningProfile = "[provisioning profile name]"
+        iosSkipSigning = true
+
+        archs = "thumbv7:arm64"
+
+    }
 }
 
 project(":html") {

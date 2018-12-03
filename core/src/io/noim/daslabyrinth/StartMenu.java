@@ -9,10 +9,9 @@ import com.badlogic.gdx.utils.Align;
 
 public class StartMenu extends Page {
 
+    public DasLabyrinth main;
     private Texture button, buttonPushed, banner;
     private float X;
-
-    public DasLabyrinth main;
 
     StartMenu(final DasLabyrinth main) {
         this.main = main;

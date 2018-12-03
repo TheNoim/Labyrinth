@@ -6,14 +6,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 
 public class Animation extends Page {
+    public DasLabyrinth main;
     private Texture banner;
     private String heading = "DAS LABYRINTH";
     private boolean animate = false;
-
     private double yAnim = 0.5;
     private double yDelta = 0.05;
-
-    public DasLabyrinth main;
 
     Animation(final DasLabyrinth main) {
         this.main = main;

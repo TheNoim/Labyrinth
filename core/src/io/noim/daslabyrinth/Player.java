@@ -8,11 +8,11 @@ import java.util.Arrays;
 
 public class Player implements Disposable {
 
-    private Texture figure;
-    private String name;
     protected GameField currentField;
     protected Array<Treasure> treasures = new Array<Treasure>();
     protected int score;
+    private Texture figure;
+    private String name;
 
     public Player(String name, Texture figure, GameField startField) {
         this.name = name;
@@ -79,22 +79,22 @@ public class Player implements Disposable {
                     for (GameField newPos : new Array.ArrayIterator<GameField>(playground.gameFields)) {
                         if (newPos != playground.newGF) {
                             boolean isNeighbourWithWay = false;
-                            if (newPos.y == i.y) {
-                                if (newPos.x == i.x - 1) {
+                            if (newPos.getY() == i.getY()) {
+                                if (newPos.getX() == i.getX() - 1) {
                                     if (i.isWayInDirection(GameField.Directions.LEFT) && newPos.isWayInDirection(GameField.Directions.RIGHT)) {
                                         isNeighbourWithWay = true;
                                     }
-                                } else if (newPos.x == i.x + 1) {
+                                } else if (newPos.getX() == i.getX() + 1) {
                                     if (i.isWayInDirection(GameField.Directions.RIGHT) && newPos.isWayInDirection(GameField.Directions.LEFT)) {
                                         isNeighbourWithWay = true;
                                     }
                                 }
-                            } else if (newPos.x == i.x) {
-                                if (newPos.y == i.y - 1) {
+                            } else if (newPos.getX() == i.getX()) {
+                                if (newPos.getY() == i.getY() - 1) {
                                     if (i.isWayInDirection(GameField.Directions.DOWN) && newPos.isWayInDirection(GameField.Directions.UP)) {
                                         isNeighbourWithWay = true;
                                     }
-                                } else if (newPos.y == i.y + 1) {
+                                } else if (newPos.getY() == i.getY() + 1) {
                                     if (i.isWayInDirection(GameField.Directions.UP) && newPos.isWayInDirection(GameField.Directions.DOWN)) {
                                         isNeighbourWithWay = true;
                                     }
@@ -126,7 +126,7 @@ public class Player implements Disposable {
 
     @Override
     public int hashCode() {
-        return Arrays.hashCode(new Object[] {this.name, this.currentField});
+        return Arrays.hashCode(new Object[]{this.name, this.currentField});
     }
 
     @Override

@@ -10,13 +10,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class DasLabyrinth extends Game {
-    private Texture background;
-    private BitmapFont font;
-    private Skin skin;
     static Boolean playMusic, playSounds, vibration;
     static int whichClass;
-    private Music music;
-    private Sound treasure, click;
     static Preferences pref;
     static int ButtonWidth;
     static String heading, playText, rankingText, settingsText;
@@ -26,6 +21,11 @@ public class DasLabyrinth extends Game {
     Ranking ranking;
     Settings settings;
     PlayerManager playerManager;
+    private Texture background;
+    private BitmapFont font;
+    private Skin skin;
+    private Music music;
+    private Sound treasure, click;
 
     @Override
     public void create() {

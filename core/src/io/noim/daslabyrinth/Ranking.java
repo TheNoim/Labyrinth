@@ -9,8 +9,8 @@ import com.badlogic.gdx.math.Vector3;
 public class Ranking extends Page {
 
     public DasLabyrinth main;
-    private Texture background, back;
     String heading = "RANKING";
+    private Texture background, back;
     private BitmapFont font;
 
     public Ranking(final DasLabyrinth main) {

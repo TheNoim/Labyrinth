@@ -11,10 +11,10 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public abstract class Page implements Screen, InputProcessor {
+    Stage stage;
     private InputMultiplexer multiplexer = new InputMultiplexer();
     private OrthographicCamera camera;
     private SpriteBatch batch;
-    Stage stage;
     private Vector3 touchPosition = new Vector3();
 
     Page() {

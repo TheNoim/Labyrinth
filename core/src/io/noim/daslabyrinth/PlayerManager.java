@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.ObjectSet;
 
 public class PlayerManager extends Page {
 
@@ -37,7 +36,6 @@ public class PlayerManager extends Page {
 
     private DasLabyrinth main;
     private Screen previousScreen;
-    private ObjectSet<String> playerNames = new ObjectSet<String>();
 
     PlayerManager(DasLabyrinth main, GameField startField) {
         this.main = main;
@@ -63,10 +61,13 @@ public class PlayerManager extends Page {
     }
 
     void addPlayer(String name, Texture figure) {
-        if (name.isEmpty() || playerNames.contains(name.toUpperCase()))
+        if (name.isEmpty())
             return;
 
-        playerNames.add(name.toUpperCase());
+        for (Player player : this.players) {
+            if (player.getName().equalsIgnoreCase(name))
+                return;
+        }
 
         this.players.add(new Player(name, figure, this.startField));
         this.textField.setText("");

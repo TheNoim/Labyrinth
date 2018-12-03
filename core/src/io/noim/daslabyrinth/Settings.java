@@ -11,19 +11,17 @@ import com.badlogic.gdx.math.Vector3;
 public class Settings extends Page {
 
     public DasLabyrinth main;
-
-    private Texture background;
-    private BitmapFont font_text;
     String heading = "SETTINGS";
-
-    private Texture checkBox, checkBox_checked;
-    private Texture back;
     boolean checkBox1Checked, checkBox2Checked, checkBox3Checked;
     float checkBoxPosX;
     float checkBoxPos1Y;
     float checkBoxPos2Y;
     float checkBoxPos3Y;
     float checkBoxSize;
+    private Texture background;
+    private BitmapFont font_text;
+    private Texture checkBox, checkBox_checked;
+    private Texture back;
 
     Settings(final DasLabyrinth main) {
         this.main = main;
