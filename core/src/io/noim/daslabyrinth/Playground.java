@@ -27,7 +27,6 @@ public class Playground extends Page {
     public DasLabyrinth main;
     int screenHeight;
     int screenWidth;
-    double percentHeight = 0.1;
     int startX;
     int heightAndWidthPerField;
     int halffinalprozent;
@@ -55,18 +54,16 @@ public class Playground extends Page {
         DasLabyrinth.whichClass = 1;
         screenHeight = Gdx.graphics.getHeight();
         screenWidth = Gdx.graphics.getWidth();
-        halffinalprozent = (int) Math.round(screenWidth * percentHeight / 2F);
-        GameField.SizeInPixels = heightAndWidthPerField = (int) Math.round((screenWidth - screenWidth * percentHeight) / 4F);
-        startX = Math.round((screenHeight - heightAndWidthPerField * 5F) / 1.1F);
+        halffinalprozent = MathUtils.round(screenWidth / 20F);
+        GameField.SizeInPixels = heightAndWidthPerField = MathUtils.round((screenWidth - screenWidth * 0.1f) / 4F);
+        startX = MathUtils.round((screenHeight - heightAndWidthPerField * 5F) / 1.1F);
         if (this.gameFields.size != this.playgroundWidth * this.playgroundHeight) {
             generateRandomField();
             int typeNewGF = MathUtils.random(0, 3);
             if (this.treasureCount < maxTreasureAmount) {
-                int rnd3 = MathUtils.random(0, 100);
-                if (rnd3 < 20) {
+                if (MathUtils.randomBoolean(0.2F)) {
                     newGF = new GameField(cards[typeNewGF], 1, -1, typeNewGF, (byte) MathUtils.random(0, 3));
-                    int rnd2 = MathUtils.random(0, 100);
-                    if (rnd2 > 20) {
+                    if (MathUtils.randomBoolean(0.8F)) {
                         newGF.addTreasure(new Treasure(treasure_min, 3));
                     } else {
                         newGF.addTreasure(new Treasure(treasure_max, 5));
@@ -83,8 +80,7 @@ public class Playground extends Page {
             // up
             for (int j = 0; j < gameFields.size; ++j) {
                 if (gameFields.get(j).getY() == 5) {
-                    Vector2 v = new Vector2();
-                    ImgButton bt = new ImgButton(arrow, v, heightAndWidthPerField / 4, heightAndWidthPerField / 4, ImgButton.Direction.Up);
+                    ImgButton bt = new ImgButton(arrow, new Vector2(), heightAndWidthPerField / 4, heightAndWidthPerField / 4, ImgButton.Direction.Up);
                     bt.gf = gameFields.get(j);
                     bt.shouldX = gameFields.get(j).getX();
                     bt.shouldY = gameFields.get(j).getY();
@@ -109,8 +105,7 @@ public class Playground extends Page {
             // left
             for (int j = 0; j < gameFields.size; ++j) {
                 if (gameFields.get(j).getX() == 1) {
-                    Vector2 v = new Vector2();
-                    ImgButton bt = new ImgButton(arrow, v, heightAndWidthPerField / 4, heightAndWidthPerField / 4, ImgButton.Direction.Left);
+                    ImgButton bt = new ImgButton(arrow, new Vector2(), heightAndWidthPerField / 4, heightAndWidthPerField / 4, ImgButton.Direction.Left);
                     bt.gf = gameFields.get(j);
                     bt.shouldX = gameFields.get(j).getX();
                     bt.shouldY = gameFields.get(j).getY();
@@ -121,8 +116,7 @@ public class Playground extends Page {
             // right
             for (int j = 0; j < gameFields.size; ++j) {
                 if (gameFields.get(j).getX() == 4) {
-                    Vector2 v = new Vector2();
-                    ImgButton bt = new ImgButton(arrow, v, heightAndWidthPerField / 4, heightAndWidthPerField / 4, ImgButton.Direction.Right);
+                    ImgButton bt = new ImgButton(arrow, new Vector2(), heightAndWidthPerField / 4, heightAndWidthPerField / 4, ImgButton.Direction.Right);
                     bt.gf = gameFields.get(j);
                     bt.shouldX = gameFields.get(j).getX();
                     bt.shouldY = gameFields.get(j).getY();
@@ -160,44 +154,44 @@ public class Playground extends Page {
             }
             batch.draw(player.getFigure(), (player.currentField.getX() - 1) * heightAndWidthPerField + halffinalprozent + heightAndWidthPerField / 4, (player.currentField.getY() - 1) * heightAndWidthPerField + startX + heightAndWidthPerField / 4, heightAndWidthPerField / 2f, heightAndWidthPerField / 2f);
         }
-        for (int i = 0; i < imgButtons.size; ++i) {
-            imgButtons.get(i).draw(batch);
+        for (ImgButton button : this.imgButtons) {
+            button.draw(batch);
         }
         batch.draw(rotateArrow, 1.25f * heightAndWidthPerField + MathUtils.round(screenWidth / 20F), -1.75f * heightAndWidthPerField + MathUtils.round((screenHeight - heightAndWidthPerField * 5F) / 1.1F), heightAndWidthPerField / 2f, heightAndWidthPerField / 2f);
     }
 
     @Override
     void update() {
-        for (int i = 0; i < imgButtons.size; ++i) {
-            if (imgButtons.get(i).gf.getX() != imgButtons.get(i).shouldX || imgButtons.get(i).gf.getY() != imgButtons.get(i).shouldY) {
-                for (int j = 0; j < gameFields.size; ++j) {
-                    if (gameFields.get(j).getX() == imgButtons.get(i).shouldX && gameFields.get(j).getY() == imgButtons.get(i).shouldY) {
-                        imgButtons.get(i).gf = gameFields.get(j);
+        for (ImgButton button : this.imgButtons) {
+            if (button.gf.getX() != button.shouldX || button.gf.getY() != button.shouldY) {
+                for (GameField gameField : this.gameFields) {
+                    if (gameField.getX() == button.shouldX && gameField.getY() == button.shouldY) {
+                        button.gf = gameField;
                     }
                 }
             }
-            switch (imgButtons.get(i).direction) {
+            switch (button.direction) {
                 case Down:
-                    imgButtons.get(i).position.x = imgButtons.get(i).gf.posX + heightAndWidthPerField / 2f;
-                    imgButtons.get(i).position.x = imgButtons.get(i).position.x - imgButtons.get(i).width / 2f;
-                    imgButtons.get(i).position.y = imgButtons.get(i).gf.posY - imgButtons.get(i).height;
+                    button.position.x = button.gf.posX + heightAndWidthPerField / 2f;
+                    button.position.x = button.position.x - button.width / 2f;
+                    button.position.y = button.gf.posY - button.height;
                     break;
                 case Up:
-                    imgButtons.get(i).position.x = imgButtons.get(i).gf.posX + heightAndWidthPerField / 2f;
-                    imgButtons.get(i).position.x = imgButtons.get(i).position.x - imgButtons.get(i).width / 2f;
-                    imgButtons.get(i).position.y = imgButtons.get(i).gf.posY + heightAndWidthPerField;
+                    button.position.x = button.gf.posX + heightAndWidthPerField / 2f;
+                    button.position.x = button.position.x - button.width / 2f;
+                    button.position.y = button.gf.posY + heightAndWidthPerField;
                     break;
                 case Left:
-                    imgButtons.get(i).position.x = imgButtons.get(i).gf.posX - imgButtons.get(i).width;
-                    imgButtons.get(i).position.y = imgButtons.get(i).gf.posY + heightAndWidthPerField / 2f;
-                    imgButtons.get(i).position.y = imgButtons.get(i).position.y - imgButtons.get(i).height;
-                    imgButtons.get(i).position.y = imgButtons.get(i).position.y + imgButtons.get(i).height / 2f;
+                    button.position.x = button.gf.posX - button.width;
+                    button.position.y = button.gf.posY + heightAndWidthPerField / 2f;
+                    button.position.y = button.position.y - button.height;
+                    button.position.y = button.position.y + button.height / 2f;
                     break;
                 case Right:
-                    imgButtons.get(i).position.x = imgButtons.get(i).gf.posX + heightAndWidthPerField;
-                    imgButtons.get(i).position.y = imgButtons.get(i).gf.posY;
-                    imgButtons.get(i).position.y = imgButtons.get(i).position.y + heightAndWidthPerField / 4f;
-                    imgButtons.get(i).position.y = imgButtons.get(i).position.y + imgButtons.get(i).height / 2f;
+                    button.position.x = button.gf.posX + heightAndWidthPerField;
+                    button.position.y = button.gf.posY;
+                    button.position.y = button.position.y + heightAndWidthPerField / 4f;
+                    button.position.y = button.position.y + button.height / 2f;
                     break;
             }
         }
@@ -237,8 +231,7 @@ public class Playground extends Page {
             GameField gf = new GameField(cards[type], x, y, type, (byte) MathUtils.random(0, 3));
             if (MathUtils.randomBoolean(0.15F)) {
                 ++this.treasureCount;
-                int rnd = MathUtils.random(0, 100);
-                if (rnd > 20) {
+                if (MathUtils.randomBoolean(0.8F)) {
                     gf.addTreasure(new Treasure(treasure_min, 3));
                 } else {
                     gf.addTreasure(new Treasure(treasure_max, 5));
