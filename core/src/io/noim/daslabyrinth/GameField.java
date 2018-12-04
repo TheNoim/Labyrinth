@@ -70,8 +70,10 @@ public class GameField implements Disposable {
     }
 
     public void setX(int x) {
-        this.x = x;
-        changeMatrix();
+        if (this.x != x) {
+            this.x = x;
+            changeMatrix();
+        }
     }
 
     public int getY() {
@@ -79,8 +81,10 @@ public class GameField implements Disposable {
     }
 
     public void setY(int y) {
-        this.y = y;
-        changeMatrix();
+        if (this.y != y) {
+            this.y = y;
+            changeMatrix();
+        }
     }
 
     void addTreasure(Treasure treasure) {
@@ -127,8 +131,7 @@ public class GameField implements Disposable {
         this.posX = (this.x - 1) * SizeInPixels + MathUtils.round(Gdx.graphics.getWidth() / 20F);
         this.posY = (this.y - 1) * SizeInPixels + MathUtils.round((Gdx.graphics.getHeight() - SizeInPixels * 5F) / 1.1F);
         rotMatrix = new Matrix4();
-        rotMatrix.translate(posX, posY, 0);
-        rotMatrix.translate(SizeInPixels / 2f, SizeInPixels / 2f, 0);
+        rotMatrix.translate(posX + SizeInPixels / 2f, posY + SizeInPixels / 2f, 0);
         rotMatrix.rotate(0, 0, 1, 90.0f * this.facing);
         rotMatrix.translate(-SizeInPixels / 2f, -SizeInPixels / 2f, 0);
     }

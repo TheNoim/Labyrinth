@@ -63,7 +63,7 @@ public class Player implements Disposable {
      * @return If the player can go to the gamefield
      */
     private boolean canMove(Playground playground, GameField nextGamefield) {
-        if (this.currentField != playground.newGF) {
+        if (!this.currentField.equals(playground.newGF) && !this.currentField.equals(nextGamefield)) {
             Array<GameField> visited = new Array<GameField>();
 
             Array<GameField> frontier = new Array<GameField>();
@@ -77,7 +77,7 @@ public class Player implements Disposable {
                         return true;
                     }
                     for (GameField newPos : new Array.ArrayIterator<GameField>(playground.gameFields)) {
-                        if (newPos != playground.newGF) {
+                        if (!newPos.equals(playground.newGF)) {
                             boolean isNeighbourWithWay = false;
                             if (newPos.getY() == i.getY()) {
                                 if (newPos.getX() == i.getX() - 1) {

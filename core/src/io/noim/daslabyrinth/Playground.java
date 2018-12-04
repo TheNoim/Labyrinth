@@ -8,7 +8,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
@@ -37,7 +36,6 @@ public class Playground extends Page {
     private Music music;
     private Sound moveSound;
     private Texture background;
-    private Matrix4 originalMatrix = new Matrix4();
     private Array<ImgButton> imgButtons = new Array<ImgButton>(2 * this.playgroundWidth + 2 * this.playgroundHeight);
     private Texture arrow = new Texture("pfeil.gif");
     private Texture rotateArrow = new Texture("rotate.png");
@@ -165,7 +163,7 @@ public class Playground extends Page {
         for (int i = 0; i < imgButtons.size; ++i) {
             imgButtons.get(i).draw(batch);
         }
-        batch.draw(rotateArrow, 2 * halffinalprozent + heightAndWidthPerField, startX - Math.round(heightAndWidthPerField * 1.25), heightAndWidthPerField / 2f, heightAndWidthPerField / 2f);
+        batch.draw(rotateArrow, 1.25f * heightAndWidthPerField + MathUtils.round(screenWidth / 20F), -1.75f * heightAndWidthPerField + MathUtils.round((screenHeight - heightAndWidthPerField * 5F) / 1.1F), heightAndWidthPerField / 2f, heightAndWidthPerField / 2f);
     }
 
     @Override
@@ -213,12 +211,15 @@ public class Playground extends Page {
             }
         }
 
-        if (touchPosition.x >= (2 * halffinalprozent + heightAndWidthPerField) && touchPosition.x <= (2 * halffinalprozent + heightAndWidthPerField + heightAndWidthPerField / 2) && touchPosition.y >= (startX - (int) Math.round(heightAndWidthPerField * 1.25)) && touchPosition.y <= (startX - (int) Math.round(heightAndWidthPerField * 1.25) + heightAndWidthPerField / 2)) {
+        if (touchPosition.x >= 1.25f * heightAndWidthPerField + MathUtils.round(screenWidth / 20F) &&
+                touchPosition.x <= 1.75f * heightAndWidthPerField + MathUtils.round(screenWidth / 20F) &&
+                touchPosition.y >= -1.75f * heightAndWidthPerField + MathUtils.round((screenHeight - heightAndWidthPerField * 5F) / 1.1F) &&
+                touchPosition.y <= -1.25f * heightAndWidthPerField + MathUtils.round((screenHeight - heightAndWidthPerField * 5F) / 1.1F)) {
             this.newGF.turn();
         } else {
-            for (int i = 0; i < imgButtons.size; ++i) {
-                if (imgButtons.get(i).isClicked(touchPosition)) {
-                    imgButtons.get(i).move(this);
+            for (ImgButton button : this.imgButtons) {
+                if (button.isClicked(touchPosition)) {
+                    button.move(this);
                     if (DasLabyrinth.playSounds) {
                         moveSound.play();
                     }
@@ -256,22 +257,22 @@ public class Playground extends Page {
         }
         int acounter = 0;
         Array<GameField> atreasures = new Array<GameField>();
-        for (int i = 0; i < gameFields.size; ++i) {
-            if (gameFields.get(i).hasTreasure()) {
+        for (GameField gameField : this.gameFields) {
+            if (gameField.hasTreasure()) {
                 ++acounter;
-                atreasures.add(gameFields.get(i));
+                atreasures.add(gameField);
             }
         }
         if (acounter > maxTreasureAmount) {
             int b = acounter - maxTreasureAmount;
-            Array<GameField> btreasure = new Array<GameField>();
+            Array<GameField> btreasure = new Array<GameField>(b);
             for (int i = 0; i < b; ++i) {
                 btreasure.add(atreasures.get(i));
             }
-            for (int i = 0; i < gameFields.size; ++i) {
-                for (int ii = 0; ii < btreasure.size; ++ii) {
-                    if (gameFields.get(i).equals(btreasure.get(ii))) {
-                        gameFields.get(i).removeTreasure();
+            for (GameField gameField : this.gameFields) {
+                for (GameField gameFieldTreasure : btreasure) {
+                    if (gameField.equals(gameFieldTreasure)) {
+                        gameField.removeTreasure();
                     }
                 }
             }
@@ -308,10 +309,8 @@ public class Playground extends Page {
         gameFields.clear();
         for (int i = 0; i < board.length; ++i) {
             for (int j = 0; j < board[0].length; ++j) {
-                if (board[i][j].getX() != i + 1)
-                    board[i][j].setX(i + 1);
-                if (board[i][j].getY() != j + 1)
-                    board[i][j].setY(j + 1);
+                board[i][j].setX(i + 1);
+                board[i][j].setY(j + 1);
                 gameFields.add(board[i][j]);
             }
         }
@@ -320,7 +319,24 @@ public class Playground extends Page {
     @Override
     public void hide() {
         super.hide();
-        music.pause();
+        if (music.isPlaying()) {
+            music.pause();
+        }
+    }
+
+    @Override
+    public void resume() {
+        super.resume();
+        if (DasLabyrinth.pref.getBoolean("Music", true)) {
+            music.play();
+        }
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
+        this.screenHeight = Gdx.graphics.getHeight();
+        this.screenWidth = Gdx.graphics.getWidth();
     }
 
     @Override
@@ -343,6 +359,7 @@ public class Playground extends Page {
         this.main.click();
         if (keycode == Input.Keys.BACK) {
             main.setScreen(this.main.startMenu);
+            return true;
         }
         return false;
     }
