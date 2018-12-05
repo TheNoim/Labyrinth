@@ -41,16 +41,16 @@ public class StartMenu extends Page {
 
     @Override
     void touch(Vector3 touchPosition) {
-        if (touchPosition.x >= (Gdx.graphics.getWidth() / 2 - DasLabyrinth.ButtonWidth / 2) && touchPosition.x <= (Gdx.graphics.getWidth() / 2 + DasLabyrinth.ButtonWidth / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 + (Functions.textHeight(DasLabyrinth.playText, this.main.getFont()) * 3)) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 + 2 * (Functions.textHeight(DasLabyrinth.playText, this.main.getFont()) * 3))) {
+        if (touchPosition.x >= (Gdx.graphics.getWidth() / 2 - DasLabyrinth.ButtonWidth / 2) && touchPosition.x <= (Gdx.graphics.getWidth() / 2 + DasLabyrinth.ButtonWidth / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 + (Functions.textHeight(this.main.lang.get("play"), this.main.getFont()) * 3)) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 + 2 * (Functions.textHeight(this.main.lang.get("play"), this.main.getFont()) * 3))) {
             this.main.click();
             this.main.getMusic().stop();
             main.setScreen(this.main.playground);
         }
-        if (touchPosition.x >= (Gdx.graphics.getWidth() / 2 - DasLabyrinth.ButtonWidth / 2) && touchPosition.x <= (Gdx.graphics.getWidth() / 2 + DasLabyrinth.ButtonWidth / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 - (Functions.textHeight(DasLabyrinth.playText, this.main.getFont()) * 3) / 2) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 + (Functions.textHeight(DasLabyrinth.playText, this.main.getFont()) * 3) / 2)) {
+        if (touchPosition.x >= (Gdx.graphics.getWidth() / 2 - DasLabyrinth.ButtonWidth / 2) && touchPosition.x <= (Gdx.graphics.getWidth() / 2 + DasLabyrinth.ButtonWidth / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 - (Functions.textHeight(this.main.lang.get("play"), this.main.getFont()) * 3) / 2) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 + (Functions.textHeight(this.main.lang.get("play"), this.main.getFont()) * 3) / 2)) {
             this.main.click();
             main.setScreen(this.main.ranking);
         }
-        if (touchPosition.x >= (Gdx.graphics.getWidth() / 2 - DasLabyrinth.ButtonWidth / 2) && touchPosition.x <= (Gdx.graphics.getWidth() / 2 + DasLabyrinth.ButtonWidth / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 - (Functions.textHeight(DasLabyrinth.playText, this.main.getFont()) * 3) * 2) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 - (Functions.textHeight(DasLabyrinth.playText, this.main.getFont()) * 3))) {
+        if (touchPosition.x >= (Gdx.graphics.getWidth() / 2 - DasLabyrinth.ButtonWidth / 2) && touchPosition.x <= (Gdx.graphics.getWidth() / 2 + DasLabyrinth.ButtonWidth / 2) && touchPosition.y >= (Gdx.graphics.getHeight() / 2 - (Functions.textHeight(this.main.lang.get("play"), this.main.getFont()) * 3) * 2) && touchPosition.y <= (Gdx.graphics.getHeight() / 2 - (Functions.textHeight(this.main.lang.get("play"), this.main.getFont()) * 3))) {
             this.main.click();
             main.setScreen(this.main.settings);
         }
@@ -61,14 +61,14 @@ public class StartMenu extends Page {
         batch.draw(this.main.getBackground(), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         batch.draw(banner, 0, (0.75F * Gdx.graphics.getHeight()), Gdx.graphics.getWidth(), 0.2F * Gdx.graphics.getHeight());
-        batch.draw(button, X, Gdx.graphics.getHeight() / 2f + (Functions.textHeight(DasLabyrinth.playText, this.main.getFont()) * 3), DasLabyrinth.ButtonWidth, Functions.textHeight(DasLabyrinth.playText, this.main.getFont()) * 3);
-        batch.draw(button, X, Gdx.graphics.getHeight() / 2f - (Functions.textHeight(DasLabyrinth.playText, this.main.getFont()) * 3) / 2, DasLabyrinth.ButtonWidth, Functions.textHeight(DasLabyrinth.rankingText, this.main.getFont()) * 3);
-        batch.draw(button, X, Gdx.graphics.getHeight() / 2f - (Functions.textHeight(DasLabyrinth.playText, this.main.getFont()) * 3) * 2, DasLabyrinth.ButtonWidth, Functions.textHeight(DasLabyrinth.settingsText, this.main.getFont()) * 3);
+        batch.draw(button, X, Gdx.graphics.getHeight() / 2f + (Functions.textHeight(this.main.lang.get("play"), this.main.getFont()) * 3), DasLabyrinth.ButtonWidth, Functions.textHeight(this.main.lang.get("play"), this.main.getFont()) * 3);
+        batch.draw(button, X, Gdx.graphics.getHeight() / 2f - (Functions.textHeight(this.main.lang.get("play"), this.main.getFont()) * 3) / 2, DasLabyrinth.ButtonWidth, Functions.textHeight(this.main.lang.get("ranking"), this.main.getFont()) * 3);
+        batch.draw(button, X, Gdx.graphics.getHeight() / 2f - (Functions.textHeight(this.main.lang.get("play"), this.main.getFont()) * 3) * 2, DasLabyrinth.ButtonWidth, Functions.textHeight(this.main.lang.get("settings"), this.main.getFont()) * 3);
 
-        this.main.getFont().draw(batch, DasLabyrinth.heading, 0, 0.9185F * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), Align.center, false);
-        this.main.getFont().draw(batch, DasLabyrinth.playText, 0, Gdx.graphics.getHeight() / 2f + 2 * (Functions.textHeight(DasLabyrinth.playText, this.main.getFont()) * 3) - (((Functions.textHeight(DasLabyrinth.playText, this.main.getFont()) * 3) - Functions.textHeight(DasLabyrinth.playText, this.main.getFont())) / 2), Gdx.graphics.getWidth(), Align.center, false);
-        this.main.getFont().draw(batch, DasLabyrinth.rankingText, 0, Gdx.graphics.getHeight() / 2f + ((Functions.textHeight(DasLabyrinth.playText, this.main.getFont()) * 3) / 2) - (((Functions.textHeight(DasLabyrinth.playText, this.main.getFont()) * 3) - Functions.textHeight(DasLabyrinth.rankingText, this.main.getFont())) / 2), Gdx.graphics.getWidth(), Align.center, false);
-        this.main.getFont().draw(batch, DasLabyrinth.settingsText, 0, Gdx.graphics.getHeight() / 2f - (Functions.textHeight(DasLabyrinth.playText, this.main.getFont()) * 3) - (((Functions.textHeight(DasLabyrinth.playText, this.main.getFont()) * 3) - Functions.textHeight(DasLabyrinth.settingsText, this.main.getFont())) / 2), Gdx.graphics.getWidth(), Align.center, false);
+        this.main.getFont().draw(batch, this.main.lang.get("heading"), 0, 0.9185F * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), Align.center, false);
+        this.main.getFont().draw(batch, this.main.lang.get("play"), 0, Gdx.graphics.getHeight() / 2f + 2 * (Functions.textHeight(this.main.lang.get("play"), this.main.getFont()) * 3) - (((Functions.textHeight(this.main.lang.get("play"), this.main.getFont()) * 3) - Functions.textHeight(this.main.lang.get("play"), this.main.getFont())) / 2), Gdx.graphics.getWidth(), Align.center, false);
+        this.main.getFont().draw(batch, this.main.lang.get("ranking"), 0, Gdx.graphics.getHeight() / 2f + ((Functions.textHeight(this.main.lang.get("play"), this.main.getFont()) * 3) / 2) - (((Functions.textHeight(this.main.lang.get("play"), this.main.getFont()) * 3) - Functions.textHeight(this.main.lang.get("ranking"), this.main.getFont())) / 2), Gdx.graphics.getWidth(), Align.center, false);
+        this.main.getFont().draw(batch, this.main.lang.get("settings"), 0, Gdx.graphics.getHeight() / 2f - (Functions.textHeight(this.main.lang.get("play"), this.main.getFont()) * 3) - (((Functions.textHeight(this.main.lang.get("play"), this.main.getFont()) * 3) - Functions.textHeight(this.main.lang.get("settings"), this.main.getFont())) / 2), Gdx.graphics.getWidth(), Align.center, false);
     }
 
     @Override

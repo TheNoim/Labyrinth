@@ -8,19 +8,22 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.I18NBundle;
+
+import java.util.Locale;
 
 public class DasLabyrinth extends Game {
     static Boolean playMusic, playSounds, vibration;
     static int whichClass;
     static Preferences pref;
     static int ButtonWidth;
-    static String heading, playText, rankingText, settingsText;
     Animation animation;
     StartMenu startMenu;
     Playground playground;
     Ranking ranking;
     Settings settings;
     PlayerManager playerManager;
+    I18NBundle lang;
     private Texture background;
     private BitmapFont font;
     private Skin skin;
@@ -45,14 +48,11 @@ public class DasLabyrinth extends Game {
 
         whichClass = 0;
 
-        heading = "DAS LABYRINTH";
-        playText = "SPIEL STARTEN";
-        rankingText = "RANKING";
-        settingsText = "EINSTELLUNGEN";
+        this.lang = I18NBundle.createBundle(Gdx.files.internal("i18n/Labyrinth"), Locale.getDefault());
 
         ButtonWidth = Math.round(Gdx.graphics.getWidth() * 0.9F);
 
-        font.getData().setScale(Functions.scaleText(settingsText, font, ButtonWidth - 40));
+        font.getData().setScale(Functions.scaleText(this.lang.get("settings"), font, ButtonWidth - 40));
 
         playMusic = pref.getBoolean("Music", true);
         playSounds = pref.getBoolean("Sounds", true);
