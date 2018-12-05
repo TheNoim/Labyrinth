@@ -64,9 +64,9 @@ public class Playground extends Page {
                 if (MathUtils.randomBoolean(0.2F)) {
                     newGF = new GameField(cards[typeNewGF], 1, -1, typeNewGF, (byte) MathUtils.random(0, 3));
                     if (MathUtils.randomBoolean(0.8F)) {
-                        newGF.addTreasure(new Treasure(treasure_min, 3));
+                        newGF.setTreasure(new Treasure(treasure_min, 3));
                     } else {
-                        newGF.addTreasure(new Treasure(treasure_max, 5));
+                        newGF.setTreasure(new Treasure(treasure_max, 5));
                     }
                 } else {
                     newGF = new GameField(cards[typeNewGF], 1, -1, typeNewGF, (byte) MathUtils.random(0, 3));
@@ -226,19 +226,21 @@ public class Playground extends Page {
         gameFields.clear();
         int x = 1;
         int y = 1;
+        boolean firstField = true;
         for (int i = 0; i < this.playgroundHeight * this.playgroundWidth; ++i) {
             int type = MathUtils.random(0, 3);
             GameField gf = new GameField(cards[type], x, y, type, (byte) MathUtils.random(0, 3));
             if (MathUtils.randomBoolean(0.15F)) {
                 ++this.treasureCount;
                 if (MathUtils.randomBoolean(0.8F)) {
-                    gf.addTreasure(new Treasure(treasure_min, 3));
+                    gf.setTreasure(new Treasure(treasure_min, 3));
                 } else {
-                    gf.addTreasure(new Treasure(treasure_max, 5));
+                    gf.setTreasure(new Treasure(treasure_max, 5));
                 }
             }
-            if (x == 1 && y == 1) {
+            if (firstField) {
                 this.main.playerManager = new PlayerManager(this.main, gf);
+                firstField = false;
             }
             gameFields.add(gf);
             if (y == this.playgroundHeight) {
@@ -277,15 +279,18 @@ public class Playground extends Page {
     }
 
     void makeMoreTreasures(int b) {
-        for (int i = 0; i < b; ++i) {
-            int rnd = MathUtils.random(0, gameFields.size - 1);
-            if (gameFields.get(rnd).hasTreasure()) { // TODO check this.main.playerManager.isPlayerOnGamefield(gameFields.get(rnd))
-                makeMoreTreasures(b - i);
+        Array<GameField> clearFields = new Array<GameField>();
+        for (GameField gameField : new Array.ArrayIterator<GameField>(this.gameFields)) {
+            if (!gameField.hasTreasure() && !this.main.playerManager.isPlayerOnGamefield(gameField)) {
+                clearFields.add(gameField);
             }
+        }
+        for (int i = 0; i < b; ++i) {
+            int rnd = MathUtils.random(0, clearFields.size - 1);
             if (MathUtils.randomBoolean(0.8F)) {
-                gameFields.get(rnd).addTreasure(new Treasure(treasure_min, 3));
+                clearFields.get(rnd).setTreasure(new Treasure(treasure_min, 3));
             } else {
-                gameFields.get(rnd).addTreasure(new Treasure(treasure_max, 5));
+                clearFields.get(rnd).setTreasure(new Treasure(treasure_max, 5));
             }
         }
     }

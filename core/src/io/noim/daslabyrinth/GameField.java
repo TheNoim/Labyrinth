@@ -87,7 +87,7 @@ public class GameField implements Disposable {
         }
     }
 
-    void addTreasure(Treasure treasure) {
+    void setTreasure(Treasure treasure) {
         this.treasure = treasure;
     }
 
