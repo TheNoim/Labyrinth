@@ -1,6 +1,7 @@
 package io.noim.daslabyrinth;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 
@@ -29,26 +30,34 @@ public class Player implements Disposable {
         return name;
     }
 
-    void addScore(int s) {
-        this.score += s;
-        DasLabyrinth.pref.putInteger("Score" + this.name, +1);
+    void addScore(int scoreToAdd) {
+        setScore(this.score + scoreToAdd);
+    }
+
+    void setScore(int score) {
+        this.score = score;
+        DasLabyrinth.pref.putInteger("Score" + this.name, score);
         DasLabyrinth.pref.flush();
     }
 
-    void setScore(int s) {
-        this.score = s;
-        DasLabyrinth.pref.putInteger("Score" + this.name, s);
-        DasLabyrinth.pref.flush();
-    }
-
-    public boolean movePlayer(Playground playground, GameField nextGamefield) {
-        if (this.canMove(playground, nextGamefield)) {
-            this.currentField = nextGamefield;
-            if (nextGamefield.hasTreasure()) {
-                this.treasures.add(nextGamefield.getTreasure());
-                nextGamefield.removeTreasure();
-                playground.makeMoreTreasures(1);
+    public boolean move(Playground playground, GameField newGameField) {
+        if (this.canMove(playground, newGameField)) {
+            this.currentField = newGameField;
+            if (newGameField.hasTreasure()) {
+                this.treasures.add(newGameField.getTreasure());
+                newGameField.removeTreasure();
+                --playground.treasureCount;
                 playground.main.treasure();
+                if (playground.treasureCount < playground.minTreasureAmount) {
+                    playground.makeMoreTreasures(MathUtils.random(
+                            playground.minTreasureAmount - playground.treasureCount,
+                            playground.maxTreasureAmount - playground.treasureCount
+                    ));
+                } else if (playground.treasureCount < playground.maxTreasureAmount) {
+                    playground.makeMoreTreasures(
+                            MathUtils.random(0, playground.maxTreasureAmount - playground.treasureCount)
+                    );
+                }
             }
             return true;
         }
@@ -81,21 +90,25 @@ public class Player implements Disposable {
                             boolean isNeighbourWithWay = false;
                             if (newPos.getY() == i.getY()) {
                                 if (newPos.getX() == i.getX() - 1) {
-                                    if (i.isWayInDirection(GameField.Directions.LEFT) && newPos.isWayInDirection(GameField.Directions.RIGHT)) {
+                                    if (i.isWayInDirection(GameField.Directions.LEFT) &&
+                                            newPos.isWayInDirection(GameField.Directions.RIGHT)) {
                                         isNeighbourWithWay = true;
                                     }
                                 } else if (newPos.getX() == i.getX() + 1) {
-                                    if (i.isWayInDirection(GameField.Directions.RIGHT) && newPos.isWayInDirection(GameField.Directions.LEFT)) {
+                                    if (i.isWayInDirection(GameField.Directions.RIGHT) &&
+                                            newPos.isWayInDirection(GameField.Directions.LEFT)) {
                                         isNeighbourWithWay = true;
                                     }
                                 }
                             } else if (newPos.getX() == i.getX()) {
                                 if (newPos.getY() == i.getY() - 1) {
-                                    if (i.isWayInDirection(GameField.Directions.DOWN) && newPos.isWayInDirection(GameField.Directions.UP)) {
+                                    if (i.isWayInDirection(GameField.Directions.DOWN) &&
+                                            newPos.isWayInDirection(GameField.Directions.UP)) {
                                         isNeighbourWithWay = true;
                                     }
                                 } else if (newPos.getY() == i.getY() + 1) {
-                                    if (i.isWayInDirection(GameField.Directions.UP) && newPos.isWayInDirection(GameField.Directions.DOWN)) {
+                                    if (i.isWayInDirection(GameField.Directions.UP) &&
+                                            newPos.isWayInDirection(GameField.Directions.DOWN)) {
                                         isNeighbourWithWay = true;
                                     }
                                 }
@@ -131,13 +144,23 @@ public class Player implements Disposable {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) return false;
-        if (obj == this) return true;
+        // is null
+        if (obj == null)
+            return false;
+
+        // is same object
+        if (obj == this)
+            return true;
+
+        // is same class name and path
         if (!obj.getClass().toString().equals(this.getClass().toString())) {
             return false;
         }
-        Player that = (Player) obj;
-        return this.name.equals(that.name) && this.currentField.equals(that.currentField);
+
+        // is the same GameField and playername
+        Player playerToCompare = (Player) obj;
+        return this.name.equals(playerToCompare.name) &&
+                this.currentField.equals(playerToCompare.currentField);
     }
 
     @Override

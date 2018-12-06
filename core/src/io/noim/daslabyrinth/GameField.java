@@ -176,7 +176,7 @@ public class GameField implements Disposable {
 
     @Override
     public String toString() {
-        return "Type " + this.type + " facing: " + this.facing;
+        return "X: " + x + "Y: " + y + "Type: " + this.type + " facing: " + this.facing;
     }
 
     public static class Directions {

@@ -32,6 +32,7 @@ public class Playground extends Page {
     int halffinalprozent;
     GameField newGF;
     Array<GameField> gameFields = new Array<GameField>(this.playgroundWidth * this.playgroundHeight);
+    int treasureCount = 0;
     private Music music;
     private Sound moveSound;
     private Texture background;
@@ -41,7 +42,6 @@ public class Playground extends Page {
     private Texture treasure_min = new Texture("treasure.png");
     private Texture treasure_max = new Texture("treasure2.png");
     private Texture selected = new Texture("checkbox.png");
-    private int treasureCount = 0;
 
     Playground(final DasLabyrinth main) {
         this.main = main;
@@ -60,19 +60,15 @@ public class Playground extends Page {
         if (this.gameFields.size != this.playgroundWidth * this.playgroundHeight) {
             generateRandomField();
             int typeNewGF = MathUtils.random(0, 3);
-            if (this.treasureCount < maxTreasureAmount) {
-                if (MathUtils.randomBoolean(0.2F)) {
-                    newGF = new GameField(cards[typeNewGF], 1, -1, typeNewGF, (byte) MathUtils.random(0, 3));
-                    if (MathUtils.randomBoolean(0.8F)) {
-                        newGF.setTreasure(new Treasure(treasure_min, 3));
-                    } else {
-                        newGF.setTreasure(new Treasure(treasure_max, 5));
-                    }
+
+            newGF = new GameField(cards[typeNewGF], 1, -1, typeNewGF, (byte) MathUtils.random(0, 3));
+            if (this.treasureCount < maxTreasureAmount && (MathUtils.randomBoolean(0.2F))) {
+                ++this.treasureCount;
+                if (MathUtils.randomBoolean(0.8F)) {
+                    newGF.setTreasure(new Treasure(treasure_min, 3));
                 } else {
-                    newGF = new GameField(cards[typeNewGF], 1, -1, typeNewGF, (byte) MathUtils.random(0, 3));
+                    newGF.setTreasure(new Treasure(treasure_max, 5));
                 }
-            } else {
-                newGF = new GameField(cards[typeNewGF], 1, -1, typeNewGF, (byte) MathUtils.random(0, 3));
             }
         }
 
@@ -267,6 +263,7 @@ public class Playground extends Page {
             for (GameField gameField : this.gameFields) {
                 for (GameField gameFieldTreasure : btreasure) {
                     if (gameField.equals(gameFieldTreasure)) {
+                        --this.treasureCount;
                         gameField.removeTreasure();
                     }
                 }
@@ -286,6 +283,7 @@ public class Playground extends Page {
             }
         }
         for (int i = 0; i < b; ++i) {
+            ++this.treasureCount;
             int rnd = MathUtils.random(0, clearFields.size - 1);
             if (MathUtils.randomBoolean(0.8F)) {
                 clearFields.get(rnd).setTreasure(new Treasure(treasure_min, 3));

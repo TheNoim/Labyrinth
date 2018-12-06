@@ -79,7 +79,7 @@ public class PlayerManager extends Page {
     }
 
     void moveCurrentPlayer(Playground playground, GameField nextGamefield) {
-        if (this.players.get(this.activePlayer).movePlayer(playground, nextGamefield)) {
+        if (this.players.get(this.activePlayer).move(playground, nextGamefield)) {
             this.nextPlayer();
         }
     }
