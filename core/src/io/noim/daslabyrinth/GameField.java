@@ -113,7 +113,10 @@ public class GameField implements Disposable {
     }
 
     boolean isClicked(Vector3 clickVector3, int size) {
-        return clickVector3.x >= this.posX && clickVector3.x <= this.posX + size && clickVector3.y >= this.posY && clickVector3.y <= this.posY + size;
+        return clickVector3.x >= this.posX &&
+                clickVector3.x <= this.posX + size &&
+                clickVector3.y >= this.posY &&
+                clickVector3.y <= this.posY + size;
     }
 
     /**

@@ -10,8 +10,8 @@ public class Animation extends Page {
     private Texture banner;
     private String heading = "DAS LABYRINTH";
     private boolean animate = false;
-    private double yAnim = 0.5;
-    private double yDelta = 0.05;
+    private float yAnim = 0.5F;
+    private float yDelta = 0.05F;
 
     Animation(final DasLabyrinth main) {
         this.main = main;
@@ -33,13 +33,13 @@ public class Animation extends Page {
 
         if (animate) {
             yAnim += yDelta; // += 0.005;
-            yDelta *= 0.9;
+            yDelta *= 0.9F;
 
-            if (yAnim >= 0.9185) {
+            if (yAnim >= 0.9185F) {
                 main.setScreen(main.startMenu);
             }
-            batch.draw(banner, 0, ((float) (yAnim - 0.1685) * Gdx.graphics.getHeight()), Gdx.graphics.getWidth(), 0.2F * Gdx.graphics.getHeight());
-            this.main.getFont().draw(batch, heading, 0, (float) yAnim * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 1, false);
+            batch.draw(banner, 0, (yAnim - 0.1685F) * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 0.2F * Gdx.graphics.getHeight());
+            this.main.getFont().draw(batch, heading, 0, yAnim * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 1, false);
         } else {
             batch.draw(banner, 0, 0.3315F * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 0.2F * Gdx.graphics.getHeight());
             this.main.getFont().draw(batch, heading, 0, 0.5F * Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 1, false);

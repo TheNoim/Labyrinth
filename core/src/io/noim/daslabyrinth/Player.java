@@ -14,6 +14,7 @@ public class Player implements Disposable {
     protected int score;
     private Texture figure;
     private String name;
+    private boolean movedGamefields = false;
 
     public Player(String name, Texture figure, GameField startField) {
         this.name = name;
@@ -40,9 +41,14 @@ public class Player implements Disposable {
         DasLabyrinth.pref.flush();
     }
 
+    void setMovedGamefields() {
+        this.movedGamefields = true;
+    }
+
     public boolean move(Playground playground, GameField newGameField) {
         if (this.canMove(playground, newGameField)) {
             this.currentField = newGameField;
+            this.movedGamefields = false;
             if (newGameField.hasTreasure()) {
                 this.treasures.add(newGameField.getTreasure());
                 newGameField.removeTreasure();
@@ -72,7 +78,9 @@ public class Player implements Disposable {
      * @return If the player can go to the gamefield
      */
     private boolean canMove(Playground playground, GameField nextGamefield) {
-        if (!this.currentField.equals(playground.newGF) && !this.currentField.equals(nextGamefield)) {
+        if (this.movedGamefields &&
+                !this.currentField.equals(playground.newGF) &&
+                !this.currentField.equals(nextGamefield)) {
             Array<GameField> visited = new Array<GameField>();
 
             Array<GameField> frontier = new Array<GameField>();

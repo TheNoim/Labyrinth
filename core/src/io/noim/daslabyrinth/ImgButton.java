@@ -53,7 +53,10 @@ public class ImgButton implements Disposable {
      * @return if the cursor is on the button
      */
     public boolean isClicked(Vector3 t) {
-        return t.x >= this.position.x - 10 && t.x <= this.position.x + this.width + 10 && t.y >= this.position.y - 10 && t.y <= this.position.y + this.height + 10;
+        return t.x >= this.position.x - 10 &&
+                t.x <= this.position.x + this.width + 10 &&
+                t.y >= this.position.y - 10 &&
+                t.y <= this.position.y + this.height + 10;
     }
 
     /**

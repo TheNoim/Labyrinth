@@ -210,6 +210,7 @@ public class Playground extends Page {
             for (ImgButton button : this.imgButtons) {
                 if (button.isClicked(touchPosition)) {
                     button.move(this);
+                    this.main.playerManager.getActivePlayer().setMovedGamefields();
                     if (DasLabyrinth.playSounds) {
                         moveSound.play();
                     }
