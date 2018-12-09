@@ -45,6 +45,10 @@ public class Player implements Disposable {
         this.movedGamefields = true;
     }
 
+    boolean movedGamefields() {
+        return this.movedGamefields;
+    }
+
     public boolean move(Playground playground, GameField newGameField) {
         if (this.canMove(playground, newGameField)) {
             this.currentField = newGameField;

@@ -207,10 +207,11 @@ public class Playground extends Page {
                 touchPosition.y <= -1.25f * heightAndWidthPerField + MathUtils.round((screenHeight - heightAndWidthPerField * 5F) / 1.1F)) {
             this.newGF.turn();
         } else {
+            Player activePlayer = this.main.playerManager.getActivePlayer();
             for (ImgButton button : this.imgButtons) {
-                if (button.isClicked(touchPosition)) {
+                if (button.isClicked(touchPosition) && !activePlayer.movedGamefields()) {
                     button.move(this);
-                    this.main.playerManager.getActivePlayer().setMovedGamefields();
+                    activePlayer.setMovedGamefields();
                     if (DasLabyrinth.playSounds) {
                         moveSound.play();
                     }
