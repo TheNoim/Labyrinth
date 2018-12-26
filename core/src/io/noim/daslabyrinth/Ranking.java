@@ -2,14 +2,13 @@ package io.noim.daslabyrinth;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 
 public class Ranking extends Page {
 
     public DasLabyrinth main;
-    String heading = "RANKING";
     private Texture background, back;
     private BitmapFont font;
 
@@ -40,10 +39,10 @@ public class Ranking extends Page {
     }
 
     @Override
-    void draw(SpriteBatch batch) {
+    void draw(Batch batch) {
         batch.draw(background, 0, 0, (float) Gdx.graphics.getWidth(), (float) Gdx.graphics.getHeight());
         batch.draw(back, Gdx.graphics.getWidth() / 20f, (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30f) - (back.getHeight() / 3f), Gdx.graphics.getWidth() / 10f, Gdx.graphics.getWidth() / 10f);
-        font.draw(batch, heading, 0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10f, Gdx.graphics.getWidth(), 1, false);
+        font.draw(batch, this.main.lang.get("ranking"), 0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10f, Gdx.graphics.getWidth(), 1, false);
     }
 
     @Override
@@ -56,10 +55,11 @@ public class Ranking extends Page {
 
     public void callClass() {
         if (DasLabyrinth.whichClass == 0) {
-            this.main.getMusic().stop();
             main.setScreen(main.startMenu);
         } else if (DasLabyrinth.whichClass == 1) {
-            this.main.getMusic().stop();
+            if (this.main.getMusic().isPlaying()) {
+                this.main.getMusic().pause();
+            }
             main.setScreen(main.playground);
         }
     }

@@ -3,7 +3,7 @@ package io.noim.daslabyrinth;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Matrix4;
@@ -87,12 +87,12 @@ public class GameField implements Disposable {
         }
     }
 
-    void setTreasure(Treasure treasure) {
-        this.treasure = treasure;
-    }
-
     public Treasure getTreasure() {
         return treasure;
+    }
+
+    void setTreasure(Treasure treasure) {
+        this.treasure = treasure;
     }
 
     public boolean hasTreasure() {
@@ -139,7 +139,7 @@ public class GameField implements Disposable {
         rotMatrix.translate(-SizeInPixels / 2f, -SizeInPixels / 2f, 0);
     }
 
-    void draw(SpriteBatch batch) {
+    void draw(Batch batch) {
         batch.setTransformMatrix(rotMatrix);
         batch.draw(this.fieldTextureRegion, 0, 0, SizeInPixels, SizeInPixels);
         batch.setTransformMatrix(originalMatrix);

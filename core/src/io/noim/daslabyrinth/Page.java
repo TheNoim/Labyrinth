@@ -5,21 +5,16 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public abstract class Page implements Screen, InputProcessor {
     Stage stage;
     private InputMultiplexer multiplexer = new InputMultiplexer();
-    private OrthographicCamera camera;
-    private SpriteBatch batch;
     private Vector3 touchPosition = new Vector3();
 
     Page() {
-        this.batch = new SpriteBatch();
-        this.camera = new OrthographicCamera();
         this.stage = new Stage();
         this.multiplexer.addProcessor(this);
         this.multiplexer.addProcessor(this.stage);
@@ -30,7 +25,7 @@ public abstract class Page implements Screen, InputProcessor {
     /**
      * @param batch batch for drawing
      */
-    abstract void draw(SpriteBatch batch);
+    abstract void draw(Batch batch);
 
     /**
      * to update objects
@@ -51,15 +46,15 @@ public abstract class Page implements Screen, InputProcessor {
 
         if (Gdx.input.justTouched()) {
             this.touchPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-            this.camera.unproject(this.touchPosition);
+            this.stage.getCamera().unproject(this.touchPosition);
             this.touch(this.touchPosition);
         }
         this.update();
-        this.batch.begin();
-        this.camera.update();
-        this.batch.setProjectionMatrix(this.camera.combined);
-        this.draw(this.batch);
-        this.batch.end();
+
+        this.stage.getBatch().begin();
+        this.draw(this.stage.getBatch());
+        this.stage.getBatch().end();
+
         this.stage.act();
         this.stage.draw();
     }
@@ -68,7 +63,6 @@ public abstract class Page implements Screen, InputProcessor {
     public void show() {
         Gdx.input.setInputProcessor(this.multiplexer);
         Gdx.input.setCatchBackKey(true);
-        this.camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         this.create();
     }
 
@@ -90,7 +84,6 @@ public abstract class Page implements Screen, InputProcessor {
 
     @Override
     public void dispose() {
-        this.batch.dispose();
         this.stage.dispose();
     }
 

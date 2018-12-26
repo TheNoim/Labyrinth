@@ -32,12 +32,6 @@ public class DasLabyrinth extends Game {
 
     @Override
     public void create() {
-        this.animation = new Animation(this);
-        this.startMenu = new StartMenu(this);
-        this.playground = new Playground(this);
-        this.ranking = new Ranking(this);
-        this.settings = new Settings(this);
-
         pref = Gdx.app.getPreferences("labyrinth.dat");
         background = new Texture("background.png");
         font = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
@@ -52,7 +46,7 @@ public class DasLabyrinth extends Game {
 
         ButtonWidth = Math.round(Gdx.graphics.getWidth() * 0.9F);
 
-        font.getData().setScale(Functions.scaleText(this.lang.get("settings"), font, ButtonWidth - 40));
+        font.getData().setScale(Functions.scaleText(this.lang.get("heading"), font, ButtonWidth - 40));
 
         playMusic = pref.getBoolean("Music", true);
         playSounds = pref.getBoolean("Sounds", true);
@@ -60,11 +54,15 @@ public class DasLabyrinth extends Game {
 
         music.setLooping(true);
 
-        if (!music.isPlaying() && playMusic) {
+        if (playMusic) {
             music.play();
-        } else {
-            music.stop();
         }
+
+        this.animation = new Animation(this);
+        this.startMenu = new StartMenu(this);
+        this.playground = new Playground(this);
+        this.ranking = new Ranking(this);
+        this.settings = new Settings(this);
         setScreen(this.animation);
     }
 

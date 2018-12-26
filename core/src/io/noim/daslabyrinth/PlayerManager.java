@@ -4,8 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -133,7 +133,7 @@ public class PlayerManager extends Page {
     }
 
     @Override
-    void draw(SpriteBatch batch) {
+    void draw(Batch batch) {
         batch.draw(this.background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         if (this.players.size > 3) {
             batch.draw(this.backButton, Gdx.graphics.getWidth() / 20f, 29 * Gdx.graphics.getHeight() / 30f - backButton.getHeight() / 3f, Gdx.graphics.getWidth() / 10f, Gdx.graphics.getWidth() / 10f);

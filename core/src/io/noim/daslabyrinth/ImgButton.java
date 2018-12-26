@@ -2,7 +2,7 @@ package io.noim.daslabyrinth;
 
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -32,7 +32,7 @@ public class ImgButton implements Disposable {
         this.direction = direction;
     }
 
-    public void draw(SpriteBatch batch) {
+    public void draw(Batch batch) {
         switch (this.direction) {
             case Down:
                 batch.draw(this.texR, this.position.x, this.position.y, this.width / 2f, this.height / 2f, this.width, this.height, 1, 1, -90.0F);
