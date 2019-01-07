@@ -166,7 +166,7 @@ public class Playground extends Page {
                     }
                 }
             }
-            switch (button.direction) {
+            switch (button.getDirection()) {
                 case Down:
                     button.position.x = button.gf.posX + heightAndWidthPerField / 2f;
                     button.position.x = button.position.x - button.width / 2f;

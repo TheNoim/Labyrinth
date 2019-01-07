@@ -21,7 +21,8 @@ public class ImgButton implements Disposable {
     protected GameField gf;
     protected int shouldX;
     protected int shouldY;
-    protected Direction direction;
+    private Direction direction;
+    private float rotation = 0;
 
     public ImgButton(Texture tex, Vector2 position, int height, int width, Direction direction) {
         this.tex = tex;
@@ -30,23 +31,25 @@ public class ImgButton implements Disposable {
         this.height = height;
         this.width = width;
         this.direction = direction;
+        switch (this.direction) {
+            case Down:
+                rotation = -90.0F;
+                break;
+            case Up:
+                rotation = 90.0F;
+                break;
+            case Left:
+                rotation = -180.0F;
+                break;
+        }
+    }
+
+    public Direction getDirection() {
+        return this.direction;
     }
 
     public void draw(Batch batch) {
-        switch (this.direction) {
-            case Down:
-                batch.draw(this.texR, this.position.x, this.position.y, this.width / 2f, this.height / 2f, this.width, this.height, 1, 1, -90.0F);
-                break;
-            case Up:
-                batch.draw(this.texR, this.position.x, this.position.y, this.width / 2f, this.height / 2f, this.width, this.height, 1, 1, 90.0F);
-                break;
-            case Left:
-                batch.draw(this.texR, this.position.x, this.position.y, this.width / 2f, this.height / 2f, this.width, this.height, 1, 1, -180.0F);
-                break;
-            case Right:
-                batch.draw(this.texR, this.position.x, this.position.y, this.width / 2f, this.height / 2f, this.width, this.height, 1, 1, 0F);
-                break;
-        }
+        batch.draw(this.texR, this.position.x, this.position.y, this.width / 2f, this.height / 2f, this.width, this.height, 1, 1, this.rotation);
     }
 
     /**
@@ -64,7 +67,7 @@ public class ImgButton implements Disposable {
      */
     public void move(Playground playground) {
         GameField[][] board = playground.GamefieldToArray();
-        GameField first;
+        GameField first = null;
         switch (this.direction) {
             case Down:
                 first = board[this.shouldX - 1][board[0].length - 1];
@@ -72,8 +75,6 @@ public class ImgButton implements Disposable {
                 System.arraycopy(board[this.shouldX - 1], 0, board[this.shouldX - 1], 1, board[0].length - 1);
 
                 board[this.shouldX - 1][0] = playground.newGF;
-
-                playground.newGF = first;
                 break;
             case Up:
                 first = board[this.shouldX - 1][0];
@@ -81,8 +82,6 @@ public class ImgButton implements Disposable {
                 System.arraycopy(board[this.shouldX - 1], 1, board[this.shouldX - 1], 0, board[0].length - 1);
 
                 board[this.shouldX - 1][board[0].length - 1] = playground.newGF;
-
-                playground.newGF = first;
                 break;
             case Left:
                 first = board[board.length - 1][this.shouldY - 1];
@@ -92,8 +91,6 @@ public class ImgButton implements Disposable {
                 }
 
                 board[0][this.shouldY - 1] = playground.newGF;
-
-                playground.newGF = first;
                 break;
             case Right:
                 first = board[0][this.shouldY - 1];
@@ -104,9 +101,9 @@ public class ImgButton implements Disposable {
 
                 board[board.length - 1][this.shouldY - 1] = playground.newGF;
 
-                playground.newGF = first;
                 break;
         }
+        playground.newGF = first;
         playground.newGF.setX(1);
         playground.newGF.setY(-1);
         playground.ArrayToGamefield(board);
