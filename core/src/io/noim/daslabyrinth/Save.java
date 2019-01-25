@@ -1,25 +1,18 @@
 package io.noim.daslabyrinth;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Timer;
 
 
 public class Save extends Page {
 
-    public DasLabyrinth main;
-
-    private Texture background;
-    private BitmapFont font_heading;
+    private DasLabyrinth main;
 
 
     public Save(final DasLabyrinth main) {
         this.main = main;
-        background = new Texture("background.png");
-        font_heading = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
     }
 
     @Override
@@ -29,7 +22,7 @@ public class Save extends Page {
 
     @Override
     void draw(Batch batch) {
-        font_heading.draw(batch, "SAVING...", 0, Gdx.graphics.getHeight() / 2f, Gdx.graphics.getWidth(), 1, false);
+        main.getFont().draw(batch, "SAVING...", 0, Gdx.graphics.getHeight() / 2f, Gdx.graphics.getWidth(), 1, false);
     }
 
     @Override
@@ -43,8 +36,6 @@ public class Save extends Page {
     @Override
     public void dispose() {
         super.dispose();
-        this.background.dispose();
-        this.font_heading.dispose();
     }
 
     private void exit() {
@@ -60,7 +51,7 @@ public class Save extends Page {
                     main.setScreen(main.playground);
                 }
             }
-        }, 0.25F);
+        }, 0.5F);
 
     }
 }

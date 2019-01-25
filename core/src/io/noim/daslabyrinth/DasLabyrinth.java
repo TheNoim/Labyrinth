@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.I18NBundle;
 import java.util.Locale;
 
 public class DasLabyrinth extends Game {
-    static Boolean playMusic, playSounds, vibration;
+    static boolean playMusic, playSounds, vibration;
     static int whichClass;
     static Preferences pref;
     static int ButtonWidth;

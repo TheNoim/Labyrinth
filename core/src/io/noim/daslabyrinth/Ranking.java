@@ -3,20 +3,16 @@ package io.noim.daslabyrinth;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector3;
 
 public class Ranking extends Page {
 
     public DasLabyrinth main;
-    private Texture background, back;
-    private BitmapFont font;
+    private Texture back;
 
     public Ranking(final DasLabyrinth main) {
         this.main = main;
-        background = new Texture("background.png");
         back = new Texture("back.png");
-        font = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
     }
 
     @Override
@@ -40,17 +36,15 @@ public class Ranking extends Page {
 
     @Override
     void draw(Batch batch) {
-        batch.draw(background, 0, 0, (float) Gdx.graphics.getWidth(), (float) Gdx.graphics.getHeight());
+        batch.draw(main.getBackground(), 0, 0, (float) Gdx.graphics.getWidth(), (float) Gdx.graphics.getHeight());
         batch.draw(back, Gdx.graphics.getWidth() / 20f, (Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 30f) - (back.getHeight() / 3f), Gdx.graphics.getWidth() / 10f, Gdx.graphics.getWidth() / 10f);
-        font.draw(batch, this.main.lang.get("ranking"), 0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10f, Gdx.graphics.getWidth(), 1, false);
+        main.getFont().draw(batch, this.main.lang.get("ranking"), 0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10f, Gdx.graphics.getWidth(), 1, false);
     }
 
     @Override
     public void dispose() {
         super.dispose();
-        this.background.dispose();
         this.back.dispose();
-        this.font.dispose();
     }
 
     public void callClass() {

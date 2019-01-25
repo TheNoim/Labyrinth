@@ -94,7 +94,7 @@ public class Player implements Disposable {
                 Array<GameField> newFrontier = new Array<GameField>();
 
                 for (GameField i : new Array.ArrayIterator<GameField>(frontier)) {
-                    if (i == nextGamefield) {
+                    if (i.equals(nextGamefield)) {
                         return true;
                     }
                     for (GameField newPos : new Array.ArrayIterator<GameField>(playground.gameFields)) {

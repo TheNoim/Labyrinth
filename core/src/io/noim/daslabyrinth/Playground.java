@@ -125,11 +125,8 @@ public class Playground extends Page {
             this.main.setScreen(this.main.playerManager);
         }
 
-        DasLabyrinth.pref.flush();
-        DasLabyrinth.playSounds = DasLabyrinth.pref.getBoolean("Sounds", true);
-        DasLabyrinth.vibration = DasLabyrinth.pref.getBoolean("Vibration", true);
         music.setLooping(true);
-        if (DasLabyrinth.pref.getBoolean("Music", true)) {
+        if (DasLabyrinth.playMusic) {
             music.play();
         }
     }
@@ -325,7 +322,7 @@ public class Playground extends Page {
     @Override
     public void resume() {
         super.resume();
-        if (DasLabyrinth.pref.getBoolean("Music", true)) {
+        if (DasLabyrinth.playMusic) {
             music.play();
         }
     }

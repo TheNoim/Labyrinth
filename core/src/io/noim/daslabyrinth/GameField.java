@@ -103,6 +103,9 @@ public class GameField implements Disposable {
         this.treasure = null;
     }
 
+    /**
+     * turns the field anticlockwise
+     */
     void turn() {
         if (this.facing > 2) {
             this.facing = 0;
