@@ -103,6 +103,24 @@ public class ImgButton implements Disposable {
 
                 break;
         }
+        for (Player player : playground.main.playerManager.players) {
+            if (first.equals(player.currentField)) {
+                switch (this.direction) {
+                    case Down:
+                        player.currentField = board[first.getX() - 1][0];
+                        break;
+                    case Up:
+                        player.currentField = board[first.getX() - 1][board[0].length - 1];
+                        break;
+                    case Left:
+                        player.currentField = board[0][first.getY() - 1];
+                        break;
+                    case Right:
+                        player.currentField = board[board.length - 1][first.getY() - 1];
+                        break;
+                }
+            }
+        }
         playground.newGF = first;
         playground.newGF.setX(1);
         playground.newGF.setY(-1);
