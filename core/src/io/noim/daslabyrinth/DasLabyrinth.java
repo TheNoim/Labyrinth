@@ -35,7 +35,7 @@ public class DasLabyrinth extends Game {
         pref = Gdx.app.getPreferences("labyrinth.dat");
         background = new Texture("background.png");
         font = new BitmapFont(Gdx.files.internal("Labyrinth.fnt"));
-        skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+        skin = new Skin(Gdx.files.internal("uiskin.json"));
         treasure = Gdx.audio.newSound(Gdx.files.internal("treasure.wav"));
         click = Gdx.audio.newSound(Gdx.files.internal("blop.wav"));
         music = Gdx.audio.newMusic(Gdx.files.internal("Spooky Fun.mp3"));

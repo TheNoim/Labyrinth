@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public abstract class Page implements Screen, InputProcessor {
     Stage stage;
@@ -15,7 +16,7 @@ public abstract class Page implements Screen, InputProcessor {
     private Vector3 touchPosition = new Vector3();
 
     Page() {
-        this.stage = new Stage();
+        this.stage = new Stage(new ScreenViewport());
         this.multiplexer.addProcessor(this);
         this.multiplexer.addProcessor(this.stage);
     }
@@ -55,7 +56,7 @@ public abstract class Page implements Screen, InputProcessor {
         this.draw(this.stage.getBatch());
         this.stage.getBatch().end();
 
-        this.stage.act();
+        this.stage.act(Gdx.graphics.getDeltaTime());
         this.stage.draw();
     }
 
@@ -68,6 +69,7 @@ public abstract class Page implements Screen, InputProcessor {
 
     @Override
     public void resize(int width, int height) {
+        stage.getViewport().update(width, height, true);
     }
 
     @Override
