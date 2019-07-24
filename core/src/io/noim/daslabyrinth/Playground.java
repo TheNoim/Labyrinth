@@ -160,6 +160,7 @@ public class Playground extends Page {
                 for (GameField gameField : this.gameFields) {
                     if (gameField.getX() == button.shouldX && gameField.getY() == button.shouldY) {
                         button.gf = gameField;
+						break;
                     }
                 }
             }
@@ -195,6 +196,7 @@ public class Playground extends Page {
         for (GameField gameField : this.gameFields) {
             if (gameField.isClicked(touchPosition, this.heightAndWidthPerField)) {
                 this.main.playerManager.moveCurrentPlayer(this, gameField);
+				break;
             }
         }
 
@@ -212,6 +214,7 @@ public class Playground extends Page {
                     if (DasLabyrinth.playSounds) {
                         moveSound.play();
                     }
+					break;
                 }
             }
         }
