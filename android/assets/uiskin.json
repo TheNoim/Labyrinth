@@ -1,178 +1,76 @@
 {
-  BitmapFont: {
-    default-font: {
+  com.badlogic.gdx.graphics.g2d.BitmapFont: {
+    Labyrinth: {
+      file: Labyrinth.fnt
+    }
+    Verdana: {
       file: Verdana.fnt
     }
-  },
-  Color: {
-    green: {
-      a: 1,
-      b: 0,
-      g: 1,
+  }
+  com.badlogic.gdx.graphics.Color: {
+    TextBlue: {
       r: 0
-    },
-    white: {
-      a: 1,
-      b: 1,
-      g: 1,
+      g: 0.6
+      b: 0.8
+      a: 1
+    }
+    White: {
       r: 1
-    },
-    red: {
-      a: 1,
-      b: 0,
-      g: 0,
-      r: 1
-    },
-    black: {
-      a: 1,
-      b: 0,
-      g: 0,
-      r: 0
+      g: 1
+      b: 1
+      a: 1
     }
-  },
-  TintedDrawable: {
-    dialogDim: {
-      name: white,
-      color: {
-        r: 0,
-        g: 0,
-        b: 0,
-        a: 0.45
-      }
-    }
-  },
-  ButtonStyle: {
+  }
+  com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
     default: {
-      down: default-round-down,
-      up: default-round
-    },
-    toggle: {
-      parent: default,
-      checked: default-round-down
+      up: button
+      down: button_pushed
     }
-  },
-  TextButtonStyle: {
+  }
+  com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
     default: {
-      parent: default,
-      font: default-font,
-      fontColor: white
-    },
-    toggle: {
-      parent: default,
-      checked: default-round-down,
-      downFontColor: red
+      checkboxOn: checkbox_checked
+      checkboxOff: checkbox
+      font: Verdana
     }
-  },
-  ScrollPaneStyle: {
+  }
+  com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
     default: {
-      vScroll: default-scroll,
-      hScrollKnob: default-round-large,
-      background: default-rect,
-      hScroll: default-scroll,
-      vScrollKnob: default-round-large
+      parent: default
     }
-  },
-  SelectBoxStyle: {
+  }
+  com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
     default: {
-      font: default-font,
-      fontColor: white,
-      background: default-select,
-      scrollStyle: default,
-      listStyle: {
-        font: default-font,
-        selection: default-select-selection
-      }
+      parent: default
+      font: Verdana
     }
-  },
-  SplitPaneStyle: {
-    default-vertical: {
-      handle: default-splitpane-vertical
-    },
-    default-horizontal: {
-      handle: default-splitpane
-    }
-  },
-  WindowStyle: {
+  }
+  com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
     default: {
-      titleFont: default-font,
-      background: default-window,
-      titleFontColor: white
-    },
-    dialog: {
-      parent: default,
-      stageBackground: dialogDim
+      font: Verdana
     }
-  },
-  ProgressBarStyle: {
-    default-horizontal: {
-      background: default-slider,
-      knob: default-slider-knob
-    },
-    default-vertical: {
-      background: default-slider,
-      knob: default-round-large
-    }
-  },
-  SliderStyle: {
-    default-horizontal: {
-      parent: default-horizontal
-    },
-    default-vertical: {
-      parent: default-vertical
-    }
-  },
-  LabelStyle: {
+  }
+  com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
     default: {
-      font: default-font,
-      fontColor: white
+      parent: default
+      font: Verdana
     }
-  },
-  TextFieldStyle: {
+  }
+  com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
     default: {
-      selection: selection,
-      background: textfield,
-      font: default-font,
-      fontColor: white,
-      cursor: cursor
+      font: Verdana
+      fontColor: White
+      background: button
     }
-  },
-  CheckBoxStyle: {
+  }
+  com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
     default: {
-      checkboxOn: check-on,
-      checkboxOff: check-off,
-      font: default-font,
-      fontColor: white
+      label: default
     }
-  },
-  ListStyle: {
+  }
+  com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
     default: {
-      fontColorUnselected: white,
-      selection: selection,
-      fontColorSelected: white,
-      font: default-font
-    }
-  },
-  TouchpadStyle: {
-    default: {
-      background: default-pane,
-      knob: default-round-large
-    }
-  },
-  TreeStyle: {
-    default: {
-      minus: tree-minus,
-      plus: tree-plus,
-      selection: default-select-selection
-    }
-  },
-  TextTooltipStyle: {
-    default: {
-      label: {
-        font: default-font,
-        fontColor: white
-      },
-      background: default-pane,
-      wrapWidth: 150
+      titleFont: Labyrinth
     }
   }
 }
