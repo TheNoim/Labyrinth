@@ -9,8 +9,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 
 public class PlayerManager extends Page {
@@ -31,13 +31,14 @@ public class PlayerManager extends Page {
             new Texture("figure4.png"),
     };
     private BitmapFont textFont;
+    private VerticalGroup playerGroup;
     private TextField textField;
-    private int i = 0;
+    private TextButton addPlayerButton;
 
     private DasLabyrinth main;
     private Screen previousScreen;
 
-    PlayerManager(DasLabyrinth main, GameField startField) {
+    PlayerManager(final DasLabyrinth main, GameField startField) {
         this.main = main;
         this.startField = startField;
 
@@ -47,7 +48,10 @@ public class PlayerManager extends Page {
         this.backButton = new Texture("back.png");
         this.textFont = new BitmapFont(Gdx.files.internal("Verdana.fnt"));
         this.textField = new TextField("Name", this.main.getSkin());
-        this.stage.addActor(this.textField);
+        this.playerGroup = new VerticalGroup();
+        this.playerGroup.setFillParent(true);
+        this.playerGroup.pad(2 * Gdx.graphics.getHeight() / 10f, Gdx.graphics.getWidth() / 2f - DasLabyrinth.ButtonWidth / 2f, 0, Gdx.graphics.getWidth() / 2f - DasLabyrinth.ButtonWidth / 2f);
+        this.stage.addActor(this.playerGroup);
         this.textField.addListener(new InputListener() {
             @Override
             public boolean keyUp(InputEvent event, int keycode) {
@@ -58,6 +62,20 @@ public class PlayerManager extends Page {
                 return super.keyUp(event, keycode);
             }
         });
+        // TODO background image smaller than font
+        this.playerGroup.addActor(this.textField);
+        this.addPlayerButton = new TextButton("Spieler hinzufügen", this.main.getSkin());
+        this.addPlayerButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (players.size < 4) {
+                    main.click();
+                    addPlayer(textField.getText(), figures[players.size]);
+                }
+            }
+        });
+        // TODO Button to big
+        this.playerGroup.addActor(this.addPlayerButton);
     }
 
     void addPlayer(String name, Texture figure) {
@@ -69,13 +87,20 @@ public class PlayerManager extends Page {
                 return;
         }
 
-        this.players.add(new Player(name, figure, this.startField));
+        Player p = new Player(name, figure, this.startField);
+        this.players.add(p);
+        HorizontalGroup group = new HorizontalGroup();
+        /*Image f = new Image(p.getFigure()); // TODO to big
+        f.setSize(GameField.SizeInPixels, GameField.SizeInPixels);
+        group.addActor(f);*/
+        group.addActor(new Label(p.getName(), this.main.getSkin()));
+        this.playerGroup.addActorAt(this.playerGroup.getChildren().size - 2, group);
         this.textField.setText("");
-        this.textField.setBounds(Gdx.graphics.getWidth() / 2f - DasLabyrinth.ButtonWidth / 2f, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10f * (this.players.size + 2), DasLabyrinth.ButtonWidth, Functions.textHeight("Spieler hinzufügen", this.textFont));
+
         if (this.players.size > 3) {
             this.textField.remove();
+            this.addPlayerButton.remove();
         }
-
     }
 
     void moveCurrentPlayer(Playground playground, GameField nextGamefield) {
@@ -138,14 +163,7 @@ public class PlayerManager extends Page {
         if (this.players.size > 1) {
             batch.draw(this.backButton, Gdx.graphics.getWidth() / 20f, 29 * Gdx.graphics.getHeight() / 30f - backButton.getHeight() / 3f, Gdx.graphics.getWidth() / 10f, Gdx.graphics.getWidth() / 10f);
         }
-        this.main.getFont().draw(batch, "Spieler", 0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10f, Gdx.graphics.getWidth(), 1, false);
-        for (i = 0; i < this.players.size; ++i) {
-            this.textFont.draw(batch, this.players.get(i).getName(), Gdx.graphics.getWidth() / 10f, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10f * (i + 2));
-        }
-        if (this.players.size < 4) {
-            batch.draw(this.button, Gdx.graphics.getWidth() / 2f - DasLabyrinth.ButtonWidth / 2f, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10f * (i + 3), DasLabyrinth.ButtonWidth, Functions.textHeight("Spieler hinzufügen", this.textFont) * 3);
-            this.textFont.draw(batch, "Spieler hinzufügen", 0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10f * (i + 3) + Functions.textHeight("Spieler hinzufügen", this.textFont) * 2, Gdx.graphics.getWidth(), Align.center, false);
-        }
+        this.main.getFont().draw(batch, "Spieler", 0, 9 * Gdx.graphics.getHeight() / 10f, Gdx.graphics.getWidth(), 1, false);
     }
 
     @Override
@@ -157,11 +175,6 @@ public class PlayerManager extends Page {
         if (this.players.size > 3 && touchPosition.x > Gdx.graphics.getWidth() / 20 && touchPosition.x < 3 * Gdx.graphics.getWidth() / 20 && touchPosition.y > 29 * Gdx.graphics.getHeight() / 30 - backButton.getHeight() / 3 && touchPosition.y < 29 * Gdx.graphics.getHeight() / 30 - backButton.getHeight() / 3 + Gdx.graphics.getWidth() / 10) {
             this.main.click();
             this.main.setScreen(this.previousScreen);
-        } else if (touchPosition.x > Gdx.graphics.getWidth() / 2 - DasLabyrinth.ButtonWidth / 2 && touchPosition.x < Gdx.graphics.getWidth() / 2 + DasLabyrinth.ButtonWidth / 2 && touchPosition.y > Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10 * (i + 3) && touchPosition.y < Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10 * (i + 3) + Functions.textHeight("Spieler hinzufügen", this.textFont) * 3) {
-            if (this.players.size < 4) {
-                this.main.click();
-                this.addPlayer(this.textField.getText(), this.figures[this.players.size]);
-            }
         }
     }
 
