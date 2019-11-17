@@ -31,7 +31,7 @@ public class PlayerManager extends Page {
             new Texture("figure4.png"),
     };
     private BitmapFont textFont;
-    private VerticalGroup playerGroup;
+    private Table playerGroup;
     private TextField textField;
     private TextButton addPlayerButton;
 
@@ -48,9 +48,10 @@ public class PlayerManager extends Page {
         this.backButton = new Texture("back.png");
         this.textFont = new BitmapFont(Gdx.files.internal("Verdana.fnt"));
         this.textField = new TextField("Name", this.main.getSkin());
-        this.playerGroup = new VerticalGroup();
+        this.playerGroup = new Table();
         this.playerGroup.setFillParent(true);
         this.playerGroup.pad(2 * Gdx.graphics.getHeight() / 10f, Gdx.graphics.getWidth() / 2f - DasLabyrinth.ButtonWidth / 2f, 0, Gdx.graphics.getWidth() / 2f - DasLabyrinth.ButtonWidth / 2f);
+        stage.setDebugAll(true);
         this.stage.addActor(this.playerGroup);
         this.textField.addListener(new InputListener() {
             @Override
@@ -62,8 +63,7 @@ public class PlayerManager extends Page {
                 return super.keyUp(event, keycode);
             }
         });
-        // TODO background image smaller than font
-        this.playerGroup.addActor(this.textField);
+        this.playerGroup.add(this.textField).growX();
         this.addPlayerButton = new TextButton("Spieler hinzufügen", this.main.getSkin());
         this.addPlayerButton.addListener(new ClickListener() {
             @Override
@@ -74,8 +74,8 @@ public class PlayerManager extends Page {
                 }
             }
         });
-        // TODO Button to big
-        this.playerGroup.addActor(this.addPlayerButton);
+        this.playerGroup.row();
+        this.playerGroup.add(this.addPlayerButton);
     }
 
     void addPlayer(String name, Texture figure) {
@@ -89,12 +89,10 @@ public class PlayerManager extends Page {
 
         Player p = new Player(name, figure, this.startField);
         this.players.add(p);
-        HorizontalGroup group = new HorizontalGroup();
-        /*Image f = new Image(p.getFigure()); // TODO to big
+        Image f = new Image(p.getFigure()); // TODO to big
         f.setSize(GameField.SizeInPixels, GameField.SizeInPixels);
-        group.addActor(f);*/
-        group.addActor(new Label(p.getName(), this.main.getSkin()));
-        this.playerGroup.addActorAt(this.playerGroup.getChildren().size - 2, group);
+        this.playerGroup.row();
+        this.playerGroup.add(f, new Label(p.getName(), this.main.getSkin()));
         this.textField.setText("");
 
         if (this.players.size > 3) {
@@ -172,7 +170,7 @@ public class PlayerManager extends Page {
 
     @Override
     void touch(Vector3 touchPosition) {
-        if (this.players.size > 3 && touchPosition.x > Gdx.graphics.getWidth() / 20 && touchPosition.x < 3 * Gdx.graphics.getWidth() / 20 && touchPosition.y > 29 * Gdx.graphics.getHeight() / 30 - backButton.getHeight() / 3 && touchPosition.y < 29 * Gdx.graphics.getHeight() / 30 - backButton.getHeight() / 3 + Gdx.graphics.getWidth() / 10) {
+        if (this.players.size > 1 && touchPosition.x > Gdx.graphics.getWidth() / 20 && touchPosition.x < 3 * Gdx.graphics.getWidth() / 20 && touchPosition.y > 29 * Gdx.graphics.getHeight() / 30 - backButton.getHeight() / 3 && touchPosition.y < 29 * Gdx.graphics.getHeight() / 30 - backButton.getHeight() / 3 + Gdx.graphics.getWidth() / 10) {
             this.main.click();
             this.main.setScreen(this.previousScreen);
         }

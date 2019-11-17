@@ -66,7 +66,7 @@ public abstract class Page implements Screen, InputProcessor {
 
     @Override
     public void resize(int width, int height) {
-        stage.getViewport().update(width, height, true);
+        this.stage.getViewport().update(width, height, true);
     }
 
     @Override
