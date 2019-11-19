@@ -50,7 +50,8 @@ public class PlayerManager extends Page {
         this.textField = new TextField("Name", this.main.getSkin());
         this.playerGroup = new Table();
         this.playerGroup.setFillParent(true);
-        this.playerGroup.pad(2 * Gdx.graphics.getHeight() / 10f, Gdx.graphics.getWidth() / 2f - DasLabyrinth.ButtonWidth / 2f, 0, Gdx.graphics.getWidth() / 2f - DasLabyrinth.ButtonWidth / 2f);
+        float padding = Gdx.graphics.getWidth() / 2f - DasLabyrinth.ButtonWidth / 2f;
+        this.playerGroup.pad(2 * Gdx.graphics.getHeight() / 10f, padding, padding, padding);
         stage.setDebugAll(true);
         this.stage.addActor(this.playerGroup);
         this.textField.addListener(new InputListener() {
@@ -89,10 +90,11 @@ public class PlayerManager extends Page {
 
         Player p = new Player(name, figure, this.startField);
         this.players.add(p);
-        Image f = new Image(p.getFigure()); // TODO to big
+        Image f = new Image(p.getFigure());
         f.setSize(GameField.SizeInPixels, GameField.SizeInPixels);
         this.playerGroup.row();
-        this.playerGroup.add(f, new Label(p.getName(), this.main.getSkin()));
+        this.playerGroup.add(f);
+        this.playerGroup.add(new Label(p.getName(), this.main.getSkin()));
         this.textField.setText("");
 
         if (this.players.size > 3) {

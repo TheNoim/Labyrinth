@@ -46,7 +46,7 @@ public class DasLabyrinth extends Game {
 
         ButtonWidth = Math.round(Gdx.graphics.getWidth() * 0.9F);
 
-        skin.getFont("Verdana").getData().setScale(Functions.scaleText(this.lang.get("heading"), skin.getFont("Verdana"), ButtonWidth - 40));
+        //skin.getFont("Verdana").getData().setScale(Functions.scaleText(this.lang.get("heading"), skin.getFont("Verdana"), ButtonWidth - 40));
         font.getData().setScale(Functions.scaleText(this.lang.get("heading"), font, ButtonWidth - 40));
 
         playMusic = pref.getBoolean("Music", true);
