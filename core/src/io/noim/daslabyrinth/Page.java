@@ -9,8 +9,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public abstract class Page implements Screen, InputProcessor {
     Stage stage;
-    private InputMultiplexer multiplexer = new InputMultiplexer();
-    private Vector3 touchPosition = new Vector3();
+    private final InputMultiplexer multiplexer = new InputMultiplexer();
+    private final Vector3 touchPosition = new Vector3();
 
     Page() {
         this.stage = new Stage(new ScreenViewport());
@@ -122,7 +122,7 @@ public abstract class Page implements Screen, InputProcessor {
     }
 
     @Override
-    public boolean scrolled(int amount) {
+    public boolean scrolled(float amountX, float amountY) {
         return false;
     }
 }
