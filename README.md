@@ -1,5 +1,5 @@
 # Labyrinth
-[![Build Status](https://travis-ci.org/TheNoim/Labyrinth.svg?branch=master)](https://travis-ci.org/TheNoim/Labyrinth)
+[![Build](https://github.com/TheNoim/Labyrinth/actions/workflows/build.yml/badge.svg)](https://github.com/TheNoim/Labyrinth/actions/workflows/build.yml)
 
 ###### Labyrinth is a board game for two to four players, published by Ravensburger in 1986, and this is a remake with LibGDX for Android.
 ###### This project was created by Jannis, Simon and Nils while the NTA 2016 in course "Spiele-Programmierung unter Android mit libGDX".
